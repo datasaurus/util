@@ -15,7 +15,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id$
+ * $Id: hash.c,v 1.1 2008/09/01 17:55:55 tkgeomap Exp $
  *
  *************************************************************************
  */
@@ -158,6 +158,9 @@ void hash_set(struct hash_tbl *tblP, const char *key, unsigned val)
 	fprintf(stderr, "Attempted to use uninitialized hash table.\n");
 	exit(1);
     }
+    if ( !key ) {
+	return;
+    }
     ep = (struct hash_entry *)MALLOC(sizeof(struct hash_entry));
     len = strlen(key);
     ep->key = (char *)MALLOC(len + 1);
@@ -191,6 +194,9 @@ long hash_get(struct hash_tbl *tblP, const char *key)
     unsigned b;			/* Index into buckets array */
     struct hash_entry *ep;	/* Hash entry */
 
+    if ( !tblP || !tblP->n_buckets || !key ) {
+	return -1;
+    }
     b = hash(key, tblP->n_buckets);
     for (ep = tblP->buckets[b]; ep; ep = ep->next) {
 	if (strcmp(ep->key, key) == 0) {
