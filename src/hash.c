@@ -15,7 +15,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: hash.c,v 1.3 2008/09/23 01:29:23 tkgeomap Exp $
+ * $Id: hash.c,v 1.4 2008/09/24 00:45:14 tkgeomap Exp $
  *
  *************************************************************************
  */
@@ -81,7 +81,6 @@ static unsigned hash(const char *k, unsigned n)
 void hash_init(struct hash_tbl *tblP, size_t n_buckets)
 {
     size_t sz;
-    struct hash_entry *ep;		/* Pointer into entry array */
     struct hash_entry **bp;		/* Pointer into bucket array */
 
     tblP->n_buckets = 0;
@@ -120,8 +119,6 @@ void hash_init(struct hash_tbl *tblP, size_t n_buckets)
 
 void hash_clear(struct hash_tbl *tblP)
 {
-    struct hash_entry *ep;
-
     if ( !tblP ) {
 	return;
     }
@@ -133,31 +130,56 @@ void hash_clear(struct hash_tbl *tblP)
    Add a value to a hash table.
  */
 
-void hash_set(struct hash_tbl *tblP, const char *key, unsigned val)
+int hash_add(struct hash_tbl *tblP, const char *key, unsigned val)
 {
     size_t len;
     struct hash_entry *ep, *p;
     unsigned b;
 
-    if ( !tblP->buckets ) {
-	fprintf(stderr, "Attempted to use uninitialized hash table.\n");
-	exit(1);
+    if ( !tblP || !tblP->buckets || !key ) {
+	return 0;
     }
-    if ( !key ) {
-	return;
+    b = hash(key, tblP->n_buckets);
+    for (p = tblP->buckets[b]; p; p = p->next) {
+	if (strcmp(p->key, key) == 0) {
+	    return 0;
+	}
     }
     ep = (struct hash_entry *)MALLOC(sizeof(struct hash_entry));
     len = strlen(key);
     ep->key = (char *)MALLOC(len + 1);
     strcpy(ep->key, key);
     ep->val = val;
-    b = hash(ep->key, tblP->n_buckets);
+    ep->next = tblP->buckets[b];
+    tblP->buckets[b] = ep;
+    return 1;
+}
+
+/*
+   Set a value in a hash table.
+ */
+
+void hash_set(struct hash_tbl *tblP, const char *key, unsigned val)
+{
+    size_t len;
+    struct hash_entry *ep, *p;
+    unsigned b;
+
+    if ( !tblP->buckets || !key ) {
+	return;
+    }
+    b = hash(key, tblP->n_buckets);
     for (p = tblP->buckets[b]; p; p = p->next) {
 	if (strcmp(p->key, key) == 0) {
 	    p->val = val;
 	    return;
 	}
     }
+    ep = (struct hash_entry *)MALLOC(sizeof(struct hash_entry));
+    len = strlen(key);
+    ep->key = (char *)MALLOC(len + 1);
+    strcpy(ep->key, key);
+    ep->val = val;
     ep->next = tblP->buckets[b];
     tblP->buckets[b] = ep;
 }
