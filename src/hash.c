@@ -15,7 +15,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: hash.c,v 1.5 2008/09/24 15:27:02 tkgeomap Exp $
+ * $Id: hash.c,v 1.6 2008/09/24 15:27:50 tkgeomap Exp $
  *
  *************************************************************************
  */
@@ -225,4 +225,32 @@ long hash_get(struct hash_tbl *tblP, const char *key)
 	}
     }
     return -1;
+}
+
+/*
+   Remove an entry from a hash table.
+ */
+
+void hash_rm(struct hash_tbl *tblP, const char *key)
+{
+    struct hash_entry *p, *prev;
+    unsigned b;
+
+    if ( !tblP->buckets || !key ) {
+	return;
+    }
+    b = hash(key, tblP->n_buckets);
+    p = tblP->buckets[b];
+    for (prev = NULL, p = tblP->buckets[b]; p; prev = p, p = p->next) {
+	if (strcmp(p->key, key) == 0) {
+	    if (prev) {
+		prev->next = p->next;
+	    } else {
+		tblP->buckets[b] = p->next;
+	    }
+	    FREE(p->key);
+	    FREE(p);
+	    return;
+	}
+    }
 }
