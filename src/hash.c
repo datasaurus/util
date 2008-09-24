@@ -15,7 +15,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: hash.c,v 1.2 2008/09/20 01:55:24 tkgeomap Exp $
+ * $Id: hash.c,v 1.3 2008/09/23 01:29:23 tkgeomap Exp $
  *
  *************************************************************************
  */
@@ -64,33 +64,33 @@ static unsigned hash(const char *k, unsigned n)
  * Arguments:
  * 	tblP		- pointer to space for a hash table.
  *			  Contents should be garbage.
- *	n_entries	- number of entries that will be stored.  Table will
+ *	n_buckets	- number of entries that will be stored.  Table will
  *			  not grow, but may become crowded, if this number
  *			  of entries is eventually exceeded.
  *
  * Side effects:
- *	If n_entries > 0, memory is allocated in the table.
- *	If n_entries == 0, the table is initialized with bogus values.
- *	It should not be used, but is safe to give to hash_clear.
+ *	If n_buckets > 0, memory is allocated in the table.
+ *	If n_buckets == 0, no memory is allocated, and the table is
+ *	initialized with bogus values.
+ *	Upon return, the table is not safe for use, but is safe to give to
+ *	hash_clear.
  *
  *----------------------------------------------------------------------
  */
 
-void hash_init(struct hash_tbl *tblP, size_t n_entries)
+void hash_init(struct hash_tbl *tblP, size_t n_buckets)
 {
     size_t sz;
     struct hash_entry *ep;		/* Pointer into entry array */
     struct hash_entry **bp;		/* Pointer into bucket array */
 
-    tblP->entries = NULL;
-    tblP->n_entries = 0;
+    tblP->n_buckets = 0;
     tblP->buckets = NULL;
     tblP->n_buckets = 0;
-    if (n_entries == 0) {
+    if (n_buckets == 0) {
 	return;
     }
-    tblP->n_entries = n_entries;
-    tblP->n_buckets = 2 * n_entries;
+    tblP->n_buckets = n_buckets;
     if (tblP->n_buckets % HASH_X == 0) {
 	tblP->n_buckets++;
     }
@@ -98,12 +98,6 @@ void hash_init(struct hash_tbl *tblP, size_t n_entries)
     tblP->buckets = (struct hash_entry **)MALLOC(sz);
     for (bp = tblP->buckets; bp < tblP->buckets + tblP->n_buckets; bp++) {
 	*bp = NULL;
-    }
-    sz = n_entries * sizeof(struct hash_entry);
-    tblP->entries = (struct hash_entry *)MALLOC(sz);
-    for (ep = tblP->entries; ep < tblP->entries + n_entries; ep++) {
-	ep->key = NULL;
-	ep->next = NULL;
     }
 }
 
@@ -126,20 +120,11 @@ void hash_init(struct hash_tbl *tblP, size_t n_entries)
 
 void hash_clear(struct hash_tbl *tblP)
 {
-    struct hash_entry *ep, *entries;
-    unsigned n_entries;
+    struct hash_entry *ep;
 
     if ( !tblP ) {
 	return;
     }
-    entries = tblP->entries;
-    n_entries = tblP->n_entries;
-    if (entries) {
-	for (ep = entries; ep < entries + n_entries; ep++) {
-	    FREE(ep->key);
-	}
-    }
-    FREE(tblP->entries);
     FREE(tblP->buckets);
     hash_init(tblP, 0);
 }
@@ -154,7 +139,7 @@ void hash_set(struct hash_tbl *tblP, const char *key, unsigned val)
     struct hash_entry *ep, *p;
     unsigned b;
 
-    if ( !tblP->entries || !tblP->buckets ) {
+    if ( !tblP->buckets ) {
 	fprintf(stderr, "Attempted to use uninitialized hash table.\n");
 	exit(1);
     }

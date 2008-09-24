@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id$
+ * $Id: hash.h,v 1.1 2008/09/01 17:55:50 tkgeomap Exp $
  *
  *************************************************************************
  */
@@ -39,8 +39,6 @@ struct hash_entry {
  */
 
 struct hash_tbl {
-    struct hash_entry *entries;		/* Entries array */
-    unsigned n_entries;			/* Number of entries */
     struct hash_entry **buckets;	/* Bucket array.  Each element is a
 					 * linked list of entries */
     unsigned n_buckets;
