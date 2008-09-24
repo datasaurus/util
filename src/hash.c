@@ -15,7 +15,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: hash.c,v 1.4 2008/09/24 00:45:14 tkgeomap Exp $
+ * $Id: hash.c,v 1.5 2008/09/24 15:27:02 tkgeomap Exp $
  *
  *************************************************************************
  */
@@ -119,8 +119,16 @@ void hash_init(struct hash_tbl *tblP, size_t n_buckets)
 
 void hash_clear(struct hash_tbl *tblP)
 {
+    struct hash_entry **bp, **bp1, *ep;
+
     if ( !tblP ) {
 	return;
+    }
+    for (bp = tblP->buckets, bp1 = bp + tblP->n_buckets; bp < bp1; bp++) {
+	for (ep = *bp; ep; ep = ep->next) {
+	    FREE(ep->key);
+	    FREE(ep);
+	}
     }
     FREE(tblP->buckets);
     hash_init(tblP, 0);
