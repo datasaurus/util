@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: hash.h,v 1.4 2008/09/24 21:57:43 tkgeomap Exp $
+ * $Id: hash.h,v 1.5 2008/09/30 19:25:55 tkgeomap Exp $
  *
  *************************************************************************
  */

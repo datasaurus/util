@@ -15,7 +15,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: hash.c,v 1.7 2008/09/24 21:57:31 tkgeomap Exp $
+ * $Id: hash.c,v 1.8 2008/09/28 03:24:17 tkgeomap Exp $
  *
  *************************************************************************
  */
@@ -78,12 +78,12 @@ static unsigned hash(const char *k, unsigned n)
  *----------------------------------------------------------------------
  */
 
-void hash_init(struct hash_tbl *tblP, size_t n_buckets)
+void hash_init(struct hash_tbl *tblP, unsigned n_buckets)
 {
     size_t sz;
     struct hash_entry **bp;		/* Pointer into bucket array */
 
-    tblP->n_buckets = tblP->n_buckets = 0;
+    tblP->n_buckets = tblP->n_entries = 0;
     tblP->buckets = NULL;
     tblP->n_buckets = 0;
     if (n_buckets == 0) {
