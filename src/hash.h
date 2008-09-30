@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: hash.h,v 1.3 2008/09/24 15:27:02 tkgeomap Exp $
+ * $Id: hash.h,v 1.4 2008/09/24 21:57:43 tkgeomap Exp $
  *
  *************************************************************************
  */
@@ -42,13 +42,14 @@ struct hash_tbl {
     struct hash_entry **buckets;	/* Bucket array.  Each element is a
 					 * linked list of entries */
     unsigned n_buckets;
+    unsigned n_entries;
 };
 
 /*
  * Global hash table functions.
  */
 
-void hash_init(struct hash_tbl *, size_t);
+void hash_init(struct hash_tbl *, unsigned);
 void hash_clear(struct hash_tbl *);
 int hash_add(struct hash_tbl *, const char *, unsigned val);
 void hash_set(struct hash_tbl *, const char *, unsigned val);
