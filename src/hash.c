@@ -15,7 +15,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: hash.c,v 1.9 2008/09/30 19:29:34 tkgeomap Exp $
+ * $Id: hash.c,v 1.10 2008/09/30 19:38:58 tkgeomap Exp $
  *
  *************************************************************************
  */
@@ -69,11 +69,11 @@ static unsigned hash(const char *k, unsigned n)
  *			  of entries is eventually exceeded.
  *
  * Side effects:
- *	If n_buckets > 0, memory is allocated in the table.
+ *	If n_buckets > 0, memory is allocated in the table, and the table
+ *	is ready for use.
  *	If n_buckets == 0, no memory is allocated, and the table is
- *	initialized with bogus values.
- *	Upon return, the table is not safe for use, but is safe to give to
- *	hash_clear.
+ *	initialized with bogus values.  The table is not safe for use,
+ *	but is safe to give to hash_clear.
  *
  *----------------------------------------------------------------------
  */
