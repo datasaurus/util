@@ -15,7 +15,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: hash.c,v 1.8 2008/09/28 03:24:17 tkgeomap Exp $
+ * $Id: hash.c,v 1.9 2008/09/30 19:29:34 tkgeomap Exp $
  *
  *************************************************************************
  */
@@ -212,7 +212,7 @@ void hash_set(struct hash_tbl *tblP, const char *key, unsigned val)
  *----------------------------------------------------------------------
  */
 
-long hash_get(struct hash_tbl *tblP, const char *key)
+int hash_get(struct hash_tbl *tblP, const char *key, unsigned *lp)
 {
     unsigned b;			/* Index into buckets array */
     struct hash_entry *ep;	/* Hash entry */
@@ -223,10 +223,11 @@ long hash_get(struct hash_tbl *tblP, const char *key)
     b = hash(key, tblP->n_buckets);
     for (ep = tblP->buckets[b]; ep; ep = ep->next) {
 	if (strcmp(ep->key, key) == 0) {
-	    return ep->val;
+	    *lp = ep->val;
+	    return 1;
 	}
     }
-    return -1;
+    return 0;
 }
 
 /*

@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: hash.h,v 1.5 2008/09/30 19:25:55 tkgeomap Exp $
+ * $Id: hash.h,v 1.6 2008/09/30 19:29:34 tkgeomap Exp $
  *
  *************************************************************************
  */
@@ -51,9 +51,9 @@ struct hash_tbl {
 
 void hash_init(struct hash_tbl *, unsigned);
 void hash_clear(struct hash_tbl *);
-int hash_add(struct hash_tbl *, const char *, unsigned val);
-void hash_set(struct hash_tbl *, const char *, unsigned val);
-long hash_get(struct hash_tbl *, const char *);
+int hash_add(struct hash_tbl *, const char *, unsigned);
+void hash_set(struct hash_tbl *, const char *, unsigned);
+int hash_get(struct hash_tbl *, const char *, unsigned *);
 void hash_rm(struct hash_tbl *, const char *);
     
 #ifdef __cplusplus
