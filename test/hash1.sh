@@ -2,7 +2,7 @@
 
 # This script tests the hash table interface in visky3.
 #
-# $Id$
+# $Id: hash1.sh,v 1.1 2008/10/01 21:14:10 gcarrie Exp $
 
 # This test uses hash1.c.  The driver application reads a stream of words
 # into a hash table and then tries to retrieve some of them.
@@ -10,6 +10,10 @@
 # Identify a file of whitespace separated words.
 
 WORD_FL=/usr/share/dict/words
+
+# This is the remove command.  Change this to : to retain intermediate results.
+
+RM='rm -f'
 
 # Get the number of words and length of the longest word.
 
@@ -62,7 +66,7 @@ then
 else
     echo 'Could not build hash from hash1.c'
     echo ''
-    rm -f correct attempt
+    $RM correct attempt
     exit 1
 fi
 
@@ -72,7 +76,7 @@ if diff correct attempt
 then
     echo "TEST COMPLETE. hash driver produced correct output"
     echo ''
-    rm -f attempt hash
+    $RM attempt hash
 else
     echo "TEST COMPLETE. hash driver failed!"
     echo ''
@@ -90,19 +94,19 @@ then
     awk '{printf "%s ", $2}' correct | ./hash > attempt
 else
     echo Could not build hash from hash1.c
-    rm -f correct attempt
+    $RM correct attempt
     exit 1
 fi
 if diff correct attempt
 then
     echo "TEST COMPLETE. hash driver produced correct output"
     echo ''
-    rm -f attempt hash
+    $RM attempt hash
 else
     echo "TEST COMPLETE. hash driver failed!"
     exit 1
 fi
 
-rm -f correct
+$RM correct
 
 echo 'Done with hash1 test'

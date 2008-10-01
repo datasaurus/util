@@ -2,7 +2,7 @@
 
 # This script tests the hash table interface in visky3.
 #
-# $Id$
+# $Id: hash4.sh,v 1.1 2008/10/01 21:19:39 gcarrie Exp $
 
 # This test uses hash4.c.  The driver application creates a small
 # hash table and then resizes it while printing a memory trace.
@@ -10,6 +10,10 @@
 # Identify a file of whitespace separated words.
 
 WORD_FL=/usr/share/dict/words
+
+# This is the remove command.  Change this to : to retain intermediate results.
+
+RM='rm -f'
 
 # Get the number of words and length of the longest word.
 
@@ -67,7 +71,7 @@ if diff correct attempt
 then
     echo "TEST COMPLETE. hash driver produced correct output"
     echo ''
-    rm -f attempt hash
+    $RM attempt hash
 else
     echo "TEST COMPLETE. hash driver failed!"
     exit 1
@@ -91,6 +95,6 @@ awk '
 ' memtrace
 echo 'Memory check done'
 
-rm -f correct memtrace
+$RM correct memtrace
 
 echo 'Done with hash4 test'

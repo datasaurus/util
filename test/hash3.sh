@@ -2,11 +2,15 @@
 
 # This script tests the hash table interface in visky3.
 #
-# $Id$
+# $Id: hash3.sh,v 1.1 2008/10/01 21:18:08 gcarrie Exp $
 
 # This test uses hash3.c.  The driver application creates a small
 # hash table and then clears it one entry at a time while printing
 # a memory trace.
+
+# This is the remove command.  Change this to : to retain intermediate results.
+
+RM='rm -f'
 
 cat << END > correct
 foo -> 0
@@ -33,7 +37,7 @@ if diff correct attempt
 then
     echo "TEST COMPLETE. hash driver produced correct output"
     echo ''
-    rm -f attempt hash
+    $RM attempt hash
 else
     echo "TEST COMPLETE. hash driver failed!"
     exit 1
@@ -59,6 +63,6 @@ awk '
 ' memtrace
 echo 'Memory check done'
 
-rm -f correct memtrace
+$RM correct memtrace
 
 echo 'Done with hash3 test'

@@ -2,7 +2,7 @@
 
 # This script tests the hash table interface in visky3.
 #
-# $Id: hash.sh,v 1.12 2008/09/30 20:15:41 tkgeomap Exp $ || exit 1
+# $Id: hash.sh,v 1.1 2008/10/01 21:10:22 gcarrie Exp $ || exit 1
 
 echo ''
 echo '------------------------------- hash1 ----------------------------------'
