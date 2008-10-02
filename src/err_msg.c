@@ -10,7 +10,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id$
+ * $Id: err_msg.c,v 1.1 2008/10/02 20:07:41 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "alloc.h"
-#include "msg.h"
+#include "err_msg.h"
 
 static char *msg;	/* Current error message */
 static size_t alloc;	/* Allocation at msg */
