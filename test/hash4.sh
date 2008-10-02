@@ -2,7 +2,7 @@
 
 # This script tests the hash table interface in visky3.
 #
-# $Id: hash4.sh,v 1.1 2008/10/01 21:19:39 gcarrie Exp $
+# $Id: hash4.sh,v 1.2 2008/10/01 21:34:02 gcarrie Exp $
 
 # This test uses hash4.c.  The driver application creates a small
 # hash table and then resizes it while printing a memory trace.
@@ -59,7 +59,7 @@ COPT='-g -Wall -Wmissing-prototypes -Isrc/ -DMEM_DEBUG'
 echo "Running the hash test"
 CFLAGS="${COPT} -DWORD_FL=\"${WORD_FL}\" \
 	-DNWORD=${NWORD} -DNBUCKET=${NWORD} -DLMAX=${LMAX}"
-if cc ${CFLAGS} -o hash hash4.c src/hash.c src/alloc.c
+if cc ${CFLAGS} -o hash hash4.c src/hash.c src/err_msg.c src/alloc.c
 then
     echo 'Running app from hash4.c with memory trace going to memtrace.'
     awk '{printf "%s ", $2}' correct | ./hash > attempt 2> memtrace

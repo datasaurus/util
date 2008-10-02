@@ -2,7 +2,7 @@
 
 # This script tests the hash table interface in visky3.
 #
-# $Id: hash2.sh,v 1.1 2008/10/01 21:16:23 gcarrie Exp $
+# $Id: hash2.sh,v 1.2 2008/10/01 21:34:02 gcarrie Exp $
 
 # This test uses hash2.c.  The driver application creates a small
 # hash table and modifies it.  It also prints a memory trace.
@@ -23,7 +23,7 @@ hello -> 10
 world -> 11
 END
 COPT='-g -Wall -Wmissing-prototypes -Isrc/ -DMEM_DEBUG'
-if cc $COPT -o hash hash2.c src/hash.c src/alloc.c
+if cc $COPT -o hash hash2.c src/hash.c src/err_msg.c src/alloc.c
 then
     echo 'Running app from hash2.c with memory trace going to memtest.'
     ./hash > attempt 2> memtrace
