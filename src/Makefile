@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.2 2008/08/30 14:28:47 tkgeomap Exp $
+# $Id: Makefile,v 1.3 2008/09/01 17:56:29 tkgeomap Exp $
 
 CFLAGS = -g -Wall -Wmissing-prototypes
 EXECS = geog
@@ -11,6 +11,9 @@ hash.o : hash.c hash.h
 
 alloc.o : alloc.c alloc.h
 	cc ${CFLAGS} -c alloc.c
+
+err_msg.o : err_msg.c err_msg.h
+	cc ${CFLAGS} -c err_msg.c
 
 clean :
 	rm -f ${EXECS} *core*  *.o
