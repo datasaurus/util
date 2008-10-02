@@ -15,7 +15,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id$
+ * $Id: hash.c,v 1.12 2008/10/02 20:12:36 gcarrie Exp $
  *
  *************************************************************************
  */
@@ -24,6 +24,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "alloc.h"
+#include "err_msg.h"
 #include "hash.h"
 
 #define HASH_X 31
@@ -150,6 +151,8 @@ int hash_add(struct hash_tbl *tblP, const char *key, unsigned val)
     b = hash(key, tblP->n_buckets);
     for (p = tblP->buckets[b]; p; p = p->next) {
 	if (strcmp(p->key, key) == 0) {
+	    err_append(key);
+	    err_append(" in use.\n");
 	    return 0;
 	}
     }
@@ -218,7 +221,7 @@ int hash_get(struct hash_tbl *tblP, const char *key, unsigned *lp)
     struct hash_entry *ep;	/* Hash entry */
 
     if ( !tblP || !tblP->n_buckets || !key ) {
-	return -1;
+	return 0;
     }
     b = hash(key, tblP->n_buckets);
     for (ep = tblP->buckets[b]; ep; ep = ep->next) {
