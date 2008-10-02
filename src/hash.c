@@ -15,7 +15,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: hash.c,v 1.10 2008/09/30 19:38:58 tkgeomap Exp $
+ * $Id$
  *
  *************************************************************************
  */
@@ -228,6 +228,37 @@ int hash_get(struct hash_tbl *tblP, const char *key, unsigned *lp)
 	}
     }
     return 0;
+}
+
+/*
+   Adjust the number of buckets in a hash table.
+ */
+
+void hash_adj(struct hash_tbl *tblP, unsigned n_buckets2)
+{
+    struct hash_entry **buckets2, **bp, **bp1, *ep, *next;
+    unsigned b;
+    size_t sz;
+
+    if (n_buckets2 % HASH_X == 0) {
+	n_buckets2++;
+    }
+    sz = n_buckets2 * sizeof(struct hash_entry *);
+    buckets2 = (struct hash_entry **)MALLOC(sz);
+    for (bp = buckets2, bp1 = bp + n_buckets2; bp < bp1; bp++) {
+	*bp = NULL;
+    }
+    for (bp = tblP->buckets, bp1 = bp + tblP->n_buckets; bp < bp1; bp++) {
+	for (ep = *bp; ep; ep = next) {
+	    next = ep->next;
+	    b = hash(ep->key, n_buckets2);
+	    ep->next = buckets2[b];
+	    buckets2[b] = ep;
+	}
+    }
+    FREE(tblP->buckets);
+    tblP->buckets = buckets2;
+    tblP->n_buckets = n_buckets2;
 }
 
 /*
