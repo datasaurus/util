@@ -15,7 +15,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: hash.c,v 1.12 2008/10/02 20:12:36 gcarrie Exp $
+ * $Id: hash.c,v 1.13 2008/10/02 20:24:51 gcarrie Exp $
  *
  *************************************************************************
  */
@@ -291,4 +291,16 @@ void hash_rm(struct hash_tbl *tblP, const char *key)
 	    return;
 	}
     }
+}
+/*
+   Provide information about the size of a hash table.
+ */
+
+void hash_sz(struct hash_tbl *tblP, unsigned *n_bucketsP, unsigned *n_entriesP)
+{
+    if ( !tblP ) {
+	return;
+    }
+    *n_bucketsP = tblP->n_buckets;
+    *n_entriesP = tblP->n_entries;
 }
