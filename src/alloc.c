@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * @(#) $Id: alloc.c,v 1.3 2008/10/30 15:14:38 gcarrie Exp $
+ * @(#) $Id: alloc.c,v 1.4 2008/10/30 15:26:08 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -161,7 +161,7 @@ void *realloc_mdb(void *m, size_t sz, char *fl_nm, int ln)
  *
  * free_mdb --
  *
- * 	This deallocator with debugging support frees memory and prints
+ * 	This destructor with debugging support frees memory and prints
  * 	information.
  *
  * Arguments:
