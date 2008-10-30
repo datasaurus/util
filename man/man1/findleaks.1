@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to user0@tkgeomap.org
 .\" 
-.\" $Id$
+.\" $Id: memtrace.1,v 1.1 2008/10/30 20:15:51 gcarrie Exp $
 .\"
 .TH memtrace 1 "Find leaks"
 .SH NAME
@@ -17,8 +17,7 @@ memtrace \- search for leaks in output from diagnostic allocators
 This script scans error output from 
 .I prog.
 .I prog
-should manage memory
-only with 
+should manage memory only with 
 .B MALLOC
 (3), 
 .B CALLOC
@@ -29,13 +28,12 @@ only with
 (3),
 and it should have been compiled with the 
 .B MEM_DEBUG
-compile time variable
-defined.  When 
+compile time variable defined.  When 
 .I prog
 exits, 
 .B memtrace
-prints a list of any allocations
-that were never freed.  These are possible memory leaks.
+prints a list of any allocations that were never freed.  These are possible memory
+leaks.
 .SH SEE ALSO
 .B MALLOC
 (3), 
