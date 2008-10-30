@@ -2,7 +2,7 @@
 
 # This script tests the hash table interface in visky3.
 #
-# $Id: hash3.sh,v 1.2 2008/10/01 21:34:02 gcarrie Exp $
+# $Id: hash3.sh,v 1.3 2008/10/02 21:09:45 gcarrie Exp $
 
 # This test uses hash3.c.  The driver application creates a small
 # hash table and then clears it one entry at a time while printing
@@ -11,6 +11,7 @@
 # This is the remove command.  Change this to : to retain intermediate results.
 
 RM='rm -f'
+FINDLEAKS=src/findleaks
 
 cat << END > correct
 foo -> 0
@@ -50,21 +51,7 @@ fi
 echo 'Memory report'
 echo 'There should be one \"leak\" because this test does not delete the table, '
 echo 'just the entries.'
-awk '
-    /(0x)?[0-9]+.* allocated / {
-	cnt[$1]++
-    }
-    /(0x)?[0-9]+.* freed / {
-	cnt[$1]--
-    }
-    END {
-	for (a in cnt) {
-	    if (cnt[a] > 0) {
-		printf "Leak at %s\n", a
-	    }
-	}
-    }
-' memtrace
+$FINDLEAKS < memtrace
 echo 'Memory check done'
 
 $RM correct memtrace

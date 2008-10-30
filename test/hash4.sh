@@ -2,7 +2,7 @@
 
 # This script tests the hash table interface in visky3.
 #
-# $Id: hash4.sh,v 1.2 2008/10/01 21:34:02 gcarrie Exp $
+# $Id: hash4.sh,v 1.3 2008/10/02 21:18:29 gcarrie Exp $
 
 # This test uses hash4.c.  The driver application creates a small
 # hash table and then resizes it while printing a memory trace.
@@ -14,6 +14,8 @@ WORD_FL=/usr/share/dict/words
 # This is the remove command.  Change this to : to retain intermediate results.
 
 RM='rm -f'
+
+FINDLEAKS=src/findleaks
 
 # Get the number of words and length of the longest word.
 
@@ -78,21 +80,7 @@ else
 fi
 
 echo 'Memory report (will not say anything if no leaks)'
-awk '
-    /(0x)?[0-9]+.* allocated / {
-	cnt[$1]++
-    }
-    /(0x)?[0-9]+.* freed / {
-	cnt[$1]--
-    }
-    END {
-	for (a in cnt) {
-	    if (cnt[a] > 0) {
-		printf "Leak at %s\n", a
-	    }
-	}
-    }
-' memtrace
+$FINDLEAKS < memtrace
 echo 'Memory check done'
 
 $RM correct memtrace
