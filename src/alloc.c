@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * @(#) $Id: alloc.c,v 1.4 2008/10/30 15:26:08 gcarrie Exp $
+ * @(#) $Id: alloc.c,v 1.5 2008/10/30 15:43:08 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -103,6 +103,9 @@ void *realloc_nrm(void *m, size_t sz)
  * 	malloc.  Information about where the allocation occurred is printed
  * 	to stderr.
  *
+ * Side effects:
+ *	If the attempt to allocate memory fails, the process aborts.
+ *
  *------------------------------------------------------------------------
  */
 
@@ -111,6 +114,7 @@ void *malloc_mdb(size_t sz, char *fl_nm, int ln)
     void *m;
 
     m = malloc(sz);
+    assert(m);
     fprintf(stderr, "%p (%09x) allocated at %s:%d\n", m, ++c, fl_nm, ln);
     return m;
 }
@@ -135,6 +139,9 @@ void *malloc_mdb(size_t sz, char *fl_nm, int ln)
  * 	realloc.  Information about where the reallocation occurred is printed
  * 	to stderr.
  *
+ * Side effects:
+ *	If the attempt to allocate memory fails, the process aborts.
+ *
  *------------------------------------------------------------------------
  */
 
@@ -143,6 +150,7 @@ void *realloc_mdb(void *m, size_t sz, char *fl_nm, int ln)
     void *m2;
 
     m2 = realloc(m, sz);
+    assert(m2);
     if (m2 != m) {
 	if (m) {
 	    fprintf(stderr, "%p (%09x) freed by realloc at %s:%d\n",
