@@ -5,23 +5,24 @@
 .\" 
 .\" Please address questions and feedback to user0@tkgeomap.org
 .\" 
-.\" $Id: alloc.3,v 1.1 2008/10/30 19:04:20 gcarrie Exp $
+.\" $Id: alloc.3,v 1.2 2008/10/30 19:05:17 gcarrie Exp $
 .\"
 .TH alloc 3 "Allocators with optional diagnostics"
-.BS
 .SH NAME
 MALLOC, CALLOC, REALLOC, FREE \- allocators with optional diagnostics
 .SH SYNOPSIS
-.nf
-\fB#include\fB \fB"alloc.h"\fR
+\fB#include\fR \fB"alloc.h"\fR
+.br
 \fBvoid *\fR \fBMALLOC\fR(\fBsize_t\fR \fIs\fB)\fR;
+.br
 \fBvoid *\fR \fBCALLOC\fR(\fBsize_t\fR \fIn\fR, \fBsize_t\fR \fIs\fB)\fR;
+.br
 \fBvoid *\fR \fBREALLOC\fR(\fBvoid *\fR \fIp\fR, \fBsize_t\fR \fIs\fB)\fR;
+.br
 \fBvoid\fR \fBFREE\fR(\fBvoid *\fR \fIp\fR)\fR;
-.fi
 .SH DESCRIPTION
-These macros interface with the standard library memory management functions.
-\fBMALLOC\fR, \fBCALLOC\fR, and \fBREALLOC\fR behave like \fBmalloc\fR,
+These macros allocate and free memory using the standard library memory management
+functions.  \fBMALLOC\fR, \fBCALLOC\fR, and \fBREALLOC\fR behave like \fBmalloc\fR,
 \fBcalloc\fR, and \fBrealloc\fR, respectively, with the exception that they abort
 the process if they fail.  \fBFREE\fR behaves exactly \fBfree\fR.
 .SH OPTIONAL DIAGNOSTICS
@@ -58,6 +59,7 @@ any allocations made that have not been freed when the process exits.  These
 are assumed to be memory leaks, and the diagnostic output can help find where
 and when they occurred.
 .SH SEE ALSO
-malloc (3), calloc (3), realloc (3), free (3), memtrace (1)
+\fBmalloc\fR (3), \fBcalloc\fR (3), \fBrealloc\fR (3), \fBfree\fR (3),
+\fBmemtrace\fR (1)
 .SH AUTHOR
 Gordon Carrie (user0@tkgeomap.org)
