@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * @(#) $Id: alloc.c,v 1.5 2008/10/30 15:43:08 gcarrie Exp $
+ * @(#) $Id: alloc.c,v 1.6 2008/10/30 15:46:12 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -52,6 +52,36 @@ void *malloc_nrm(size_t sz)
     void *m;
 
     m = malloc(sz);
+    assert(m);
+    return m;
+}
+
+/*
+ *------------------------------------------------------------------------
+ *
+ * calloc_nrm --
+ *
+ *	This is a front end to calloc
+ *
+ * Arguments:
+ *	size_t n	- number of items
+ * 	size_t sz	- item size
+ *
+ * Results:
+ * 	Memory is allocated with calloc.  Return value is return value of
+ * 	calloc.
+ *
+ * Side effects:
+ *	If the attempt to allocate memory fails, the process aborts.
+ *
+ *------------------------------------------------------------------------
+ */
+
+void *calloc_nrm(size_t n, size_t sz)
+{
+    void *m;
+
+    m = calloc(n, sz);
     assert(m);
     return m;
 }
@@ -114,6 +144,42 @@ void *malloc_mdb(size_t sz, char *fl_nm, int ln)
     void *m;
 
     m = malloc(sz);
+    assert(m);
+    fprintf(stderr, "%p (%09x) allocated at %s:%d\n", m, ++c, fl_nm, ln);
+    return m;
+}
+
+/*
+ *------------------------------------------------------------------------
+ *
+ * calloc_mdb --
+ *
+ * 	This allocator with debugging support allocates memory and prints
+ * 	information.
+ *
+ * Arguments:
+ * 	size_t n	- number of items
+ * 	size_t sz	- item size
+ * 	char *fl_nm	- string, assumed to be name of file where allocation
+ *			  occurs.
+ * 	int ln		- line number in fl_nm where allocation occurs.
+ *
+ * Results:
+ * 	Memory is allocated with calloc.  Return value is return value of
+ * 	calloc.  Information about where the allocation occurred is printed
+ * 	to stderr.
+ *
+ * Side effects:
+ *	If the attempt to allocate memory fails, the process aborts.
+ *
+ *------------------------------------------------------------------------
+ */
+
+void *calloc_mdb(size_t n, size_t sz, char *fl_nm, int ln)
+{
+    void *m;
+
+    m = calloc(n, sz);
     assert(m);
     fprintf(stderr, "%p (%09x) allocated at %s:%d\n", m, ++c, fl_nm, ln);
     return m;

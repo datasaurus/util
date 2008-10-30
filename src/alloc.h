@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * @(#) $Id: alloc.h,v 1.7 2008/10/30 16:01:04 gcarrie Exp $
+ * @(#) $Id: alloc.h,v 1.8 2008/10/30 16:05:46 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -26,17 +26,21 @@ extern "C" {
 
 #ifdef MEM_DEBUG
 #define MALLOC(s) malloc_mdb((s), __FILE__, __LINE__)
+#define CALLOC(n,s) calloc_mdb((n), (s), __FILE__, __LINE__)
 #define REALLOC(x,s) realloc_mdb((x), (s), __FILE__, __LINE__)
 #define FREE(x) free_mdb((x), __FILE__, __LINE__)
 #else
 #define MALLOC(s) malloc_nrm((s))
+#define CALLOC(n,s) calloc_mdb((n), (s))
 #define REALLOC(x,s) realloc_nrm((x),(s))
 #define FREE(x) free((x))
 #endif
 
 void *malloc_nrm(size_t);
+void *calloc_nrm(size_t, size_t);
 void *realloc_nrm(void *, size_t);
 void *malloc_mdb(size_t, char *, int);
+void *calloc_mdb(size_t, size_t, char *, int);
 void *realloc_mdb(void *, size_t, char *, int);
 void free_mdb(void *, char *, int);
 
