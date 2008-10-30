@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * @(#) $Id: alloc.h,v 1.4 2008/10/30 15:21:16 gcarrie Exp $
+ * @(#) $Id: alloc.h,v 1.5 2008/10/30 15:26:08 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -18,7 +18,7 @@
 #ifndef ALLOC_H_
 #define ALLOC_H_
 
-#include <stddef.h>
+#include <stdlib.h>
 
 #ifdef __cplusplus
 extern "C" {
