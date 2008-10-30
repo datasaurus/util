@@ -1,0 +1,49 @@
+.\" 
+.\" Copyright (c) 2008 Gordon D. Carrie.  All rights reserved.
+.\" 
+.\" Licensed under the Open Software License version 2.1
+.\" 
+.\" Please address questions and feedback to user0@tkgeomap.org
+.\" 
+.\" $Id$
+.\"
+.TH memtrace 1 "Find leaks"
+.SH NAME
+memtrace \- search for leaks in output from diagnostic allocators
+.SH SYNOPSIS
+.I prog
+.B 2>&1 | memtrace
+.SH DESCRIPTION
+This script scans error output from 
+.I prog.
+.I prog
+should manage memory
+only with 
+.B MALLOC
+(3), 
+.B CALLOC
+(3), 
+.B REALLOC
+(3), 
+.B FREE
+(3),
+and it should have been compiled with the 
+.B MEM_DEBUG
+compile time variable
+defined.  When 
+.I prog
+exits, 
+.B memtrace
+prints a list of any allocations
+that were never freed.  These are possible memory leaks.
+.SH SEE ALSO
+.B MALLOC
+(3), 
+.B CALLOC
+(3), 
+.B REALLOC
+(3), 
+.B FREE
+(3)
+.SH AUTHOR
+Gordon Carrie (user0@tkgeomap.org)
