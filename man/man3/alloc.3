@@ -1,0 +1,63 @@
+.\" 
+.\" Copyright (c) 2008 Gordon D. Carrie.  All rights reserved.
+.\" 
+.\" Licensed under the Open Software License version 2.1
+.\" 
+.\" Please address questions and feedback to user0@tkgeomap.org
+.\" 
+.\" $Id$
+.\"
+.TH alloc 3 "Allocators with optional diagnostics"
+.BS
+.SH NAME
+MALLOC, CALLOC, REALLOC, FREE \- allocators with optional diagnostics
+.SH SYNOPSIS
+.nf
+\fB#include\fB \fB"alloc.h"\fR
+\fBvoid *\fR \fBMALLOC\fR(\fBsize_t\fR \fIs\fB)\fR;
+\fBvoid *\fR \fBCALLOC\fR(\fBsize_t\fR \fIn\fR, \fBsize_t\fR \fIs\fB)\fR;
+\fBvoid *\fR \fBREALLOC\fR(\fBvoid *\fR \fIp\fR, \fBsize_t\fR \fIs\fB)\fR;
+\fBvoid\fR \fBFREE\fR(\fBvoid *\fR \fIp\fR)\fR;
+.fi
+.SH DESCRIPTION
+These macros interface with the standard library memory management functions.
+\fBMALLOC\fR, \fBCALLOC\fR, and \fBREALLOC\fR behave like \fBmalloc\fR,
+\fBcalloc\fR, and \fBrealloc\fR, respectively, with the exception that they abort
+the process if they fail.  \fBFREE\fR behaves exactly \fBfree\fR.
+.SH OPTIONAL DIAGNOSTICS
+If the \fBMEM_DEBUG\fR variable is defined at compile time, such as with a
+line of form '\fB#define MEM_DEBUG\fR' in a header file, the macros also
+arrange for diagnostic information to go to standard error.  This information
+can help identify memory leaks.
+.PP
+When \fBMALLOC\fR or \fBCALLOC\fR allocates memory, it prints a line of form:
+.IP
+\fIaddress\fR (\fIcounter\fR) \fBallocated at\fR \fIfile\fR\fB:\fIline\fR
+.PP
+Here, \fIaddress\fR is the address of the new allocation, \fIcounter\fR is
+the number of times one of the allocation macros has been called, and \fIfile\fR
+and \fIline\fR identify the C source file and line number where the call occurred.
+.PP
+If \fBREALLOC\fR returns its argument, it prints a line of form:
+.IP
+\fIaddress\fR (\fIcounter\fR) \fBreallocated at\fR \fIfile\fR\fB:\fIline\fR
+.PP
+If \fBREALLOC\fR returns a new address, it prints two lines of form:
+.IP
+\fIaddress\fR (\fIcounter\fR) \fBfreed by realloc at\fR \fIfile\fB:\fIline\fR
+.br
+\fIaddress\fR (\fIcounter\fR) \fBallocated by realloc at\fR \fIfile\fB:\fIline\fR
+.PP
+When \fBFREE\fR frees memory, it prints a line of form:
+.IP
+\fIaddress\fR (\fIcounter\fR) \fBfreed at\fR \fIfile\fB:\fIline\fR
+.PP
+The resulting output gives a history of allocations and calls to free made by
+the process.  Script \fBmemtrace\fR can scan this output and report on
+any allocations made that have not been freed when the process exits.  These
+are assumed to be memory leaks, and the diagnostic output can help find where
+and when they occurred.
+.SH SEE ALSO
+malloc (3), calloc (3), realloc (3), free (3), memtrace.awk (1)
+.SH AUTHOR
+Gordon Carrie (user0@tkgeomap.org)
