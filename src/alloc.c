@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * @(#) $Id: alloc.c,v 1.11 2008/04/10 20:53:56 tkgeomap Exp $
+ * @(#) $Id: alloc.c,v 1.1 2008/09/01 17:54:58 tkgeomap Exp $
  *
  **********************************************************************
  *
@@ -29,7 +29,7 @@ static unsigned c;
 /*
  *------------------------------------------------------------------------
  *
- * Malloc --
+ * malloc_nrm --
  *
  *	This is a front end to malloc
  *
@@ -46,7 +46,7 @@ static unsigned c;
  *------------------------------------------------------------------------
  */
 
-void *Malloc(size_t sz)
+void *malloc_nrm(size_t sz)
 {
     void *m;
 
@@ -58,7 +58,7 @@ void *Malloc(size_t sz)
 /*
  *------------------------------------------------------------------------
  *
- * Realloc --
+ * realloc_mdb --
  *
  *	This is a front end to realloc.
  *
@@ -76,7 +76,7 @@ void *Malloc(size_t sz)
  *------------------------------------------------------------------------
  */
 
-void *Realloc(void *m, size_t sz)
+void *realloc_mdb(void *m, size_t sz)
 {
     m = realloc(m, sz);
     assert(m);
@@ -86,7 +86,7 @@ void *Realloc(void *m, size_t sz)
 /*
  *------------------------------------------------------------------------
  *
- * DB_Malloc --
+ * malloc_mdb --
  *
  * 	This allocator with debugging support allocates memory and prints
  * 	information.
@@ -105,7 +105,7 @@ void *Realloc(void *m, size_t sz)
  *------------------------------------------------------------------------
  */
 
-void *DB_Malloc(size_t sz, char *fl_nm, int ln)
+void *malloc_mdb(size_t sz, char *fl_nm, int ln)
 {
     void *m;
 
@@ -117,7 +117,7 @@ void *DB_Malloc(size_t sz, char *fl_nm, int ln)
 /*
  *------------------------------------------------------------------------
  *
- * DB_Realloc --
+ * realloc_mdb --
  *
  * 	This allocator with debugging support reallocates memory and prints
  * 	information.
@@ -137,7 +137,7 @@ void *DB_Malloc(size_t sz, char *fl_nm, int ln)
  *------------------------------------------------------------------------
  */
 
-void *DB_Realloc(void *m, size_t sz, char *fl_nm, int ln)
+void *realloc_mdb(void *m, size_t sz, char *fl_nm, int ln)
 {
     void *m2;
 
@@ -158,7 +158,7 @@ void *DB_Realloc(void *m, size_t sz, char *fl_nm, int ln)
 /*
  *------------------------------------------------------------------------
  *
- * DB_Free --
+ * free_mdb --
  *
  * 	This deallocator with debugging support frees memory and prints
  * 	information.
@@ -176,7 +176,7 @@ void *DB_Realloc(void *m, size_t sz, char *fl_nm, int ln)
  *------------------------------------------------------------------------
  */
 
-void DB_Free(void *m, char *fl_nm, int ln)
+void free_mdb(void *m, char *fl_nm, int ln)
 {
     fprintf(stderr, "%p (%09x) freed at %s:%d\n", m, ++c, fl_nm, ln);
     free(m);
