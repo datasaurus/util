@@ -9,13 +9,14 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * @(#) $Id: alloc.c,v 1.2 2008/10/30 15:08:33 gcarrie Exp $
+ * @(#) $Id: alloc.c,v 1.3 2008/10/30 15:14:38 gcarrie Exp $
  *
  **********************************************************************
  *
  */
 
 #include <assert.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include "alloc.h"
 
@@ -58,7 +59,7 @@ void *malloc_nrm(size_t sz)
 /*
  *------------------------------------------------------------------------
  *
- * realloc_mdb --
+ * realloc_nrm --
  *
  *	This is a front end to realloc.
  *
@@ -76,7 +77,7 @@ void *malloc_nrm(size_t sz)
  *------------------------------------------------------------------------
  */
 
-void *realloc_mdb(void *m, size_t sz)
+void *realloc_nrm(void *m, size_t sz)
 {
     m = realloc(m, sz);
     assert(m);
