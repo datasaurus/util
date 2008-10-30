@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * @(#) $Id: alloc.h,v 1.6 2008/10/30 15:42:49 gcarrie Exp $
+ * @(#) $Id: alloc.h,v 1.7 2008/10/30 16:01:04 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -34,11 +34,11 @@ extern "C" {
 #define FREE(x) free((x))
 #endif
 
-void *malloc_nrm(size_t sz);
-void *realloc_nrm(void *m, size_t sz);
-void *malloc_mdb(size_t sz, char *fl_nm, int ln);
-void *realloc_mdb(void *m, size_t sz, char *fl_nm, int ln);
-void free_mdb(void *m, char *fl_nm, int ln);
+void *malloc_nrm(size_t);
+void *realloc_nrm(void *, size_t);
+void *malloc_mdb(size_t, char *, int);
+void *realloc_mdb(void *, size_t, char *, int);
+void free_mdb(void *, char *, int);
 
 #ifdef __cplusplus
 }
