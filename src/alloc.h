@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * @(#) $Id: alloc.h,v 1.8 2008/10/30 16:05:46 gcarrie Exp $
+ * @(#) $Id: alloc.h,v 1.9 2008/10/30 16:16:58 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -31,7 +31,7 @@ extern "C" {
 #define FREE(x) free_mdb((x), __FILE__, __LINE__)
 #else
 #define MALLOC(s) malloc_nrm((s))
-#define CALLOC(n,s) calloc_mdb((n), (s))
+#define CALLOC(n,s) calloc_nrm((n), (s))
 #define REALLOC(x,s) realloc_nrm((x),(s))
 #define FREE(x) free((x))
 #endif
