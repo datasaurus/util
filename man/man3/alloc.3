@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to user0@tkgeomap.org
 .\" 
-.\" $Id: alloc.3,v 1.2 2008/10/30 19:05:17 gcarrie Exp $
+.\" $Id: alloc.3,v 1.3 2008/10/30 20:41:45 gcarrie Exp $
 .\"
 .TH alloc 3 "Allocators with optional diagnostics"
 .SH NAME
@@ -28,8 +28,10 @@ the process if they fail.  \fBFREE\fR behaves exactly \fBfree\fR.
 .SH OPTIONAL DIAGNOSTICS
 If the \fBMEM_DEBUG\fR variable is defined at compile time, such as with a
 line of form '\fB#define MEM_DEBUG\fR' in a header file, the macros also
-arrange for diagnostic information to go to standard error.  This information
-can help identify memory leaks.
+arrange for output of diagnostic information.  This information normally
+goes to file descriptor \fB2\fR (standard error), unless overridden by compile
+time variable \fBMEM_DEBUG_OUT\fR.  The diagnostic output can help identify memory
+leaks.
 .PP
 When \fBMALLOC\fR or \fBCALLOC\fR allocates memory, it prints a line of form:
 .IP
