@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * @(#) $Id: alloc.c,v 1.6 2008/10/30 15:46:12 gcarrie Exp $
+ * @(#) $Id: alloc.c,v 1.7 2008/10/30 16:16:58 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -26,6 +26,16 @@
  */
 
 static unsigned c;
+
+/*
+ * Where to send diagnostic output
+ */
+
+#ifndef MEM_DEBUG_OUT
+#define MEM_DEBUG_OUT 2
+#endif
+
+static FILE *out;
 
 /*
  *------------------------------------------------------------------------
@@ -131,7 +141,7 @@ void *realloc_nrm(void *m, size_t sz)
  * Results:
  * 	Memory is allocated with malloc.  Return value is return value of
  * 	malloc.  Information about where the allocation occurred is printed
- * 	to stderr.
+ * 	to stream out.
  *
  * Side effects:
  *	If the attempt to allocate memory fails, the process aborts.
@@ -145,7 +155,8 @@ void *malloc_mdb(size_t sz, char *fl_nm, int ln)
 
     m = malloc(sz);
     assert(m);
-    fprintf(stderr, "%p (%09x) allocated at %s:%d\n", m, ++c, fl_nm, ln);
+    assert(out || (out = fdopen(MEM_DEBUG_OUT, "w")));
+    fprintf(out, "%p (%09x) allocated at %s:%d\n", m, ++c, fl_nm, ln);
     return m;
 }
 
@@ -167,7 +178,7 @@ void *malloc_mdb(size_t sz, char *fl_nm, int ln)
  * Results:
  * 	Memory is allocated with calloc.  Return value is return value of
  * 	calloc.  Information about where the allocation occurred is printed
- * 	to stderr.
+ * 	to stream out.
  *
  * Side effects:
  *	If the attempt to allocate memory fails, the process aborts.
@@ -181,7 +192,8 @@ void *calloc_mdb(size_t n, size_t sz, char *fl_nm, int ln)
 
     m = calloc(n, sz);
     assert(m);
-    fprintf(stderr, "%p (%09x) allocated at %s:%d\n", m, ++c, fl_nm, ln);
+    assert(out || (out = fdopen(MEM_DEBUG_OUT, "w")));
+    fprintf(out, "%p (%09x) allocated at %s:%d\n", m, ++c, fl_nm, ln);
     return m;
 }
 
@@ -203,7 +215,7 @@ void *calloc_mdb(size_t n, size_t sz, char *fl_nm, int ln)
  * Results:
  * 	Memory is reallocated with realloc.  Return value is return value of
  * 	realloc.  Information about where the reallocation occurred is printed
- * 	to stderr.
+ * 	to stream out.
  *
  * Side effects:
  *	If the attempt to allocate memory fails, the process aborts.
@@ -217,15 +229,16 @@ void *realloc_mdb(void *m, size_t sz, char *fl_nm, int ln)
 
     m2 = realloc(m, sz);
     assert(m2);
+    assert(out || (out = fdopen(MEM_DEBUG_OUT, "w")));
     if (m2 != m) {
 	if (m) {
-	    fprintf(stderr, "%p (%09x) freed by realloc at %s:%d\n",
+	    fprintf(out, "%p (%09x) freed by realloc at %s:%d\n",
 		    m, ++c, fl_nm, ln);
 	}
-	fprintf(stderr, "%p (%09x) allocated by realloc at %s:%d\n",
+	fprintf(out, "%p (%09x) allocated by realloc at %s:%d\n",
 		m2, ++c, fl_nm, ln);
     } else {
-	fprintf(stderr, "%p (%09x) reallocated at %s:%d\n", m, ++c, fl_nm, ln);
+	fprintf(out, "%p (%09x) reallocated at %s:%d\n", m, ++c, fl_nm, ln);
     }
     return m2;
 }
@@ -246,13 +259,14 @@ void *realloc_mdb(void *m, size_t sz, char *fl_nm, int ln)
  *
  * Results:
  * 	Memory is freed with free.  Information about where the reallocation
- * 	occurred is printed to stderr.
+ * 	occurred is printed to stream out.
  *
  *------------------------------------------------------------------------
  */
 
 void free_mdb(void *m, char *fl_nm, int ln)
 {
-    fprintf(stderr, "%p (%09x) freed at %s:%d\n", m, ++c, fl_nm, ln);
+    assert(out || (out = fdopen(MEM_DEBUG_OUT, "w")));
+    fprintf(out, "%p (%09x) freed at %s:%d\n", m, ++c, fl_nm, ln);
     free(m);
 }
