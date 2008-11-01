@@ -5,63 +5,63 @@
 .\" 
 .\" Please address questions and feedback to user0@tkgeomap.org
 .\" 
-.\" $Id: alloc.3,v 1.3 2008/10/30 20:41:45 gcarrie Exp $
+.\" $Id: alloc.3,v 1.4 2008/10/31 16:39:59 gcarrie Exp $
 .\"
 .TH alloc 3 "Allocators with optional diagnostics"
 .SH NAME
 MALLOC, CALLOC, REALLOC, FREE \- allocators with optional diagnostics
 .SH SYNOPSIS
-\fB#include\fR \fB"alloc.h"\fR
+.B #include "alloc.h"
 .br
-\fBvoid *\fR \fBMALLOC\fR(\fBsize_t\fR \fIs\fB)\fR;
+\fBvoid * MALLOC(size_t\fP \fIs\fP\fB);\fP
 .br
-\fBvoid *\fR \fBCALLOC\fR(\fBsize_t\fR \fIn\fR, \fBsize_t\fR \fIs\fB)\fR;
+\fBvoid * CALLOC(size_t\fP \fIn\fP\fB, size_t\fP \fIs\fP\fB);\fP
 .br
-\fBvoid *\fR \fBREALLOC\fR(\fBvoid *\fR \fIp\fR, \fBsize_t\fR \fIs\fB)\fR;
+\fBvoid * REALLOC(void *\fP \fIp\fP\fB, size_t\fP \fIs\fP\fB);\fP
 .br
-\fBvoid\fR \fBFREE\fR(\fBvoid *\fR \fIp\fR)\fR;
+\fBvoid FREE(void *\fP \fIp\fP\fB);\fP
 .SH DESCRIPTION
 These macros allocate and free memory using the standard library memory management
-functions.  \fBMALLOC\fR, \fBCALLOC\fR, and \fBREALLOC\fR behave like \fBmalloc\fR,
-\fBcalloc\fR, and \fBrealloc\fR, respectively, with the exception that they abort
-the process if they fail.  \fBFREE\fR behaves exactly \fBfree\fR.
+functions.  \fBMALLOC\fP, \fBCALLOC\fP, and \fBREALLOC\fP behave like \fBmalloc\fP,
+\fBcalloc\fP, and \fBrealloc\fP, respectively, with the exception that they abort
+the process if they fail.  \fBFREE\fP behaves exactly \fBfree\fP.
 .SH OPTIONAL DIAGNOSTICS
-If the \fBMEM_DEBUG\fR variable is defined at compile time, such as with a
-line of form '\fB#define MEM_DEBUG\fR' in a header file, the macros also
+If the \fBMEM_DEBUG\fP variable is defined at compile time, such as with a
+line of form '\fB#define MEM_DEBUG\fP' in a header file, the macros also
 arrange for output of diagnostic information.  This information normally
-goes to file descriptor \fB2\fR (standard error), unless overridden by compile
-time variable \fBMEM_DEBUG_OUT\fR.  The diagnostic output can help identify memory
+goes to file descriptor \fB2\fP (standard error), unless overridden by compile
+time variable \fBMEM_DEBUG_OUT\fP.  The diagnostic output can help identify memory
 leaks.
 .PP
-When \fBMALLOC\fR or \fBCALLOC\fR allocates memory, it prints a line of form:
+When \fBMALLOC\fP or \fBCALLOC\fP allocates memory, it prints a line of form:
 .IP
-\fIaddress\fR (\fIcounter\fR) \fBallocated at\fR \fIfile\fR\fB:\fIline\fR
+\fIaddress\fP \fB(\fP\fIcounter\fP\fB)\fP \fBallocated at\fP \fIfile\fP\fB:\fP\fIline\fP
 .PP
-Here, \fIaddress\fR is the address of the new allocation, \fIcounter\fR is
-the number of times one of the allocation macros has been called, and \fIfile\fR
-and \fIline\fR identify the C source file and line number where the call occurred.
+Here, \fIaddress\fP is the address of the new allocation, \fIcounter\fP is
+the number of times one of the allocation macros has been called, and \fIfile\fP
+and \fIline\fP identify the C source file and line number where the call occurred.
 .PP
-If \fBREALLOC\fR returns its argument, it prints a line of form:
+If \fBREALLOC\fP returns its argument, it prints a line of form:
 .IP
-\fIaddress\fR (\fIcounter\fR) \fBreallocated at\fR \fIfile\fR\fB:\fIline\fR
+\fIaddress\fP \fB(\fP\fIcounter\fP\fB)\fP \fBreallocated at\fP \fIfile\fP\fB:\fP\fIline\fP
 .PP
-If \fBREALLOC\fR returns a new address, it prints two lines of form:
+If \fBREALLOC\fP returns a new address, it prints two lines of form:
 .IP
-\fIaddress\fR (\fIcounter\fR) \fBfreed by realloc at\fR \fIfile\fB:\fIline\fR
+\fIaddress\fP \fB(\fP\fIcounter\fP\fB)\fP \fBfreed by realloc at\fP \fIfile\fP\fB:\fP\fIline\fP
 .br
-\fIaddress\fR (\fIcounter\fR) \fBallocated by realloc at\fR \fIfile\fB:\fIline\fR
+\fIaddress\fP \fB(\fP\fIcounter\fP\fB)\fP \fBallocated by realloc at\fP \fIfile\fP\fB:\fP\fIline\fP
 .PP
-When \fBFREE\fR frees memory, it prints a line of form:
+When \fBFREE\fP frees memory, it prints a line of form:
 .IP
-\fIaddress\fR (\fIcounter\fR) \fBfreed at\fR \fIfile\fB:\fIline\fR
+\fIaddress\fP \fB(\fP\fIcounter\fP\fB)\fP \fBfreed at\fP \fIfile\fP\fB:\fP\fIline\fP
 .PP
 The resulting output gives a history of allocations and calls to free made by
-the process.  Script \fBmemtrace\fR can scan this output and report on
+the process.  Script \fBmemtrace\fP can scan this output and report on
 any allocations made that have not been freed when the process exits.  These
 are assumed to be memory leaks, and the diagnostic output can help find where
 and when they occurred.
 .SH SEE ALSO
-\fBmalloc\fR (3), \fBcalloc\fR (3), \fBrealloc\fR (3), \fBfree\fR (3),
-\fBmemtrace\fR (1)
+\fBmalloc\fP (3), \fBcalloc\fP (3), \fBrealloc\fP (3), \fBfree\fP (3),
+\fBmemtrace\fP (1)
 .SH AUTHOR
 Gordon Carrie (user0@tkgeomap.org)
