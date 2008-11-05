@@ -5,21 +5,19 @@
 .\" 
 .\" Please address questions and feedback to user0@tkgeomap.org
 .\" 
-.\" $Id: alloc.3,v 1.4 2008/10/31 16:39:59 gcarrie Exp $
+.\" $Id: alloc.3,v 1.5 2008/11/01 02:59:09 gcarrie Exp $
 .\"
 .TH alloc 3 "Allocators with optional diagnostics"
 .SH NAME
 MALLOC, CALLOC, REALLOC, FREE \- allocators with optional diagnostics
 .SH SYNOPSIS
-.B #include "alloc.h"
-.br
+.nf
+\fB#include "alloc.h"\fP
 \fBvoid * MALLOC(size_t\fP \fIs\fP\fB);\fP
-.br
 \fBvoid * CALLOC(size_t\fP \fIn\fP\fB, size_t\fP \fIs\fP\fB);\fP
-.br
 \fBvoid * REALLOC(void *\fP \fIp\fP\fB, size_t\fP \fIs\fP\fB);\fP
-.br
 \fBvoid FREE(void *\fP \fIp\fP\fB);\fP
+.fi
 .SH DESCRIPTION
 These macros allocate and free memory using the standard library memory management
 functions.  \fBMALLOC\fP, \fBCALLOC\fP, and \fBREALLOC\fP behave like \fBmalloc\fP,
@@ -32,29 +30,42 @@ arrange for output of diagnostic information.  This information normally
 goes to file descriptor \fB2\fP (standard error), unless overridden by compile
 time variable \fBMEM_DEBUG_OUT\fP.  The diagnostic output can help identify memory
 leaks.
-.PP
-When \fBMALLOC\fP or \fBCALLOC\fP allocates memory, it prints a line of form:
-.IP
+
+When \fBMALLOC\fP or \fBCALLOC\fP allocates memory with \fBMEM_DEBUG\fP defined,
+it prints a line of form:
+
+.nf
+.ti +5
 \fIaddress\fP \fB(\fP\fIcounter\fP\fB)\fP \fBallocated at\fP \fIfile\fP\fB:\fP\fIline\fP
-.PP
+.fi
+
 Here, \fIaddress\fP is the address of the new allocation, \fIcounter\fP is
 the number of times one of the allocation macros has been called, and \fIfile\fP
 and \fIline\fP identify the C source file and line number where the call occurred.
-.PP
-If \fBREALLOC\fP returns its argument, it prints a line of form:
-.IP
+
+If \fBREALLOC\fP returns \fIp\fP, it prints a line of form:
+
+.nf
+.ti +5
 \fIaddress\fP \fB(\fP\fIcounter\fP\fB)\fP \fBreallocated at\fP \fIfile\fP\fB:\fP\fIline\fP
-.PP
+.fi
+
 If \fBREALLOC\fP returns a new address, it prints two lines of form:
-.IP
+
+.nf
+.in +5
 \fIaddress\fP \fB(\fP\fIcounter\fP\fB)\fP \fBfreed by realloc at\fP \fIfile\fP\fB:\fP\fIline\fP
-.br
 \fIaddress\fP \fB(\fP\fIcounter\fP\fB)\fP \fBallocated by realloc at\fP \fIfile\fP\fB:\fP\fIline\fP
-.PP
+.in -5
+.fi
+
 When \fBFREE\fP frees memory, it prints a line of form:
-.IP
+
+.nf
+.ti +5
 \fIaddress\fP \fB(\fP\fIcounter\fP\fB)\fP \fBfreed at\fP \fIfile\fP\fB:\fP\fIline\fP
-.PP
+.fi
+
 The resulting output gives a history of allocations and calls to free made by
 the process.  Script \fBmemtrace\fP can scan this output and report on
 any allocations made that have not been freed when the process exits.  These
