@@ -11,11 +11,11 @@
  *
  *  Copyright (c) 2008 Gordon D. Carrie
  *
- * Licensed under the Open Software License version 2.1
+ * Licensed under the Open Software License version 3.0
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: hash.c,v 1.13 2008/10/02 20:24:51 gcarrie Exp $
+ * $Id: hash.c,v 1.14 2008/10/05 21:40:04 tkgeomap Exp $
  *
  *************************************************************************
  */

@@ -5,11 +5,11 @@
  * 
  * Copyright (c) 2007, 2008 Gordon D. Carrie
  *
- * Licensed under the Open Software License version 2.1
+ * Licensed under the Open Software License version 3.0
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * @(#) $Id: alloc.h,v 1.9 2008/10/30 16:16:58 gcarrie Exp $
+ * @(#) $Id: alloc.h,v 1.10 2008/10/31 16:20:53 gcarrie Exp $
  *
  **********************************************************************
  *
