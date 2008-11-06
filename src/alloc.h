@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * @(#) $Id: alloc.h,v 1.10 2008/10/31 16:20:53 gcarrie Exp $
+ * @(#) $Id: alloc.h,v 1.11 2008/11/06 17:09:42 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -24,25 +24,15 @@
 extern "C" {
 #endif
 
-#ifdef MEM_DEBUG
-#define MALLOC(s) malloc_mdb((s), __FILE__, __LINE__)
-#define CALLOC(n,s) calloc_mdb((n), (s), __FILE__, __LINE__)
-#define REALLOC(x,s) realloc_mdb((x), (s), __FILE__, __LINE__)
-#define FREE(x) free_mdb((x), __FILE__, __LINE__)
-#else
-#define MALLOC(s) malloc_nrm((s))
-#define CALLOC(n,s) calloc_nrm((n), (s))
-#define REALLOC(x,s) realloc_nrm((x),(s))
-#define FREE(x) free((x))
-#endif
+#define MALLOC(s) malloc_tkx((s), __FILE__, __LINE__)
+#define CALLOC(n,s) calloc_tkx((n), (s), __FILE__, __LINE__)
+#define REALLOC(x,s) realloc_tkx((x), (s), __FILE__, __LINE__)
+#define FREE(x) free_tkx((x), __FILE__, __LINE__)
 
-void *malloc_nrm(size_t);
-void *calloc_nrm(size_t, size_t);
-void *realloc_nrm(void *, size_t);
-void *malloc_mdb(size_t, char *, int);
-void *calloc_mdb(size_t, size_t, char *, int);
-void *realloc_mdb(void *, size_t, char *, int);
-void free_mdb(void *, char *, int);
+void *malloc_tkx(size_t, char *, int);
+void *calloc_tkx(size_t, size_t, char *, int);
+void *realloc_tkx(void *, size_t, char *, int);
+void free_tkx(void *, char *, int);
 
 #ifdef __cplusplus
 }

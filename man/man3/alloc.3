@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to user0@tkgeomap.org
 .\" 
-.\" $Id: alloc.3,v 1.6 2008/11/05 04:56:01 gcarrie Exp $
+.\" $Id: alloc.3,v 1.7 2008/11/06 17:09:42 gcarrie Exp $
 .\"
 .TH alloc 3 "Allocators with optional diagnostics"
 .SH NAME
@@ -24,12 +24,32 @@ functions.  \fBMALLOC\fP, \fBCALLOC\fP, and \fBREALLOC\fP behave like \fBmalloc\
 \fBcalloc\fP, and \fBrealloc\fP, respectively, with the exception that they abort
 the process if they fail.  \fBFREE\fP behaves exactly \fBfree\fP.
 .SH OPTIONAL DIAGNOSTICS
-If the \fBMEM_DEBUG\fP variable is defined at compile time, such as with a
-line of form '\fB#define MEM_DEBUG\fP' in a header file, the macros also
-arrange for output of diagnostic information.  This information normally
-goes to file descriptor \fB2\fP (standard error), unless overridden by compile
-time variable \fBMEM_DEBUG_OUT\fP.  The diagnostic output can help identify memory
-leaks.
+If the \fBMEM_DEBUG\fP environment variable is defined, the macros also
+arrange for output of diagnostic information.  The diagnostic output can
+help identify memory leaks.
+
+If \fBMEM_DEBUG\fP represents an integer, it is interpreted as a file descriptor.
+Thus, in the following example, \fBapp\fP will send diagnostic information to
+file descriptor \fB2\fP (standard error).
+
+.nf
+.in +5
+\fBexport MEM_DEBUG=\fP\fI2\fP
+\fBapp\fP
+.in -5
+.fi
+
+Otherwise, \fBMEM_DEBUG\fP is interpreted as a file name.  Diagnostic output
+will go to this file, over-writing any previous contents.
+In the following example, \fBapp\fP will send diagnostic information to
+file \fBapp.mem.out\fP
+
+.nf
+.in +5
+\fBexport MEM_DEBUG=app.mem.out\fP
+\fBapp\fP
+.in -5
+.fi
 
 When \fBMALLOC\fP or \fBCALLOC\fP allocates memory with \fBMEM_DEBUG\fP defined,
 it prints a line of form:
@@ -38,10 +58,6 @@ it prints a line of form:
 .ti +5
 \fIaddress\fP \fB(\fP\fIcounter\fP\fB)\fP \fBallocated at\fP \fIfile\fP\fB:\fP\fIline\fP
 .fi
-
-Here, \fIaddress\fP is the address of the new allocation, \fIcounter\fP is
-the number of times one of the allocation macros has been called, and \fIfile\fP
-and \fIline\fP identify the C source file and line number where the call occurred.
 
 If \fBREALLOC\fP returns \fIp\fP, it prints a line of form:
 
@@ -65,6 +81,11 @@ When \fBFREE\fP frees memory, it prints a line of form:
 .ti +5
 \fIaddress\fP \fB(\fP\fIcounter\fP\fB)\fP \fBfreed at\fP \fIfile\fP\fB:\fP\fIline\fP
 .fi
+
+Above, \fIaddress\fP is the address of the new or modified allocation,
+\fIcounter\fP is the number of times one of the allocation macros has been
+called, and \fIfile\fP and \fIline\fP identify the C source file and line
+number where the call occurred.
 
 The resulting output gives a history of allocations and calls to free made by
 the process.  Script \fBmemtrace\fP can scan this output and report on

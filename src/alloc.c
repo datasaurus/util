@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * @(#) $Id: alloc.c,v 1.8 2008/10/31 16:30:43 gcarrie Exp $
+ * @(#) $Id: alloc.c,v 1.9 2008/11/06 17:09:42 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -19,6 +19,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "alloc.h"
+
+static int init;
+static void alloc_init(void);
+static void clean(void);
 
 /*
  * This counter records the number of times an allocator
@@ -31,103 +35,47 @@ static unsigned c;
  * Where to send diagnostic output
  */
 
-#ifndef MEM_DEBUG_OUT
-#define MEM_DEBUG_OUT 2
-#endif
-
 static FILE *out;
 
 /*
  *------------------------------------------------------------------------
  *
- * malloc_nrm --
+ * alloc_init --
  *
- *	This is a front end to malloc
- *
- * Arguments:
- * 	size_t sz	- number of bytes to allocate
- *
- * Results:
- * 	Memory is allocated with malloc.  Return value is return value of
- * 	malloc.
- *
- * Side effects:
- *	If the attempt to allocate memory fails, the process aborts.
+ *	Initialize this interface.
  *
  *------------------------------------------------------------------------
  */
 
-void *malloc_nrm(size_t sz)
+void alloc_init(void)
 {
-    void *m;
+    char *onm;
+    int od;
 
-    m = malloc(sz);
-    assert(m);
-    return m;
+    if (init) {
+	return;
+    }
+    onm = getenv("MEM_DEBUG");
+    if (onm) {
+	if (sscanf(onm, "%d", &od) == 1) {
+	    out = fdopen(od, "w");
+	} else {
+	    out = fopen(onm, "w");
+	}
+	assert(out);
+	atexit(clean);
+    }
+    init = 1;
+}
+void clean()
+{
+    fclose(out);
 }
 
 /*
  *------------------------------------------------------------------------
  *
- * calloc_nrm --
- *
- *	This is a front end to calloc
- *
- * Arguments:
- *	size_t n	- number of items
- * 	size_t sz	- item size
- *
- * Results:
- * 	Memory is allocated with calloc.  Return value is return value of
- * 	calloc.
- *
- * Side effects:
- *	If the attempt to allocate memory fails, the process aborts.
- *
- *------------------------------------------------------------------------
- */
-
-void *calloc_nrm(size_t n, size_t sz)
-{
-    void *m;
-
-    m = calloc(n, sz);
-    assert(m);
-    return m;
-}
-
-/*
- *------------------------------------------------------------------------
- *
- * realloc_nrm --
- *
- *	This is a front end to realloc.
- *
- * Arguments:
- * 	void *m		- address of memory to reallocate.
- * 	size_t sz	- number of bytes to allocate
- *
- * Results:
- * 	Memory is reallocated with realloc.  Return value is return value of
- * 	realloc.
- *
- * Side effects:
- *	If the attempt to allocate memory fails, the process aborts.
- *
- *------------------------------------------------------------------------
- */
-
-void *realloc_nrm(void *m, size_t sz)
-{
-    m = realloc(m, sz);
-    assert(m);
-    return m;
-}
-
-/*
- *------------------------------------------------------------------------
- *
- * malloc_mdb --
+ * malloc_tkx --
  *
  * 	This allocator with debugging support allocates memory and prints
  * 	information.
@@ -149,21 +97,24 @@ void *realloc_nrm(void *m, size_t sz)
  *------------------------------------------------------------------------
  */
 
-void *malloc_mdb(size_t sz, char *fl_nm, int ln)
+void *malloc_tkx(size_t sz, char *fl_nm, int ln)
 {
     void *m;
 
+    if ( !init ) {
+	alloc_init();
+    }
     m = malloc(sz);
     assert(m);
-    assert(out || (out = fdopen(MEM_DEBUG_OUT, "w")));
-    fprintf(out, "%p (%09x) allocated at %s:%d\n", m, ++c, fl_nm, ln);
+    if (out)
+	fprintf(out, "%p (%09x) allocated at %s:%d\n", m, ++c, fl_nm, ln);
     return m;
 }
 
 /*
  *------------------------------------------------------------------------
  *
- * calloc_mdb --
+ * calloc_tkx --
  *
  * 	This allocator with debugging support allocates memory and prints
  * 	information.
@@ -186,21 +137,25 @@ void *malloc_mdb(size_t sz, char *fl_nm, int ln)
  *------------------------------------------------------------------------
  */
 
-void *calloc_mdb(size_t n, size_t sz, char *fl_nm, int ln)
+void *calloc_tkx(size_t n, size_t sz, char *fl_nm, int ln)
 {
     void *m;
 
+    if ( !init ) {
+	alloc_init();
+    }
     m = calloc(n, sz);
     assert(m);
-    assert(out || (out = fdopen(MEM_DEBUG_OUT, "w")));
-    fprintf(out, "%p (%09x) allocated at %s:%d\n", m, ++c, fl_nm, ln);
+    if (out) {
+	fprintf(out, "%p (%09x) allocated at %s:%d\n", m, ++c, fl_nm, ln);
+    }
     return m;
 }
 
 /*
  *------------------------------------------------------------------------
  *
- * realloc_mdb --
+ * realloc_tkx --
  *
  * 	This allocator with debugging support reallocates memory and prints
  * 	information.
@@ -223,22 +178,26 @@ void *calloc_mdb(size_t n, size_t sz, char *fl_nm, int ln)
  *------------------------------------------------------------------------
  */
 
-void *realloc_mdb(void *m, size_t sz, char *fl_nm, int ln)
+void *realloc_tkx(void *m, size_t sz, char *fl_nm, int ln)
 {
     void *m2;
 
+    if ( !init ) {
+	alloc_init();
+    }
     m2 = realloc(m, sz);
     assert(m2);
-    assert(out || (out = fdopen(MEM_DEBUG_OUT, "w")));
-    if (m2 != m) {
-	if (m) {
-	    fprintf(out, "%p (%09x) freed by realloc at %s:%d\n",
-		    m, ++c, fl_nm, ln);
+    if (out) {
+	if (m2 != m) {
+	    if (m) {
+		fprintf(out, "%p (%09x) freed by realloc at %s:%d\n",
+			m, ++c, fl_nm, ln);
+	    }
+	    fprintf(out, "%p (%09x) allocated by realloc at %s:%d\n",
+		    m2, ++c, fl_nm, ln);
+	} else {
+	    fprintf(out, "%p (%09x) reallocated at %s:%d\n", m, ++c, fl_nm, ln);
 	}
-	fprintf(out, "%p (%09x) allocated by realloc at %s:%d\n",
-		m2, ++c, fl_nm, ln);
-    } else {
-	fprintf(out, "%p (%09x) reallocated at %s:%d\n", m, ++c, fl_nm, ln);
     }
     return m2;
 }
@@ -246,7 +205,7 @@ void *realloc_mdb(void *m, size_t sz, char *fl_nm, int ln)
 /*
  *------------------------------------------------------------------------
  *
- * free_mdb --
+ * free_tkx --
  *
  * 	This destructor with debugging support frees memory and prints
  * 	information.
@@ -264,9 +223,13 @@ void *realloc_mdb(void *m, size_t sz, char *fl_nm, int ln)
  *------------------------------------------------------------------------
  */
 
-void free_mdb(void *m, char *fl_nm, int ln)
+void free_tkx(void *m, char *fl_nm, int ln)
 {
-    assert(out || (out = fdopen(MEM_DEBUG_OUT, "w")));
-    fprintf(out, "%p (%09x) freed at %s:%d\n", m, ++c, fl_nm, ln);
+    if ( !init ) {
+	alloc_init();
+    }
+    if (out) {
+	fprintf(out, "%p (%09x) freed at %s:%d\n", m, ++c, fl_nm, ln);
+    }
     free(m);
 }
