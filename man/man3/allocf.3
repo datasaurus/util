@@ -1,0 +1,29 @@
+.\" 
+.\" Copyright (c) 2008 Gordon D. Carrie.  All rights reserved.
+.\" 
+.\" Licensed under the Open Software License version 3.0
+.\" 
+.\" Please address questions and feedback to user0@tkgeomap.org
+.\" 
+.\" $Id$
+.\"
+.TH allocf 3 "Dynamic multidimensional allocators"
+.SH NAME
+MALLOC, CALLOC, REALLOC, FREE \- allocators with optional diagnostics
+mallocf2, freef2, mallocf3, freef3, mallocf4, freef4 \- dynamic allocators for multidimensional arrays of floats
+.SH SYNOPSIS
+.nf
+\fB#include "allocf.h"\fP
+\fBfloat **mallocf2(size_t\fP \fIj\fP, \fBsize_t\fP \fIi\fP);
+\fBvoid freef2(float **\fP\fId\fP);
+\fBfloat ***mallocf3(size_t\fP \fIk\fP, \fBsize_t\fP \fIj\fP, \fBsize_t\fP \fIi\fP);
+\fBvoid freef3(float ***\fP\fId\fP);
+\fBfloat ****mallocf4(size_t\fP \fIl\fP, \fBsize_t\fP \fIk\fP, \fBsize_t\fP \fIj\fP, \fBsize_t\fP \fIi\fP);
+\fBvoid freef4(float ****\fP\fId\fP);
+.fi
+.SH DESCRIPTION
+These allocators create multidimensional arrays of float values.
+.SH SEE ALSO
+\fBMALLOC\fP (3), \fBCALLOC\fP (3), \fBREALLOC\fP (3), \fBFREE\fP (3)
+.SH AUTHOR
+Gordon Carrie (user0@tkgeomap.org)
