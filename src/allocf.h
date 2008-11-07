@@ -10,7 +10,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: allocf.h,v 1.2 2008/11/06 17:09:42 gcarrie Exp $
+ * $Id: allocf.h,v 1.3 2008/11/07 03:25:17 gcarrie Exp $
  *
  */
 
@@ -22,7 +22,6 @@ extern "C" {
 #endif
 
 #include <stddef.h>
-#include "alloc.h"
 
 float **mallocf2(size_t j, size_t i);
 void freef2(float **d);
