@@ -10,7 +10,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: err_msg.c,v 1.2 2008/10/02 21:21:20 gcarrie Exp $
+ * $Id: err_msg.c,v 1.3 2008/11/06 17:09:42 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 #include "alloc.h"
 #include "err_msg.h"
 
@@ -48,20 +49,28 @@ static size_t len;	/* strlen(msg) */
 
 void err_append(const char *s)
 {
-    size_t new_len, new_alloc;
+    size_t l, new_len, new_alloc;
+    long ll, llen;
     char *e, *e1;
     const char *m;
 
-    if ( !s || strlen(s) == 0 ) {
+    if ( !s ) {
 	return;
     }
-    new_len = len + strlen(s);
+    l = strlen(s);
+    if (l == 0) {
+	return;
+    }
+    new_len = len + l;
     new_alloc = new_len + 1;
     if (new_alloc > alloc) {
 	msg = REALLOC(msg, new_alloc);
 	alloc = new_alloc;
     }
-    for (e = msg + len, m = s, e1 = e + strlen(s); e < e1; e++, m++) {
+    ll = (long)l;
+    llen = (long)len;
+    assert((double)l == (double)ll && (double)len == (double)llen);
+    for (e = msg + llen, m = s, e1 = e + ll; e < e1; e++, m++) {
 	*e  = *m;
     }
     *e = '\0';
