@@ -2,7 +2,7 @@
 #
 # This script exercises alloc1.c.
 #
-# $Id: alloc1.sh,v 1.3 2008/11/10 03:12:34 gcarrie Exp $
+# $Id: alloc1.sh,v 1.4 2008/11/10 04:10:27 gcarrie Exp $
 
 EXEC=alloc1
 FINDLEAKS=src/findleaks
@@ -28,6 +28,7 @@ $EXEC
 echo Done with test2
 echo ""
 $RM $EXEC
+unset MEM_DEBUG
 
 echo test3: building and running alloc1 with memory trace.
 echo An account of allocations and calls to free should appear in $OUT
@@ -40,6 +41,7 @@ cat $OUT
 echo Done with test3
 echo ""
 $RM $EXEC $OUT
+unset MEM_DEBUG
 
 echo test4: building and running alloc1.
 echo Sending memory trace to findleaks, which should not find anything.
@@ -50,6 +52,7 @@ $EXEC 2>&1 | $FINDLEAKS
 echo Done with test4
 echo ""
 $RM $EXEC
+unset MEM_DEBUG
 
 echo test5: building and running alloc1.
 echo Sending memory trace to an unusable file.
@@ -62,7 +65,9 @@ echo Starting test5
 $EXEC
 echo Done with test5
 echo ""
+chmod 644 $OUT
 $RM $EXEC $OUT
+unset MEM_DEBUG
 
 echo test6: simulate allocation failure in alloc1
 echo This should produce a warning about failure to allocate x3.
@@ -73,3 +78,4 @@ $EXEC
 echo Done with test6
 echo ""
 $RM $EXEC
+unset MEM_FAIL

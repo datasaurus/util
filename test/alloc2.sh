@@ -2,7 +2,7 @@
 #
 # This script exercises alloc2.c.
 #
-# $Id: alloc2.sh,v 1.1 2008/10/31 21:05:37 gcarrie Exp $
+# $Id: alloc2.sh,v 1.2 2008/11/06 18:24:42 gcarrie Exp $
 
 EXEC=alloc2
 FINDLEAKS=src/findleaks
@@ -26,6 +26,7 @@ $EXEC
 echo Done with test2
 echo ""
 $RM $EXEC
+unset MEM_DEBUG
 
 echo test3: building and running alloc2.
 echo Sending memory trace to findleaks, which should report a leak.
@@ -35,3 +36,4 @@ $EXEC 2>&1 | $FINDLEAKS
 echo Done with test3
 echo ""
 $RM $EXEC
+unset MEM_DEBUG
