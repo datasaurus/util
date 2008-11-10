@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to user0@tkgeomap.org
 .\" 
-.\" $Id: alloc.3,v 1.9 2008/11/10 04:33:25 gcarrie Exp $
+.\" $Id: alloc.3,v 1.10 2008/11/10 05:05:02 gcarrie Exp $
 .\"
 .TH alloc 3 "Allocators with optional diagnostics"
 .SH NAME
@@ -24,13 +24,15 @@ MALLOC, CALLOC, REALLOC, FREE \- allocators with optional diagnostics
 .fi
 .SH DESCRIPTION
 These functions allocate and free memory using the standard library memory
-management functions and arrange optional diagnostics described below.
+management functions, and they arrange optional diagnostics described below.
 \fBmalloc_tkx\fP calls \fBmalloc\fP with argument \fIs\fP and returns the result.
 \fBcalloc_tkx\fP calls \fBcalloc\fP with arguments \fIn\fP and \fIs\fP and
 returns the result.
 \fBrealloc_tkx\fP calls \fBrealloc\fP with arguments \fIp\fP and \fIs\fP and
 returns the result.
 \fBfree_tkx\fP calls \fBfree\fP with argument \fIp\fP.
+Allocations made with \fBmalloc_tkx\fP, \fBcalloc_tkx\fP, and \fBrealloc_tkx\fP
+should be freed with \fBfree_tkx\fP.
 Arguments \fIf\fP and \fIl\fP are assumed to be set to compiler macros
 \fB__FILE__\fP and \fB__LINE__\fP.  The functions use these values to track leaks
 and simulate failures.
@@ -63,13 +65,15 @@ and simulate failures.
 
 .nf
 .in +5
-\fBree_tkx(\fP\fIx\fP, \fB__FILE__\fP, \fB__LINE__)\fP
+\fBfree_tkx(\fP\fIx\fP, \fB__FILE__\fP, \fB__LINE__)\fP
 .in -5
 .fi
 
 
 \fBMALLOC\fP, \fBCALLOC\fP, \fBREALLOC\fP and \fBFREE\fP behave like
 \fBmalloc\fP, \fBcalloc\fP, \fBrealloc\fP, and \fBfree\fP respectively.
+Allocations made with \fBMALLOC\fP, \fBCALLOC\fP, \fBREALLOC\fP should be freed
+with \fBFREE\fP.
 .SH OPTIONAL DIAGNOSTICS
 If the \fBMEM_DEBUG\fP environment variable is defined, the macros also
 arrange for output of diagnostic information.  The diagnostic output can
