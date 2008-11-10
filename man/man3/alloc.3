@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to user0@tkgeomap.org
 .\" 
-.\" $Id: alloc.3,v 1.7 2008/11/06 17:09:42 gcarrie Exp $
+.\" $Id: alloc.3,v 1.8 2008/11/06 18:24:42 gcarrie Exp $
 .\"
 .TH alloc 3 "Allocators with optional diagnostics"
 .SH NAME
@@ -92,6 +92,12 @@ the process.  Script \fBmemtrace\fP can scan this output and report on
 any allocations made that have not been freed when the process exits.  These
 are assumed to be memory leaks, and the diagnostic output can help find where
 and when they occurred.
+.SH SIMULATING ALLOCATION FAILURES
+If environment variable \fBMEM_FAIL\fP exists and has form
+\fIfile\fP\fB:\fP\fIline\fP, and line \fIline\fP of source file \fIfile\fP has
+a call to \fBMALLOC\fP, \fBCALLOC\fP, or \fBREALLOC\fP, then the allocator will
+always return \fBNULL\fR.  This exercises code branches that handle allocation
+failures.
 .SH SEE ALSO
 \fBmalloc\fP (3), \fBcalloc\fP (3), \fBrealloc\fP (3), \fBfree\fP (3),
 \fBmemtrace\fP (1)
