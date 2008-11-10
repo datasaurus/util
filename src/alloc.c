@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * @(#) $Id: alloc.c,v 1.11 2008/11/10 03:24:31 gcarrie Exp $
+ * @(#) $Id: alloc.c,v 1.12 2008/11/10 03:44:33 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -78,7 +78,7 @@ void alloc_init(void)
     s = getenv("MEM_FAIL");
     if (s) {
 	fail_fnm = malloc(strlen(s) + 1);
-	if (sscanf("%s:%d", fail_fnm, &fail_line) != 2) {
+	if (sscanf(s, "%[^:]:%d", fail_fnm, &fail_line) != 2) {
 	    fprintf(stderr, "Could not get failure spec from %s\n", s);
 	    free(fail_fnm);
 	}
