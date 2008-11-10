@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to user0@tkgeomap.org
 .\" 
-.\" $Id: alloc.3,v 1.8 2008/11/06 18:24:42 gcarrie Exp $
+.\" $Id: alloc.3,v 1.9 2008/11/10 04:33:25 gcarrie Exp $
 .\"
 .TH alloc 3 "Allocators with optional diagnostics"
 .SH NAME
@@ -13,16 +13,63 @@ MALLOC, CALLOC, REALLOC, FREE \- allocators with optional diagnostics
 .SH SYNOPSIS
 .nf
 \fB#include "alloc.h"\fP
+\fBvoid * malloc_tkx(size_t\fP \fIs\fP, \fBchar *\fP\fIf\fP, \fBint\fP \fIl\fP);
+\fBvoid * calloc_tkx(size_t\fP \fIn\fP, \fBsize_t\fP \fIs\fP, \fBchar *\fP\fIf\fP, \fBint\fP \fIl\fP);
+\fBvoid * realloc_tkx(void *\fP\fIp\fP, \fBsize_t\fP \fIs\fP, \fBchar *\fP\fIf\fP, \fBint\fP \fIl\fP);
+\fBvoid free_tkx(void *\fP\fIp\fP, \fBchar *\fP\fIf\fP, \fBint\fP \fIl\fP);
 \fBvoid * MALLOC(size_t\fP \fIs\fP\fB);\fP
 \fBvoid * CALLOC(size_t\fP \fIn\fP\fB, size_t\fP \fIs\fP\fB);\fP
 \fBvoid * REALLOC(void *\fP \fIp\fP\fB, size_t\fP \fIs\fP\fB);\fP
 \fBvoid FREE(void *\fP \fIp\fP\fB);\fP
 .fi
 .SH DESCRIPTION
-These macros allocate and free memory using the standard library memory management
-functions.  \fBMALLOC\fP, \fBCALLOC\fP, and \fBREALLOC\fP behave like \fBmalloc\fP,
-\fBcalloc\fP, and \fBrealloc\fP, respectively, with the exception that they abort
-the process if they fail.  \fBFREE\fP behaves exactly \fBfree\fP.
+These functions allocate and free memory using the standard library memory
+management functions and arrange optional diagnostics described below.
+\fBmalloc_tkx\fP calls \fBmalloc\fP with argument \fIs\fP and returns the result.
+\fBcalloc_tkx\fP calls \fBcalloc\fP with arguments \fIn\fP and \fIs\fP and
+returns the result.
+\fBrealloc_tkx\fP calls \fBrealloc\fP with arguments \fIp\fP and \fIs\fP and
+returns the result.
+\fBfree_tkx\fP calls \fBfree\fP with argument \fIp\fP.
+Arguments \fIf\fP and \fIl\fP are assumed to be set to compiler macros
+\fB__FILE__\fP and \fB__LINE__\fP.  The functions use these values to track leaks
+and simulate failures.
+
+\fBMALLOC(\fP\fIs\fP\fB)\fP is a macro for
+
+.nf
+.in +5
+\fBmalloc_tkx(\fP\fIs\fP, \fB__FILE__\fP, \fB__LINE__)\fP
+.in -5
+.fi
+
+\fBCALLOC(\fP\fIn\fP, \fIs\fP\fB)\fP is a macro for 
+
+.nf
+.in +5
+\fBalloc_tkx(\fP\fIn\fP, \fIs\fP, \fB__FILE__\fP, \fB__LINE__)\fP
+.in -5
+.fi
+
+\fBREALLOC(\fP\fIx\fP, \fIs\fP\fB)\fP is a macro for 
+
+.nf
+.in +5
+\fBrealloc_tkx(\fP\fIx\fP, \fIs\fP, \fB__FILE__\fP, \fB__LINE__)\fP
+.in -5
+.fi
+
+\fBFREE(\fP\fIx\fP\fB)\fP is a macro for 
+
+.nf
+.in +5
+\fBree_tkx(\fP\fIx\fP, \fB__FILE__\fP, \fB__LINE__)\fP
+.in -5
+.fi
+
+
+\fBMALLOC\fP, \fBCALLOC\fP, \fBREALLOC\fP and \fBFREE\fP behave like
+\fBmalloc\fP, \fBcalloc\fP, \fBrealloc\fP, and \fBfree\fP respectively.
 .SH OPTIONAL DIAGNOSTICS
 If the \fBMEM_DEBUG\fP environment variable is defined, the macros also
 arrange for output of diagnostic information.  The diagnostic output can
@@ -96,7 +143,7 @@ and when they occurred.
 If environment variable \fBMEM_FAIL\fP exists and has form
 \fIfile\fP\fB:\fP\fIline\fP, and line \fIline\fP of source file \fIfile\fP has
 a call to \fBMALLOC\fP, \fBCALLOC\fP, or \fBREALLOC\fP, then the allocator will
-always return \fBNULL\fR.  This exercises code branches that handle allocation
+always return \fBNULL\fP.  This exercises code branches that handle allocation
 failures.
 .SH SEE ALSO
 \fBmalloc\fP (3), \fBcalloc\fP (3), \fBrealloc\fP (3), \fBfree\fP (3),
