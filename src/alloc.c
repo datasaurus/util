@@ -9,15 +9,15 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * @(#) $Id: alloc.c,v 1.9 2008/11/06 17:09:42 gcarrie Exp $
+ * @(#) $Id: alloc.c,v 1.10 2008/11/06 18:24:42 gcarrie Exp $
  *
  **********************************************************************
  *
  */
 
-#include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <errno.h>
 #include "alloc.h"
 
 static int init;
@@ -62,7 +62,6 @@ void alloc_init(void)
 	} else {
 	    out = fopen(onm, "w");
 	}
-	assert(out);
 	atexit(clean);
     }
     init = 1;
@@ -88,11 +87,8 @@ void clean()
  *
  * Results:
  * 	Memory is allocated with malloc.  Return value is return value of
- * 	malloc.  Information about where the allocation occurred is printed
- * 	to stream out.
- *
- * Side effects:
- *	If the attempt to allocate memory fails, the process aborts.
+ * 	malloc.  Information about where the allocation occurred might be
+ *	printed to stream out.
  *
  *------------------------------------------------------------------------
  */
@@ -105,8 +101,7 @@ void *malloc_tkx(size_t sz, char *fl_nm, int ln)
 	alloc_init();
     }
     m = malloc(sz);
-    assert(m);
-    if (out)
+    if (m && out)
 	fprintf(out, "%p (%09x) allocated at %s:%d\n", m, ++c, fl_nm, ln);
     return m;
 }
@@ -128,7 +123,7 @@ void *malloc_tkx(size_t sz, char *fl_nm, int ln)
  *
  * Results:
  * 	Memory is allocated with calloc.  Return value is return value of
- * 	calloc.  Information about where the allocation occurred is printed
+ * 	calloc.  Information about where the allocation occurred might be printed
  * 	to stream out.
  *
  * Side effects:
@@ -145,8 +140,7 @@ void *calloc_tkx(size_t n, size_t sz, char *fl_nm, int ln)
 	alloc_init();
     }
     m = calloc(n, sz);
-    assert(m);
-    if (out) {
+    if (m && out) {
 	fprintf(out, "%p (%09x) allocated at %s:%d\n", m, ++c, fl_nm, ln);
     }
     return m;
@@ -169,11 +163,8 @@ void *calloc_tkx(size_t n, size_t sz, char *fl_nm, int ln)
  *
  * Results:
  * 	Memory is reallocated with realloc.  Return value is return value of
- * 	realloc.  Information about where the reallocation occurred is printed
+ * 	realloc.  Information about where the reallocation occurred might be printed
  * 	to stream out.
- *
- * Side effects:
- *	If the attempt to allocate memory fails, the process aborts.
  *
  *------------------------------------------------------------------------
  */
@@ -186,8 +177,7 @@ void *realloc_tkx(void *m, size_t sz, char *fl_nm, int ln)
 	alloc_init();
     }
     m2 = realloc(m, sz);
-    assert(m2);
-    if (out) {
+    if (m2 && out) {
 	if (m2 != m) {
 	    if (m) {
 		fprintf(out, "%p (%09x) freed by realloc at %s:%d\n",
@@ -218,7 +208,7 @@ void *realloc_tkx(void *m, size_t sz, char *fl_nm, int ln)
  *
  * Results:
  * 	Memory is freed with free.  Information about where the reallocation
- * 	occurred is printed to stream out.
+ * 	occurred might be printed to stream out.
  *
  *------------------------------------------------------------------------
  */
