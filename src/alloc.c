@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * @(#) $Id: alloc.c,v 1.10 2008/11/06 18:24:42 gcarrie Exp $
+ * @(#) $Id: alloc.c,v 1.11 2008/11/10 03:24:31 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -17,6 +17,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <errno.h>
 #include "alloc.h"
 
@@ -35,7 +36,14 @@ static unsigned c;
  * Where to send diagnostic output
  */
 
-static FILE *out;
+static FILE *diag_out;
+
+/*
+ * File and line at which to induce pretend memory failure
+ */
+
+static char *fail_fnm;
+static int fail_line;
 
 /*
  *------------------------------------------------------------------------
@@ -49,26 +57,42 @@ static FILE *out;
 
 void alloc_init(void)
 {
-    char *onm;
+    char *s;
     int od;
 
     if (init) {
 	return;
     }
-    onm = getenv("MEM_DEBUG");
-    if (onm) {
-	if (sscanf(onm, "%d", &od) == 1) {
-	    out = fdopen(od, "w");
+    s = getenv("MEM_DEBUG");
+    if (s) {
+	if (sscanf(s, "%d", &od) == 1) {
+	    diag_out = fdopen(od, "w");
 	} else {
-	    out = fopen(onm, "w");
+	    diag_out = fopen(s, "w");
+	}
+	if ( !diag_out ) {
+	    perror("MEM_DEBUG set but unable to open diagnostic memory file");
 	}
 	atexit(clean);
+    }
+    s = getenv("MEM_FAIL");
+    if (s) {
+	fail_fnm = malloc(strlen(s) + 1);
+	if (sscanf("%s:%d", fail_fnm, &fail_line) != 2) {
+	    fprintf(stderr, "Could not get failure spec from %s\n", s);
+	    free(fail_fnm);
+	}
     }
     init = 1;
 }
 void clean()
 {
-    fclose(out);
+    if (diag_out) {
+	fclose(diag_out);
+    }
+    if (fail_fnm) {
+	free(fail_fnm);
+    }
 }
 
 /*
@@ -81,19 +105,19 @@ void clean()
  *
  * Arguments:
  * 	size_t sz	- number of bytes to allocate
- * 	char *fl_nm	- string, assumed to be name of file where allocation
+ * 	char *fnm	- string, assumed to be name of file where allocation
  *			  occurs.
- * 	int ln		- line number in fl_nm where allocation occurs.
+ * 	int ln		- line number in fnm where allocation occurs.
  *
  * Results:
  * 	Memory is allocated with malloc.  Return value is return value of
  * 	malloc.  Information about where the allocation occurred might be
- *	printed to stream out.
+ *	printed to stream diag_out.
  *
  *------------------------------------------------------------------------
  */
 
-void *malloc_tkx(size_t sz, char *fl_nm, int ln)
+void *malloc_tkx(size_t sz, char *fnm, int ln)
 {
     void *m;
 
@@ -101,8 +125,11 @@ void *malloc_tkx(size_t sz, char *fl_nm, int ln)
 	alloc_init();
     }
     m = malloc(sz);
-    if (m && out)
-	fprintf(out, "%p (%09x) allocated at %s:%d\n", m, ++c, fl_nm, ln);
+    if (fail_fnm && (ln == fail_line) && strcmp(fail_fnm, fnm) == 0) {
+	return NULL;
+    }
+    if (m && diag_out)
+	fprintf(diag_out, "%p (%09x) allocated at %s:%d\n", m, ++c, fnm, ln);
     return m;
 }
 
@@ -117,14 +144,14 @@ void *malloc_tkx(size_t sz, char *fl_nm, int ln)
  * Arguments:
  * 	size_t n	- number of items
  * 	size_t sz	- item size
- * 	char *fl_nm	- string, assumed to be name of file where allocation
+ * 	char *fnm	- string, assumed to be name of file where allocation
  *			  occurs.
- * 	int ln		- line number in fl_nm where allocation occurs.
+ * 	int ln		- line number in fnm where allocation occurs.
  *
  * Results:
  * 	Memory is allocated with calloc.  Return value is return value of
  * 	calloc.  Information about where the allocation occurred might be printed
- * 	to stream out.
+ * 	to stream diag_out.
  *
  * Side effects:
  *	If the attempt to allocate memory fails, the process aborts.
@@ -132,16 +159,19 @@ void *malloc_tkx(size_t sz, char *fl_nm, int ln)
  *------------------------------------------------------------------------
  */
 
-void *calloc_tkx(size_t n, size_t sz, char *fl_nm, int ln)
+void *calloc_tkx(size_t n, size_t sz, char *fnm, int ln)
 {
     void *m;
 
     if ( !init ) {
 	alloc_init();
     }
+    if (fail_fnm && (ln == fail_line) && strcmp(fail_fnm, fnm) == 0) {
+	return NULL;
+    }
     m = calloc(n, sz);
-    if (m && out) {
-	fprintf(out, "%p (%09x) allocated at %s:%d\n", m, ++c, fl_nm, ln);
+    if (m && diag_out) {
+	fprintf(diag_out, "%p (%09x) allocated at %s:%d\n", m, ++c, fnm, ln);
     }
     return m;
 }
@@ -157,36 +187,39 @@ void *calloc_tkx(size_t n, size_t sz, char *fl_nm, int ln)
  * Arguments:
  * 	void *m		- address of memory to reallocate.
  * 	size_t sz	- number of bytes to allocate
- * 	char *fl_nm	- string, assumed to be name of file where allocation
+ * 	char *fnm	- string, assumed to be name of file where allocation
  *			  occurs.
- * 	int ln		- line number in fl_nm where allocation occurs.
+ * 	int ln		- line number in fnm where allocation occurs.
  *
  * Results:
  * 	Memory is reallocated with realloc.  Return value is return value of
  * 	realloc.  Information about where the reallocation occurred might be printed
- * 	to stream out.
+ * 	to stream diag_out.
  *
  *------------------------------------------------------------------------
  */
 
-void *realloc_tkx(void *m, size_t sz, char *fl_nm, int ln)
+void *realloc_tkx(void *m, size_t sz, char *fnm, int ln)
 {
     void *m2;
 
     if ( !init ) {
 	alloc_init();
     }
+    if (fail_fnm && (ln == fail_line) && strcmp(fail_fnm, fnm) == 0) {
+	return NULL;
+    }
     m2 = realloc(m, sz);
-    if (m2 && out) {
+    if (m2 && diag_out) {
 	if (m2 != m) {
 	    if (m) {
-		fprintf(out, "%p (%09x) freed by realloc at %s:%d\n",
-			m, ++c, fl_nm, ln);
+		fprintf(diag_out, "%p (%09x) freed by realloc at %s:%d\n",
+			m, ++c, fnm, ln);
 	    }
-	    fprintf(out, "%p (%09x) allocated by realloc at %s:%d\n",
-		    m2, ++c, fl_nm, ln);
+	    fprintf(diag_out, "%p (%09x) allocated by realloc at %s:%d\n",
+		    m2, ++c, fnm, ln);
 	} else {
-	    fprintf(out, "%p (%09x) reallocated at %s:%d\n", m, ++c, fl_nm, ln);
+	    fprintf(diag_out, "%p (%09x) reallocated at %s:%d\n", m, ++c, fnm, ln);
 	}
     }
     return m2;
@@ -202,24 +235,24 @@ void *realloc_tkx(void *m, size_t sz, char *fl_nm, int ln)
  *
  * Arguments:
  * 	void *m		- address of memory to free.
- * 	char *fl_nm	- string, assumed to be name of file where allocation
+ * 	char *fnm	- string, assumed to be name of file where allocation
  *			  occurs.
- * 	int ln		- line number in fl_nm where allocation occurs.
+ * 	int ln		- line number in fnm where allocation occurs.
  *
  * Results:
  * 	Memory is freed with free.  Information about where the reallocation
- * 	occurred might be printed to stream out.
+ * 	occurred might be printed to stream diag_out.
  *
  *------------------------------------------------------------------------
  */
 
-void free_tkx(void *m, char *fl_nm, int ln)
+void free_tkx(void *m, char *fnm, int ln)
 {
     if ( !init ) {
 	alloc_init();
     }
-    if (out) {
-	fprintf(out, "%p (%09x) freed at %s:%d\n", m, ++c, fl_nm, ln);
+    if (diag_out) {
+	fprintf(diag_out, "%p (%09x) freed at %s:%d\n", m, ++c, fnm, ln);
     }
     free(m);
 }
