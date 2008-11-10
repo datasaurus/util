@@ -1,7 +1,7 @@
 /*
  * alloc.c --
  *
- *	This file defines memory allocators.
+ *	This file defines memory allocators.  See the alloc.3 man page.
  * 
  * Copyright (c) 2007, 2008 Gordon D. Carrie
  *
@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * @(#) $Id: alloc.c,v 1.12 2008/11/10 03:44:33 gcarrie Exp $
+ * @(#) $Id: alloc.c,v 1.13 2008/11/10 04:12:32 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -46,13 +46,7 @@ static char *fail_fnm;
 static int fail_line;
 
 /*
- *------------------------------------------------------------------------
- *
- * alloc_init --
- *
- *	Initialize this interface.
- *
- *------------------------------------------------------------------------
+ * Initialize this interface.
  */
 
 void alloc_init(void)
@@ -85,6 +79,10 @@ void alloc_init(void)
     }
     init = 1;
 }
+
+/*
+ * Clean up when process exits.
+ */
 void clean()
 {
     if (diag_out) {
@@ -95,28 +93,6 @@ void clean()
     }
 }
 
-/*
- *------------------------------------------------------------------------
- *
- * malloc_tkx --
- *
- * 	This allocator with debugging support allocates memory and prints
- * 	information.
- *
- * Arguments:
- * 	size_t sz	- number of bytes to allocate
- * 	char *fnm	- string, assumed to be name of file where allocation
- *			  occurs.
- * 	int ln		- line number in fnm where allocation occurs.
- *
- * Results:
- * 	Memory is allocated with malloc.  Return value is return value of
- * 	malloc.  Information about where the allocation occurred might be
- *	printed to stream diag_out.
- *
- *------------------------------------------------------------------------
- */
-
 void *malloc_tkx(size_t sz, char *fnm, int ln)
 {
     void *m;
@@ -133,32 +109,6 @@ void *malloc_tkx(size_t sz, char *fnm, int ln)
     return m;
 }
 
-/*
- *------------------------------------------------------------------------
- *
- * calloc_tkx --
- *
- * 	This allocator with debugging support allocates memory and prints
- * 	information.
- *
- * Arguments:
- * 	size_t n	- number of items
- * 	size_t sz	- item size
- * 	char *fnm	- string, assumed to be name of file where allocation
- *			  occurs.
- * 	int ln		- line number in fnm where allocation occurs.
- *
- * Results:
- * 	Memory is allocated with calloc.  Return value is return value of
- * 	calloc.  Information about where the allocation occurred might be printed
- * 	to stream diag_out.
- *
- * Side effects:
- *	If the attempt to allocate memory fails, the process aborts.
- *
- *------------------------------------------------------------------------
- */
-
 void *calloc_tkx(size_t n, size_t sz, char *fnm, int ln)
 {
     void *m;
@@ -176,29 +126,6 @@ void *calloc_tkx(size_t n, size_t sz, char *fnm, int ln)
     return m;
 }
 
-/*
- *------------------------------------------------------------------------
- *
- * realloc_tkx --
- *
- * 	This allocator with debugging support reallocates memory and prints
- * 	information.
- *
- * Arguments:
- * 	void *m		- address of memory to reallocate.
- * 	size_t sz	- number of bytes to allocate
- * 	char *fnm	- string, assumed to be name of file where allocation
- *			  occurs.
- * 	int ln		- line number in fnm where allocation occurs.
- *
- * Results:
- * 	Memory is reallocated with realloc.  Return value is return value of
- * 	realloc.  Information about where the reallocation occurred might be printed
- * 	to stream diag_out.
- *
- *------------------------------------------------------------------------
- */
-
 void *realloc_tkx(void *m, size_t sz, char *fnm, int ln)
 {
     void *m2;
@@ -225,27 +152,6 @@ void *realloc_tkx(void *m, size_t sz, char *fnm, int ln)
     return m2;
 }
 
-/*
- *------------------------------------------------------------------------
- *
- * free_tkx --
- *
- * 	This destructor with debugging support frees memory and prints
- * 	information.
- *
- * Arguments:
- * 	void *m		- address of memory to free.
- * 	char *fnm	- string, assumed to be name of file where allocation
- *			  occurs.
- * 	int ln		- line number in fnm where allocation occurs.
- *
- * Results:
- * 	Memory is freed with free.  Information about where the reallocation
- * 	occurred might be printed to stream diag_out.
- *
- *------------------------------------------------------------------------
- */
-
 void free_tkx(void *m, char *fnm, int ln)
 {
     if ( !init ) {
