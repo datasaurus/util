@@ -8,7 +8,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: hash1.sh,v 1.5 2008/11/11 21:02:55 gcarrie Exp $
+# $Id: hash1.sh,v 1.6 2008/11/11 21:08:35 gcarrie Exp $
 #
 ########################################################################
 
@@ -78,7 +78,7 @@ int main(void)
 
     while (scanf(" %s", key) == 1) {
 	if (hash_get(&tbl, key, &n)) {
-	    printf("%ld %s\n", n, key);
+	    printf("%u %s\n", n, key);
 	} else {
 	    fprintf(stderr, "No entry for %s\n", key);
 	    exit(1);
@@ -111,10 +111,9 @@ awk -v nword=$NWORD \
 
 # Build and run the driver application.  Put its output into the file "attempt"
 
-COPT='-g -Wall -Wmissing-prototypes -Isrc/'
-
 echo "Running the hash test"
 echo "Putting test values into file \"attempt\""
+COPT='-g -Wall -Wmissing-prototypes -Isrc/'
 NBUCKET=${NWORD}
 CFLAGS="${COPT} -DNBUCKET=${NBUCKET}"
 if cc ${CFLAGS} -o hash hash1.c src/err_msg.c src/hash.c src/alloc.c
@@ -122,23 +121,23 @@ then
     awk '{printf "%s ", $2}' correct | ./hash > attempt
 else
     echo 'Could not build hash from hash1.c'
-    echo ''
     $RM correct attempt
     exit 1
 fi
+echo ''
+echo 'hash driver is done'
 
 # Compare the output from the test "attempt" with the "correct"
 
 if diff correct attempt
 then
-    echo "TEST COMPLETE. hash driver produced correct output"
-    echo ''
+    echo "hash driver produced correct output"
     $RM attempt hash
 else
-    echo "TEST COMPLETE. hash driver failed!"
-    echo ''
+    echo "hash driver failed!"
     exit 1
 fi
+echo ''
 
 # Repeat with a smaller hash table.
 
@@ -154,16 +153,20 @@ else
     $RM correct attempt
     exit 1
 fi
+echo ''
+echo 'hash driver is done'
+
+# Compare the output from the test "attempt" with the "correct"
+
 if diff correct attempt
 then
-    echo "TEST COMPLETE. hash driver produced correct output"
-    echo ''
+    echo "hash driver produced correct output"
     $RM attempt hash
 else
-    echo "TEST COMPLETE. hash driver failed!"
+    echo "hash driver failed!"
     exit 1
 fi
+echo ''
 
 $RM correct hash1.c
-
 echo 'Done with hash1 test'

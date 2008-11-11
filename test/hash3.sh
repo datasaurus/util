@@ -8,7 +8,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: hash3.sh,v 1.5 2008/11/11 21:20:29 gcarrie Exp $
+# $Id: hash3.sh,v 1.6 2008/11/11 21:26:03 gcarrie Exp $
 #
 ########################################################################
 
@@ -102,28 +102,35 @@ END
 
 # Build and run the test application, with memory trace.
 
+echo "Running the hash test"
+echo "Putting test values into file \"attempt\""
+echo "Putting memory trace into file \"memtrace\""
 COPT='-g -Wall -Wmissing-prototypes -Isrc/ -DMEM_DEBUG'
 export MEM_DEBUG=2
 if cc $COPT -o hash hash3.c src/hash.c src/err_msg.c src/alloc.c
 then
-    echo 'Running app from hash3.c with memory trace going to memtrace.'
     ./hash > attempt 2> memtrace
 else
     echo Could not build hash from hash3.c
     exit 1
 fi
+echo ''
+echo 'hash driver is done'
+
+# Compare the output from the test "attempt" with the "correct"
+
 if diff correct attempt
 then
-    echo "TEST COMPLETE. hash driver produced correct output"
-    echo ''
+    echo "hash driver produced correct output"
     $RM attempt hash
 else
     echo "TEST COMPLETE. hash driver failed!"
     exit 1
 fi
 unset MEM_DEBUG
+echo ''
 
-echo 'Memory report'
+echo 'Checking memory trace'
 echo 'There should be one \"leak\" because this test does not delete the table, '
 echo 'just the entries.'
 src/findleaks < memtrace

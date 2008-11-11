@@ -8,14 +8,14 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: hash2.sh,v 1.5 2008/11/11 21:09:27 gcarrie Exp $
+# $Id: hash2.sh,v 1.6 2008/11/11 21:10:37 gcarrie Exp $
 #
 ########################################################################
 
 # This is the remove command.  Change this to : to retain intermediate results.
 
 RM='rm -f'
-FINDLEAKS=src/findleaks
+#RM=:
 
 # The test application creates a small hash table and modifies it.  It also
 # prints a memory trace.
@@ -83,27 +83,36 @@ END
 
 # Build, run, and evaluate the test application
 
-COPT='-g -Wall -Wmissing-prototypes -Isrc/ -DMEM_DEBUG'
+echo "Running the hash test"
+echo "Putting test values into file \"attempt\""
+echo "Putting memory trace into file \"memtrace\""
+COPT='-g -Wall -Wmissing-prototypes -Isrc/'
+export MEM_DEBUG=2
 if cc $COPT -o hash hash2.c src/hash.c src/err_msg.c src/alloc.c
 then
-    echo 'Running app from hash2.c with memory trace going to memtest.'
     ./hash > attempt 2> memtrace
 else
     echo Could not build hash from hash2.c
     exit 1
 fi
+echo ''
+echo 'hash driver is done'
+
+# Compare the output from the test "attempt" with the "correct"
+
 if diff correct attempt
 then
-    echo "TEST COMPLETE.  hash driver produced correct output"
-    echo ''
+    echo "hash driver produced correct output"
     $RM attempt hash
 else
-    echo "TEST COMPLETE.  hash driver failed!"
+    echo "hash driver failed!"
     exit 1
 fi
+unset MEM_DEBUG
+echo ''
 
-echo 'Memory report (will not say anything if no leaks)'
-$FINDLEAKS < memtrace
+echo 'Checking memory trace (will not say anything if no leaks)'
+src/findleaks < memtrace
 echo 'Memory check done'
 
 $RM correct memtrace hash2.c

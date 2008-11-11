@@ -8,13 +8,14 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: hash4.sh,v 1.4 2008/10/30 21:11:34 gcarrie Exp $
+# $Id: hash4.sh,v 1.5 2008/11/11 21:36:07 gcarrie Exp $
 #
 ########################################################################
 
 # This is the remove command.  Change this to : to retain intermediate results.
 
 RM='rm -f'
+#RM=:
 
 # This test creates an application that creates a small
 # hash table and then resizes it while printing a memory trace.
@@ -122,31 +123,36 @@ awk -v nword=$NWORD \
 
 # Build and run the driver application.  Put its output into the file "attempt"
 
-COPT='-g -Wall -Wmissing-prototypes -Isrc/'
-
 echo "Running the hash test"
+echo "Putting test values into file \"attempt\""
+echo "Putting memory trace into file \"memtrace\""
+COPT='-g -Wall -Wmissing-prototypes -Isrc/'
 CFLAGS="${COPT}"
 export MEM_DEBUG=2
 if cc ${CFLAGS} -o hash hash4.c src/hash.c src/err_msg.c src/alloc.c
 then
-    echo 'Running app from hash4.c with memory trace going to memtrace.'
     awk '{printf "%s ", $2}' correct | ./hash > attempt 2> memtrace
 else
     echo Could not build hash from hash4.c
     exit 1
 fi
+echo ''
+echo 'hash driver is done'
+
+# Compare the output from the test "attempt" with the "correct"
+
 if diff correct attempt
 then
-    echo "TEST COMPLETE. hash driver produced correct output"
+    echo "hash driver produced correct output"
     echo ''
     $RM attempt hash
 else
-    echo "TEST COMPLETE. hash driver failed!"
+    echo "hash driver failed!"
     exit 1
 fi
 unset MEM_DEBUG
 
-echo 'Memory report (will not say anything if no leaks)'
+echo 'Checking memory trace (will not say anything if no leaks)'
 src/findleaks < memtrace
 echo 'Memory check done'
 
