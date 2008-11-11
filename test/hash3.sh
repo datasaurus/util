@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# This script tests the hash table interface in visky3.
+# This script tests the hash table interface in src.
 #
 # Copyright (c) 2008 Gordon D. Carrie
 #
@@ -8,16 +8,14 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: hash3.sh,v 1.4 2008/10/30 21:11:34 gcarrie Exp $
+# $Id: hash3.sh,v 1.5 2008/11/11 21:20:29 gcarrie Exp $
 #
 ########################################################################
 
 # This is the remove command.  Change this to : to retain intermediate results.
 
-RM=:
-#RM='rm -f'
-
-FINDLEAKS=src/findleaks
+#RM=:
+RM='rm -f'
 
 # The test application creates a small hash table and then clears it one entry
 # at a time while printing a memory trace.
@@ -128,7 +126,7 @@ unset MEM_DEBUG
 echo 'Memory report'
 echo 'There should be one \"leak\" because this test does not delete the table, '
 echo 'just the entries.'
-$FINDLEAKS < memtrace
+src/findleaks < memtrace
 echo 'Memory check done'
 
 $RM correct memtrace hash3.c
