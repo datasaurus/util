@@ -1,21 +1,29 @@
 #!/bin/sh
-
-# This script tests the hash table interface in visky3.
 #
-# $Id: hash1.sh,v 1.3 2008/10/02 21:18:26 gcarrie Exp $
-
-# This test uses hash1.c.  The driver application reads a stream of words
-# into a hash table and then tries to retrieve some of them.
-
-# Identify a file of whitespace separated words.
-
-WORD_FL=/usr/share/dict/words
+# This script tests the hash table interface defined in src.
+#
+# Copyright (c) 2008 Gordon D. Carrie
+#
+# Licensed under the Open Software License version 3.0
+#
+# Please send feedback to user0@tkgeomap.org
+#
+# $Id: hash1.sh,v 1.4 2008/11/11 19:48:34 gcarrie Exp $
+#
+########################################################################
 
 # This is the remove command.  Change this to : to retain intermediate results.
 
 RM='rm -f'
 
-# Get the number of words and length of the longest word.
+# This test creates an application that reads a stream of words
+# into a hash table and then tries to retrieve some of them.
+
+# Identify a file of whitespace separated words, WORD_FL.
+
+WORD_FL=/usr/share/dict/words
+
+# Get the number of words, NWORD, and length of the longest word, LMAX.
 
 NWORD=`cat ${WORD_FL} | wc -l`
 NWORD=`printf "%d" $NWORD`
@@ -32,6 +40,56 @@ LMAX=`awk '
     END {
 	printf "%d", lmax
     }' ${WORD_FL}`
+
+# The test application will read words from WORD_FL and store them in a hash
+# table. Hash values for each word will be its line index from WORD_FL.
+# The process will then read words from standard input.
+# For each word, it will print the word and its index from WORD_FL.
+
+# Here is the source code for the test application.
+# NBUCKET will be defined at compile time, depending on the type of test.
+
+SOURCE=hash1.c
+cat > $SOURCE << END
+#include <stdlib.h>
+#include <stdio.h>
+#include <hash.h>
+
+char keys[$NWORD][$LMAX];
+
+int main(void)
+{
+    struct hash_tbl tbl;
+    char *word_fl = "$WORD_FL";
+    FILE *in;
+    unsigned n;
+    char key[$LMAX];
+
+    fprintf(stderr, "Running hash driver with %d buckets for %d words.\n",
+	    NBUCKET, $NWORD);
+    hash_init(&tbl, NBUCKET);
+    if ( !(in = fopen(word_fl, "r")) ) {
+	fprintf(stderr, "Could not open %s\n", word_fl);
+	exit(1);
+    }
+    for (n = 0; fscanf(in, " %s", keys[n]) == 1; n++) {
+	hash_set(&tbl, keys[n], n);
+    }
+    fclose(in);
+
+    while (scanf(" %s", key) == 1) {
+	if (hash_get(&tbl, key, &n)) {
+	    printf("%ld %s\n", n, key);
+	} else {
+	    fprintf(stderr, "No entry for %s\n", key);
+	    exit(1);
+	}
+    }
+
+    hash_clear(&tbl);
+    return 0;
+}
+END
 
 # Pick out some random words for the test.  Put them into file "correct"
 
@@ -58,8 +116,8 @@ COPT='-g -Wall -Wmissing-prototypes -Isrc/'
 
 echo "Running the hash test"
 echo "Putting test values into file \"attempt\""
-CFLAGS="${COPT} -DWORD_FL=\"${WORD_FL}\" \
-	-DNWORD=${NWORD} -DNBUCKET=${NWORD} -DLMAX=${LMAX}"
+NBUCKET=${NWORD}
+CFLAGS="${COPT} -DNBUCKET=${NBUCKET}"
 if cc ${CFLAGS} -o hash hash1.c src/err_msg.c src/hash.c src/alloc.c
 then
     awk '{printf "%s ", $2}' correct | ./hash > attempt
@@ -87,8 +145,8 @@ fi
 
 echo "Running the hash test with excessively small hash table"
 echo "Putting test values into file \"attempt\""
-CFLAGS="${COPT} -DWORD_FL=\"${WORD_FL}\" \
-	-DNWORD=${NWORD} -DNBUCKET=`expr ${NWORD} / 4` -DLMAX=${LMAX}"
+NBUCKET=`expr ${NWORD} / 4`
+CFLAGS="${COPT} -DNBUCKET=${NBUCKET}"
 if cc ${CFLAGS} -o hash hash1.c src/err_msg.c src/hash.c src/alloc.c
 then
     awk '{printf "%s ", $2}' correct | ./hash > attempt
@@ -107,6 +165,6 @@ else
     exit 1
 fi
 
-$RM correct
+$RM correct $SOURCE
 
 echo 'Done with hash1 test'
