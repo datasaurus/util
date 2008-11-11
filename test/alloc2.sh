@@ -8,7 +8,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: alloc2.sh,v 1.4 2008/11/10 05:26:55 gcarrie Exp $
+# $Id: alloc2.sh,v 1.5 2008/11/11 22:31:41 gcarrie Exp $
 #
 ########################################################################
 
@@ -72,3 +72,5 @@ echo Done with test3
 echo ""
 $RM alloc2
 unset MEM_DEBUG
+
+$RM alloc2.c
