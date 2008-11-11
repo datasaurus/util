@@ -5,17 +5,17 @@
  *
  * 	Reference:
  * 	Kernighan, Brian W. and Rob Pike
- * 	The practice of programming
+ * 	The Practice of Programming
  * 	Reading, Massachusetts
  * 	1999
  *
- *  Copyright (c) 2008 Gordon D. Carrie
+ * Copyright (c) 2008 Gordon D. Carrie
  *
  * Licensed under the Open Software License version 3.0
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: hash.c,v 1.15 2008/11/06 17:09:42 gcarrie Exp $
+ * $Id: hash.c,v 1.16 2008/11/11 22:52:10 gcarrie Exp $
  *
  *************************************************************************
  */
