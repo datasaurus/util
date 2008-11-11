@@ -1,8 +1,16 @@
 #!/bin/sh
-
-# This script tests the hash table interface in visky3.
 #
-# $Id: hash2.sh,v 1.4 2008/10/30 21:11:34 gcarrie Exp $
+# This script tests the hash table interface in src.
+#
+# Copyright (c) 2008 Gordon D. Carrie
+#
+# Licensed under the Open Software License version 3.0
+#
+# Please send feedback to user0@tkgeomap.org
+#
+# $Id: hash2.sh,v 1.5 2008/11/11 21:09:27 gcarrie Exp $
+#
+########################################################################
 
 # This is the remove command.  Change this to : to retain intermediate results.
 
