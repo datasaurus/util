@@ -1,23 +1,29 @@
 #!/bin/sh
-
-# This script tests the hash table interface in visky3.
 #
-# $Id: hash4.sh,v 1.3 2008/10/02 21:18:29 gcarrie Exp $
-
-# This test uses hash4.c.  The driver application creates a small
-# hash table and then resizes it while printing a memory trace.
-
-# Identify a file of whitespace separated words.
-
-WORD_FL=/usr/share/dict/words
+# This script tests the hash table interface in src.
+#
+# Copyright (c) 2008 Gordon D. Carrie
+#
+# Licensed under the Open Software License version 3.0
+#
+# Please send feedback to user0@tkgeomap.org
+#
+# $Id: hash4.sh,v 1.4 2008/10/30 21:11:34 gcarrie Exp $
+#
+########################################################################
 
 # This is the remove command.  Change this to : to retain intermediate results.
 
 RM='rm -f'
 
-FINDLEAKS=src/findleaks
+# This test creates an application that creates a small
+# hash table and then resizes it while printing a memory trace.
 
-# Get the number of words and length of the longest word.
+# Identify a file of whitespace separated words, WORD_FL.
+
+WORD_FL=/usr/share/dict/words
+
+# Get the number of words, NWORD, and length of the longest word, LMAX.
 
 NWORD=`cat ${WORD_FL} | wc -l`
 NWORD=`printf "%d" $NWORD`
@@ -34,6 +40,66 @@ LMAX=`awk '
     END {
 	printf "%d", lmax
     }' ${WORD_FL}`
+NBUCKET=$NWORD
+
+# The test application will read WORD_FL from from standard input.
+# For each word, it will print the word and its index from WORD_FL.
+# Then it will resize the hash table a couple of times and repeat.
+
+# Here is the source code for the test application.
+
+cat > hash4.c << END
+#include <stdlib.h>
+#include <stdio.h>
+#include <hash.h>
+
+char keys[$NWORD][$LMAX];
+
+int main(void)
+{
+    struct hash_tbl tbl;
+    char *word_fl = "$WORD_FL";
+    FILE *in;
+    unsigned n;
+    char key[$LMAX];
+
+    fprintf(stderr, "Running hash driver with %d buckets for %d words.\n",
+	    $NBUCKET, $NWORD);
+    hash_init(&tbl, $NBUCKET);
+    if ( !(in = fopen(word_fl, "r")) ) {
+	fprintf(stderr, "Could not open %s\n", word_fl);
+	exit(1);
+    }
+    for (n = 0; fscanf(in, " %s", keys[n]) == 1; n++) {
+	hash_set(&tbl, keys[n], n);
+    }
+    fclose(in);
+
+    n = $NBUCKET / 4;
+    fprintf(stderr, "Adjusting table to %d buckets for %d words.\n", n, $NWORD);
+    hash_adj(&tbl, n);
+
+    n = $NBUCKET * 2;
+    fprintf(stderr, "Adjusting table to %d buckets for %d words.\n", n, $NWORD);
+    hash_adj(&tbl, n);
+
+    /*
+       Retrieve some entries from the resized table.
+     */
+
+    while (scanf(" %s", key) == 1) {
+	if (hash_get(&tbl, key, &n)) {
+	    printf("%u %s\n", n, key);
+	} else {
+	    printf("No entry for %s\n", key);
+	    exit(1);
+	}
+    }
+
+    hash_clear(&tbl);
+    return 0;
+}
+END
 
 # Pick out some random words for the test.  Put them into file "correct"
 
@@ -56,11 +122,11 @@ awk -v nword=$NWORD \
 
 # Build and run the driver application.  Put its output into the file "attempt"
 
-COPT='-g -Wall -Wmissing-prototypes -Isrc/ -DMEM_DEBUG'
+COPT='-g -Wall -Wmissing-prototypes -Isrc/'
 
 echo "Running the hash test"
-CFLAGS="${COPT} -DWORD_FL=\"${WORD_FL}\" \
-	-DNWORD=${NWORD} -DNBUCKET=${NWORD} -DLMAX=${LMAX}"
+CFLAGS="${COPT}"
+export MEM_DEBUG=2
 if cc ${CFLAGS} -o hash hash4.c src/hash.c src/err_msg.c src/alloc.c
 then
     echo 'Running app from hash4.c with memory trace going to memtrace.'
@@ -78,11 +144,12 @@ else
     echo "TEST COMPLETE. hash driver failed!"
     exit 1
 fi
+unset MEM_DEBUG
 
 echo 'Memory report (will not say anything if no leaks)'
-$FINDLEAKS < memtrace
+src/findleaks < memtrace
 echo 'Memory check done'
 
-$RM correct memtrace
+$RM correct memtrace hash4.c
 
 echo 'Done with hash4 test'
