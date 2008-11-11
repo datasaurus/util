@@ -1,33 +1,65 @@
 #!/bin/sh
 #
-# This script exercises alloc2.c.
+# This script runs a test application that leaks memory.
 #
-# $Id: alloc2.sh,v 1.3 2008/11/10 05:25:09 gcarrie Exp $
+# Copyright (c) 2008 Gordon D. Carrie
+#
+# Licensed under the Open Software License version 3.0
+#
+# Please send feedback to user0@tkgeomap.org
+#
+# $Id: alloc2.sh,v 1.4 2008/11/10 05:26:55 gcarrie Exp $
+#
+########################################################################
 
-EXEC=alloc2
 FINDLEAKS=src/findleaks
-OUT=alloc2.out
 RM='rm -f'
 
-$RM $OUT
+# Here is the source code for the driver application.
+# It allocates some memory, and then fails to free it.
+
+cat > alloc2.c << END
+#include <alloc.h>
+
+int main(void)
+{
+    size_t i;
+    float *x1, *x2, *x3;
+
+    i = 1000;
+    x1 = CALLOC(i, sizeof(float));
+    FREE(x1);
+
+    x2 = MALLOC(i * sizeof(float));
+    FREE(x2);
+
+    x3 = CALLOC(i, sizeof(float));
+    i = 2000;
+    x3 = REALLOC(x3, i * sizeof(float));
+
+    return 0;
+}
+END
+
+# Run the tests
 
 echo test1: building and running alloc2
-cc -Isrc -o $EXEC src/alloc.c alloc2.c
+cc -Isrc -o alloc2 src/alloc.c alloc2.c
 echo Starting test1
-$EXEC
+alloc2
 echo Done with test1
 echo ""
-$RM $EXEC
+$RM alloc2
 
 echo test2: building and running alloc2 with memory trace.
 echo An account of allocations and calls to free should appear on terminal
 export MEM_DEBUG=2
 cc -Isrc -o alloc2 src/alloc.c alloc2.c
 echo Starting test2
-$EXEC
+alloc2
 echo Done with test2
 echo ""
-$RM $EXEC
+$RM alloc2
 unset MEM_DEBUG
 
 echo test3: building and running alloc2.
@@ -35,8 +67,8 @@ echo Sending memory trace to findleaks, which should report a leak.
 export MEM_DEBUG=2
 cc -Isrc -o alloc2 src/alloc.c alloc2.c
 echo Starting test3
-$EXEC 2>&1 | $FINDLEAKS
+alloc2 2>&1 | $FINDLEAKS
 echo Done with test3
 echo ""
-$RM $EXEC
+$RM alloc2
 unset MEM_DEBUG
