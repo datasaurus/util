@@ -15,7 +15,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: hash.c,v 1.14 2008/10/05 21:40:04 tkgeomap Exp $
+ * $Id: hash.c,v 1.15 2008/11/06 17:09:42 gcarrie Exp $
  *
  *************************************************************************
  */
@@ -144,6 +144,7 @@ int hash_add(struct hash_tbl *tblP, const char *key, unsigned val)
     size_t len;
     struct hash_entry *ep, *p;
     unsigned b;
+    char *s, *d;
 
     if ( !tblP || !tblP->buckets || !key ) {
 	return 0;
@@ -159,7 +160,9 @@ int hash_add(struct hash_tbl *tblP, const char *key, unsigned val)
     ep = (struct hash_entry *)MALLOC(sizeof(struct hash_entry));
     len = strlen(key);
     ep->key = (char *)MALLOC(len + 1);
-    strcpy(ep->key, key);
+    for (s = (char *)key, d = ep->key; *s; s++, d++) {
+	*d = *s;
+    }
     ep->val = val;
     ep->next = tblP->buckets[b];
     tblP->buckets[b] = ep;
@@ -176,6 +179,7 @@ void hash_set(struct hash_tbl *tblP, const char *key, unsigned val)
     size_t len;
     struct hash_entry *ep, *p;
     unsigned b;
+    char *s, *d;
 
     if ( !tblP->buckets || !key ) {
 	return;
@@ -190,7 +194,9 @@ void hash_set(struct hash_tbl *tblP, const char *key, unsigned val)
     ep = (struct hash_entry *)MALLOC(sizeof(struct hash_entry));
     len = strlen(key);
     ep->key = (char *)MALLOC(len + 1);
-    strcpy(ep->key, key);
+    for (s = (char *)key, d = ep->key; *s; s++, d++) {
+	*d = *s;
+    }
     ep->val = val;
     ep->next = tblP->buckets[b];
     tblP->buckets[b] = ep;
