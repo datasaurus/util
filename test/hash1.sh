@@ -8,7 +8,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: hash1.sh,v 1.4 2008/11/11 19:48:34 gcarrie Exp $
+# $Id: hash1.sh,v 1.5 2008/11/11 21:02:55 gcarrie Exp $
 #
 ########################################################################
 
@@ -49,8 +49,7 @@ LMAX=`awk '
 # Here is the source code for the test application.
 # NBUCKET will be defined at compile time, depending on the type of test.
 
-SOURCE=hash1.c
-cat > $SOURCE << END
+cat > hash1.c << END
 #include <stdlib.h>
 #include <stdio.h>
 #include <hash.h>
@@ -165,6 +164,6 @@ else
     exit 1
 fi
 
-$RM correct $SOURCE
+$RM correct hash1.c
 
 echo 'Done with hash1 test'
