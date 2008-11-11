@@ -2,7 +2,7 @@
 
 # This script tests the hash table interface in visky3.
 #
-# $Id: hash1.sh,v 1.2 2008/10/01 21:34:02 gcarrie Exp $
+# $Id: hash1.sh,v 1.3 2008/10/02 21:18:26 gcarrie Exp $
 
 # This test uses hash1.c.  The driver application reads a stream of words
 # into a hash table and then tries to retrieve some of them.
@@ -60,7 +60,7 @@ echo "Running the hash test"
 echo "Putting test values into file \"attempt\""
 CFLAGS="${COPT} -DWORD_FL=\"${WORD_FL}\" \
 	-DNWORD=${NWORD} -DNBUCKET=${NWORD} -DLMAX=${LMAX}"
-if cc ${CFLAGS} -o hash hash1.c src/err_msg.c src/hash.c
+if cc ${CFLAGS} -o hash hash1.c src/err_msg.c src/hash.c src/alloc.c
 then
     awk '{printf "%s ", $2}' correct | ./hash > attempt
 else
@@ -89,7 +89,7 @@ echo "Running the hash test with excessively small hash table"
 echo "Putting test values into file \"attempt\""
 CFLAGS="${COPT} -DWORD_FL=\"${WORD_FL}\" \
 	-DNWORD=${NWORD} -DNBUCKET=`expr ${NWORD} / 4` -DLMAX=${LMAX}"
-if cc ${CFLAGS} -o hash hash1.c src/err_msg.c src/hash.c
+if cc ${CFLAGS} -o hash hash1.c src/err_msg.c src/hash.c src/alloc.c
 then
     awk '{printf "%s ", $2}' correct | ./hash > attempt
 else
