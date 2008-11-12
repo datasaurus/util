@@ -10,7 +10,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: allocf.c,v 1.4 2008/11/07 03:41:28 gcarrie Exp $
+ * $Id: allocf.c,v 1.5 2008/11/12 04:11:59 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -87,8 +87,9 @@ float ** mallocf2(size_t j, size_t i)
 
 void freef2(float **dat)
 {
-    if (dat && dat[0])
+    if (dat && dat[0]) {
 	FREE(dat[0]);
+    }
     FREE(dat);
 }
 
