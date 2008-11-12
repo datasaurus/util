@@ -10,7 +10,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: allocf.c,v 1.3 2008/11/07 03:25:08 gcarrie Exp $
+ * $Id: allocf.c,v 1.4 2008/11/07 03:41:28 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -44,7 +44,7 @@
 
 float ** mallocf2(size_t j, size_t i)
 {
-    float **dat;		/* Return value */
+    float **dat = NULL;		/* Return value */
     long n;			/* Loop parameter */
     long jj, ii;		/* Addends for pointer arithmetic */
 
@@ -52,7 +52,14 @@ float ** mallocf2(size_t j, size_t i)
     ii = (long)i;
     assert((double)jj == (double)j && (double)ii == (double)i);
     dat = (float **)CALLOC(j, sizeof(float *));
+    if ( !dat ) {
+	return NULL;
+    }
     dat[0] = (float *)CALLOC(j * i, sizeof(float));
+    if ( !dat[0] ) {
+	FREE(dat);
+	return NULL;
+    }
     for (n = 1; n < jj; n++) {
 	dat[n] = dat[n - 1] + ii;
     }
@@ -120,8 +127,20 @@ float *** mallocf3(size_t k, size_t j, size_t i)
     assert((double)kk == (double)k && (double)jj == (double)j
 	    && (double)ii == (double)i);
     dat = (float ***)CALLOC(k, sizeof(float **));
+    if ( !dat ) {
+	return NULL;
+    }
     dat[0] = (float **)CALLOC(k * j, sizeof(float *));
+    if ( !dat[0] ) {
+	FREE(dat);
+	return NULL;
+    }
     dat[0][0] = (float *)CALLOC(k * j * i, sizeof(float));
+    if ( !dat[0][0] ) {
+	FREE(dat[0]);
+	FREE(dat);
+	return NULL;
+    }
     for (n = 1; n < kk; n++) {
 	dat[n] = dat[n - 1] + jj;
     }
@@ -199,9 +218,27 @@ float **** mallocf4(size_t l, size_t k, size_t j, size_t i)
     assert((double)ll == (double)l && (double)kk == (double)k
 	    && (double)jj == (double)j && (double)ii == (double)i);
     dat = (float ****)CALLOC(l, sizeof(float ***));
+    if ( !dat ) {
+	return NULL;
+    }
     dat[0] = (float ***)CALLOC(l * k, sizeof(float **));
+    if ( !dat[0] ) {
+	FREE(dat);
+	return NULL;
+    }
     dat[0][0] = (float **)CALLOC(l * k * j, sizeof(float *));
+    if ( !dat[0][0] ) {
+	FREE(dat[0]);
+	FREE(dat);
+	return NULL;
+    }
     dat[0][0][0] = (float *)CALLOC(l * k * j * i, sizeof(float));
+    if ( !dat[0][0][0] ) {
+	FREE(dat[0][0]);
+	FREE(dat[0]);
+	FREE(dat);
+	return NULL;
+    }
     for (n = 1; n < ll; n++) {
 	dat[n] = dat[n - 1] + kk;
     }
