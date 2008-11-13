@@ -11,13 +11,12 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: allocf.c,v 1.6 2008/11/12 04:13:45 gcarrie Exp $
+ * $Id: allocf.c,v 1.7 2008/11/13 04:14:37 gcarrie Exp $
  *
  **********************************************************************
  *
  */
 
-#include <assert.h>
 #include "alloc.h"
 #include "allocf.h"
 
@@ -29,7 +28,9 @@ float ** mallocf2(size_t j, size_t i)
 
     jj = (long)j;
     ii = (long)i;
-    assert((double)jj == (double)j && (double)ii == (double)i);
+    if ((double)jj != (double)j || (double)ii != (double)i) {
+	return NULL;
+    }
     dat = (float **)CALLOC(j, sizeof(float *));
     if ( !dat ) {
 	return NULL;
@@ -62,8 +63,10 @@ float *** mallocf3(size_t k, size_t j, size_t i)
     kk = (long)k;
     jj = (long)j;
     ii = (long)i;
-    assert((double)kk == (double)k && (double)jj == (double)j
-	    && (double)ii == (double)i);
+    if ((double)kk != (double)k || (double)jj != (double)j
+	    || (double)ii != (double)i) {
+	return NULL;
+    }
     dat = (float ***)CALLOC(k, sizeof(float **));
     if ( !dat ) {
 	return NULL;
@@ -111,8 +114,10 @@ float **** mallocf4(size_t l, size_t k, size_t j, size_t i)
     kk = (long)k;
     jj = (long)j;
     ii = (long)i;
-    assert((double)ll == (double)l && (double)kk == (double)k
-	    && (double)jj == (double)j && (double)ii == (double)i);
+    if ((double)ll != (double)l || (double)kk != (double)k
+	    || (double)jj != (double)j || (double)ii != (double)i) {
+	return NULL;
+    }
     dat = (float ****)CALLOC(l, sizeof(float ***));
     if ( !dat ) {
 	return NULL;
