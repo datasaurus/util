@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to user0@tkgeomap.org
 .\" 
-.\" $Id$
+.\" $Id: allocf.3,v 1.1 2008/11/07 22:58:08 gcarrie Exp $
 .\"
 .TH allocf 3 "Dynamic multidimensional allocators"
 .SH NAME
@@ -23,6 +23,31 @@ mallocf2, freef2, mallocf3, freef3, mallocf4, freef4 \- dynamic allocators for m
 .fi
 .SH DESCRIPTION
 These allocators create multidimensional arrays of float values.
+.PP
+\fBmallocf2\fP allocates a two dimensional array of float values.  If the
+return value is assigned to \fId\fP, then the highest index of the array
+will be \fId\fP[\fIj\fP-1][\fIi\fP-1].  \fId\fP[\fI0\fP] will be a contiguous
+block of \fIj\fP \fB*\fP \fIi\fP floats.  Return value is \fBNULL\fP
+if something goes wrong.  \fBfreef2\fP frees all memory associated with \fId\fP,
+which should be a return value of \fBmalloc2f\fP.
+.PP
+\fBmallocf3\fP allocates a three dimensional array of float values.  If the
+return value is assigned to \fId\fP, then the highest index of the array
+will be \fId\fP[\fIk\fP-1][\fIj\fP-1][\fIi\fP-1].
+\fId\fP[\fI0\fP][\fI0\fP] will be a contiguous block of
+\fIk\fP \fB*\fP \fIj\fP \fB*\fP \fIi\fP floats.
+Return value is \fBNULL\fP if something goes wrong.
+\fBfreef3\fP frees all memory associated with \fId\fP,
+which should be a return value of \fBmalloc3f\fP.
+.PP
+\fBmallocf4\fP allocates a four dimensional array of float values.  If the
+return value is assigned to \fId\fP, then the highest index of the array
+will be \fId\fP[\fIl\fP-1][\fIk\fP-1][\fIj\fP-1][\fIi\fP-1].
+\fId\fP[\fI0\fP][\fI0\fP][\fI0\fP]  will be a contiguous block of
+\fIl\fP \fB*\fP \fIk\fP \fB*\fP \fIj\fP \fB*\fP \fIi\fP floats.
+Return value is \fBNULL\fP if something goes wrong.
+\fBfreef4\fP frees all memory associated with \fId\fP,
+which should be a return value of \fBmalloc4f\fP.
 .SH SEE ALSO
 \fBMALLOC\fP (3), \fBCALLOC\fP (3), \fBREALLOC\fP (3), \fBFREE\fP (3)
 .SH AUTHOR
