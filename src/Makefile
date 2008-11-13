@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.4 2008/10/02 21:20:11 gcarrie Exp $
+# $Id: Makefile,v 1.5 2008/10/30 16:06:22 gcarrie Exp $
 
 CFLAGS = -g -Wall -Wmissing-prototypes
 EXECS = geog
@@ -19,4 +19,4 @@ err_msg.o : err_msg.c err_msg.h
 	cc ${CFLAGS} -c err_msg.c
 
 clean :
-	rm -f ${EXECS} *core*  *.o
+	rm -f ${EXECS} *core*  *.o *.ps
