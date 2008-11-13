@@ -2,8 +2,7 @@
  * allocf.c --
  *
  *	This file defines functions that allocate multi-dimensional
- *	arrays of floating point values.  See allocf (3) for
- *	documentation.
+ *	arrays of floating point values.  See allocf (3).
  * 
  * Copyright (c) 2008 Gordon D. Carrie
  *
@@ -11,7 +10,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: allocf.c,v 1.7 2008/11/13 04:14:37 gcarrie Exp $
+ * $Id: allocf.c,v 1.8 2008/11/13 04:22:59 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -19,11 +18,11 @@
 
 #include "alloc.h"
 #include "allocf.h"
-
+
 float ** mallocf2(size_t j, size_t i)
 {
-    float **dat = NULL;		/* Return value */
-    long n;			/* Loop parameter */
+    float **dat = NULL;
+    long n;
     long jj, ii;		/* Addends for pointer arithmetic */
 
     jj = (long)j;
@@ -45,7 +44,7 @@ float ** mallocf2(size_t j, size_t i)
     }
     return dat;
 }
-
+
 void freef2(float **dat)
 {
     if (dat && dat[0]) {
@@ -56,8 +55,8 @@ void freef2(float **dat)
 
 float *** mallocf3(size_t k, size_t j, size_t i)
 {
-    float ***dat;		/* Return value */
-    long n, ne;			/* Loop parameters */
+    float ***dat;
+    long n, ne;
     long kk, jj, ii;		/* Addends for pointer arithmetic */
 
     kk = (long)k;
@@ -90,7 +89,7 @@ float *** mallocf3(size_t k, size_t j, size_t i)
     }
     return dat;
 }
-
+
 void freef3(float ***dat)
 {
     if (dat) {
@@ -106,8 +105,8 @@ void freef3(float ***dat)
 
 float **** mallocf4(size_t l, size_t k, size_t j, size_t i)
 {
-    float ****dat;		/* Return value */
-    long n, ne;			/* Loop parameters */
+    float ****dat;
+    long n, ne;
     long ll, kk, jj, ii;	/* Addends for pointer arithmetic */
 
     ll = (long)l;
@@ -151,7 +150,7 @@ float **** mallocf4(size_t l, size_t k, size_t j, size_t i)
     }
     return dat;
 }
-
+
 void freef4(float ****dat)
 {
     if (dat) {
