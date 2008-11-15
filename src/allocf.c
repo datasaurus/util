@@ -10,13 +10,14 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: allocf.c,v 1.8 2008/11/13 04:22:59 gcarrie Exp $
+ * $Id: allocf.c,v 1.9 2008/11/13 04:41:03 gcarrie Exp $
  *
  **********************************************************************
  *
  */
 
 #include "alloc.h"
+#include "err_msg.h"
 #include "allocf.h"
 
 float ** mallocf2(size_t j, size_t i)
@@ -28,15 +29,18 @@ float ** mallocf2(size_t j, size_t i)
     jj = (long)j;
     ii = (long)i;
     if ((double)jj != (double)j || (double)ii != (double)i) {
+	err_append("Dimensions too big for pointer arithmetic.\n");
 	return NULL;
     }
     dat = (float **)CALLOC(j, sizeof(float *));
     if ( !dat ) {
+	err_append("Could not allocate memory.\n");
 	return NULL;
     }
     dat[0] = (float *)CALLOC(j * i, sizeof(float));
     if ( !dat[0] ) {
 	FREE(dat);
+	err_append("Could not allocate memory.\n");
 	return NULL;
     }
     for (n = 1; n < jj; n++) {
@@ -64,21 +68,25 @@ float *** mallocf3(size_t k, size_t j, size_t i)
     ii = (long)i;
     if ((double)kk != (double)k || (double)jj != (double)j
 	    || (double)ii != (double)i) {
+	err_append("Dimensions too big for pointer arithmetic.\n");
 	return NULL;
     }
     dat = (float ***)CALLOC(k, sizeof(float **));
     if ( !dat ) {
+	err_append("Could not allocate memory.\n");
 	return NULL;
     }
     dat[0] = (float **)CALLOC(k * j, sizeof(float *));
     if ( !dat[0] ) {
 	FREE(dat);
+	err_append("Could not allocate memory.\n");
 	return NULL;
     }
     dat[0][0] = (float *)CALLOC(k * j * i, sizeof(float));
     if ( !dat[0][0] ) {
 	FREE(dat[0]);
 	FREE(dat);
+	err_append("Could not allocate memory.\n");
 	return NULL;
     }
     for (n = 1; n < kk; n++) {
@@ -115,21 +123,25 @@ float **** mallocf4(size_t l, size_t k, size_t j, size_t i)
     ii = (long)i;
     if ((double)ll != (double)l || (double)kk != (double)k
 	    || (double)jj != (double)j || (double)ii != (double)i) {
+	err_append("Dimensions too big for pointer arithmetic.\n");
 	return NULL;
     }
     dat = (float ****)CALLOC(l, sizeof(float ***));
     if ( !dat ) {
+	err_append("Could not allocate memory.\n");
 	return NULL;
     }
     dat[0] = (float ***)CALLOC(l * k, sizeof(float **));
     if ( !dat[0] ) {
 	FREE(dat);
+	err_append("Could not allocate memory.\n");
 	return NULL;
     }
     dat[0][0] = (float **)CALLOC(l * k * j, sizeof(float *));
     if ( !dat[0][0] ) {
 	FREE(dat[0]);
 	FREE(dat);
+	err_append("Could not allocate memory.\n");
 	return NULL;
     }
     dat[0][0][0] = (float *)CALLOC(l * k * j * i, sizeof(float));
@@ -137,6 +149,7 @@ float **** mallocf4(size_t l, size_t k, size_t j, size_t i)
 	FREE(dat[0][0]);
 	FREE(dat[0]);
 	FREE(dat);
+	err_append("Could not allocate memory.\n");
 	return NULL;
     }
     for (n = 1; n < ll; n++) {
