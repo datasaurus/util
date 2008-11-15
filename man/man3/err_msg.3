@@ -1,0 +1,22 @@
+.\" 
+.\" Copyright (c) 2008 Gordon D. Carrie.  All rights reserved.
+.\" 
+.\" Licensed under the Open Software License version 3.0
+.\" 
+.\" Please address questions and feedback to user0@tkgeomap.org
+.\" 
+.\" $Id: $
+.\"
+.TH err_msg 3 "Error messages"
+.SH NAME
+err_append, err_get, err_destroy \- error message production and retrieval
+.SH SYNOPSIS
+.nf
+\fB#include "err_msg.h"\fP
+\fBvoid err_append(const char *\fP\fImsg\fP\fB);\fP
+\fBchar *err_get(void);\fP
+\fBvoid err_destroy(void);\fP
+.fi
+.SH DESCRIPTION
+This function create, modify, and retrieve a global error string.
+.PP
