@@ -8,7 +8,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: $
+# $Id: allocf1.sh,v 1.1 2008/11/15 05:19:25 gcarrie Exp $
 #
 ########################################################################
 
@@ -50,7 +50,7 @@ int main(void)                                                           /* 4 */
 END
 
 echo test1: building and running allocf1
-cc -Isrc -o allocf1 allocf1.c src/allocf.c src/alloc.c
+cc -Isrc -o allocf1 allocf1.c src/allocf.c src/alloc.c src/err_msg.c
 echo Starting test1
 allocf1
 echo Done with test1
@@ -59,7 +59,7 @@ $RM allocf1
 
 echo test2: building and running allocf1 with memory trace.
 echo An account of allocations and calls to free should appear on terminal
-cc -Isrc -o allocf1 allocf1.c src/allocf.c src/alloc.c
+cc -Isrc -o allocf1 allocf1.c src/allocf.c src/alloc.c src/err_msg.c
 echo Starting test2
 export MEM_DEBUG=2
 allocf1
@@ -71,7 +71,7 @@ unset MEM_DEBUG
 echo test3: building and running allocf1.
 echo Sending memory trace to findleaks, which should not find anything.
 export MEM_DEBUG=2
-cc -Isrc -o allocf1 allocf1.c src/allocf.c src/alloc.c
+cc -Isrc -o allocf1 allocf1.c src/allocf.c src/alloc.c src/err_msg.c
 echo Starting test3
 allocf1 2>&1 | src/findleaks
 echo Done with test3
@@ -81,7 +81,7 @@ unset MEM_DEBUG
 
 echo test4: simulate allocation failure in allocf1
 echo This should produce a warning about failure to allocate x.
-cc -Isrc -o allocf1 allocf1.c src/allocf.c src/alloc.c
+cc -Isrc -o allocf1 allocf1.c src/allocf.c src/alloc.c src/err_msg.c
 export MEM_FAIL="src/allocf.c:33"
 echo Starting test4
 allocf1
@@ -92,7 +92,7 @@ unset MEM_FAIL
 
 echo test5: simulate a later allocation failure in allocf1
 echo This should produce a warning about failure to allocate x.
-cc -Isrc -o allocf1 allocf1.c src/allocf.c src/alloc.c
+cc -Isrc -o allocf1 allocf1.c src/allocf.c src/alloc.c src/err_msg.c
 export MEM_FAIL="src/allocf.c:37"
 echo Starting test5
 allocf1
@@ -104,7 +104,7 @@ unset MEM_FAIL
 echo test6: simulate later allocation failure in allocf1 with memory tracing
 echo This should produce a warning about failure to allocate x.
 echo Trace output should show now leaks
-cc -Isrc -o allocf1 allocf1.c src/allocf.c src/alloc.c
+cc -Isrc -o allocf1 allocf1.c src/allocf.c src/alloc.c src/err_msg.c
 export MEM_FAIL="src/allocf.c:37"
 export MEM_DEBUG=3
 echo Starting test6
