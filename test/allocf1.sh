@@ -8,7 +8,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: allocf1.sh,v 1.3 2008/11/16 03:55:40 gcarrie Exp $
+# $Id: allocf1.sh,v 1.4 2008/11/16 04:33:32 gcarrie Exp $
 #
 ########################################################################
 
@@ -34,7 +34,6 @@ int main(void)
     x = mallocf2(j_max, i_max);
     if ( !x ) {
 	fprintf(stderr, "Could not allocate x\n");
-	err_destroy();
 	return 1;
     }
     for (j = 0; j < j_max; j++) {
@@ -46,7 +45,6 @@ int main(void)
     printf("x[9][9] = %f\n", x[9][9]);
     printf("x[999][999] = %f\n", x[999][999]);
     freef2(x);
-    err_destroy();
     return 0;
 }
 END

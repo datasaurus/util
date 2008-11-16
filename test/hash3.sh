@@ -8,7 +8,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: hash3.sh,v 1.6 2008/11/11 21:26:03 gcarrie Exp $
+# $Id: hash3.sh,v 1.7 2008/11/11 22:15:54 gcarrie Exp $
 #
 ########################################################################
 
@@ -76,7 +76,6 @@ int main(void)
     hash_rm(&tbl, "hello");
     hash_rm(&tbl, "world");
 
-    err_destroy();
     return 0;
 }
 END
@@ -131,7 +130,7 @@ unset MEM_DEBUG
 echo ''
 
 echo 'Checking memory trace'
-echo 'There should be one \"leak\" because this test does not delete the table, '
+echo 'There should be one "leak" because this test does not delete the table, '
 echo 'just the entries.'
 src/findleaks < memtrace
 echo 'Memory check done'
