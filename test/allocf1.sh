@@ -8,7 +8,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: allocf1.sh,v 1.2 2008/11/15 22:51:06 gcarrie Exp $
+# $Id: allocf1.sh,v 1.3 2008/11/16 03:55:40 gcarrie Exp $
 #
 ########################################################################
 
@@ -87,7 +87,7 @@ unset MEM_DEBUG
 echo test4: simulate allocation failure in allocf1
 echo This should produce a warning about failure to allocate x.
 cc -Isrc -o allocf1 allocf1.c src/allocf.c src/alloc.c src/err_msg.c
-export MEM_FAIL="src/allocf.c:35"
+export MEM_FAIL="src/allocf.c:38"
 echo ""
 echo Starting test4
 allocf1
@@ -99,7 +99,7 @@ unset MEM_FAIL
 echo test5: simulate a later allocation failure in allocf1
 echo This should produce a warning about failure to allocate x.
 cc -Isrc -o allocf1 allocf1.c src/allocf.c src/alloc.c src/err_msg.c
-export MEM_FAIL="src/allocf.c:40"
+export MEM_FAIL="src/allocf.c:43"
 echo ""
 echo Starting test5
 allocf1
@@ -112,7 +112,7 @@ echo test6: simulate later allocation failure in allocf1 with memory tracing
 echo This should produce a warning about failure to allocate x.
 echo Trace output should show no leaks
 cc -Isrc -o allocf1 allocf1.c src/allocf.c src/alloc.c src/err_msg.c
-export MEM_FAIL="src/allocf.c:40"
+export MEM_FAIL="src/allocf.c:43"
 export MEM_DEBUG=3
 echo ""
 echo Starting test6
