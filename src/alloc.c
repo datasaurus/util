@@ -9,7 +9,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * @(#) $Id: alloc.c,v 1.13 2008/11/10 04:12:32 gcarrie Exp $
+ * @(#) $Id: alloc.c,v 1.14 2008/11/10 05:13:51 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -104,8 +104,9 @@ void *malloc_tkx(size_t sz, char *fnm, int ln)
     if (fail_fnm && (ln == fail_line) && strcmp(fail_fnm, fnm) == 0) {
 	return NULL;
     }
-    if (m && diag_out)
+    if (m && diag_out) {
 	fprintf(diag_out, "%p (%09x) allocated at %s:%d\n", m, ++c, fnm, ln);
+    }
     return m;
 }
 
