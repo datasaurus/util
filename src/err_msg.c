@@ -10,7 +10,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: err_msg.c,v 1.3 2008/11/06 17:09:42 gcarrie Exp $
+ * $Id: err_msg.c,v 1.4 2008/11/07 22:38:01 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -22,6 +22,8 @@
 #include <assert.h>
 #include "alloc.h"
 #include "err_msg.h"
+
+static int init;	/* If false, need to initialize interface */
 
 static char *msg;	/* Current error message */
 static size_t alloc;	/* Allocation at msg */
@@ -61,10 +63,19 @@ void err_append(const char *s)
     if (l == 0) {
 	return;
     }
+    if ( !init ) {
+	atexit(err_destroy);
+	init = 1;
+    }
     new_len = len + l;
     new_alloc = new_len + 1;
     if (new_alloc > alloc) {
 	msg = REALLOC(msg, new_alloc);
+	if ( !msg ) {
+	    fprintf(stderr, "Unable to allocate memory for error messages."
+		    "Exiting.\n");
+	    exit(1);
+	}
 	alloc = new_alloc;
     }
     ll = (long)l;
