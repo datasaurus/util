@@ -10,7 +10,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: allocf.h,v 1.3 2008/11/07 03:25:17 gcarrie Exp $
+ * $Id: allocf.h,v 1.4 2008/11/07 03:41:27 gcarrie Exp $
  *
  */
 
@@ -23,11 +23,11 @@ extern "C" {
 
 #include <stddef.h>
 
-float **mallocf2(size_t j, size_t i);
+float **mallocf2(long j, long i);
 void freef2(float **d);
-float ***mallocf3(size_t k, size_t j, size_t i);
+float ***mallocf3(long k, long j, long i);
 void freef3(float ***d);
-float ****mallocf4(size_t l, size_t k, size_t j, size_t i);
+float ****mallocf4(long l, long k, long j, long i);
 void freef4(float ****d);
 
 #ifdef __cplusplus
