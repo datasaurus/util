@@ -8,7 +8,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: $
+# $Id: allocf2.sh,v 1.1 2008/11/16 03:46:59 gcarrie Exp $
 #
 ########################################################################
 
@@ -42,7 +42,7 @@ int main(void)
 END
 
 echo test1: building and running allocf2.
-echo It should complain about dimensions too big for pointer arithmetic.
+echo It should complain about non-positive dimensions.
 echo ""
 cc -Isrc -o allocf2 allocf2.c src/allocf.c src/alloc.c src/err_msg.c
 echo Starting test1
