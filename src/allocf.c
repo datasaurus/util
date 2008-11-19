@@ -10,7 +10,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: allocf.c,v 1.11 2008/11/16 04:33:01 gcarrie Exp $
+ * $Id: allocf.c,v 1.12 2008/11/17 04:49:21 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -43,13 +43,13 @@ float ** mallocf2(long j, long i)
 	err_append("Could not allocate memory.\n");
 	return NULL;
     }
-    dat[0] = (float *)CALLOC(ji, sizeof(float));
+    dat[0] = (float *)CALLOC(ji + 1, sizeof(float));
     if ( !dat[0] ) {
 	FREE(dat);
 	err_append("Could not allocate memory.\n");
 	return NULL;
     }
-    for (n = 1; n < j; n++) {
+    for (n = 1; n <= j; n++) {
 	dat[n] = dat[n - 1] + i;
     }
     return dat;
