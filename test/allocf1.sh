@@ -8,7 +8,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: allocf1.sh,v 1.5 2008/11/16 04:46:20 gcarrie Exp $
+# $Id: allocf1.sh,v 1.6 2008/11/17 04:56:22 gcarrie Exp $
 #
 ########################################################################
 
@@ -22,73 +22,37 @@ RM='rm -f'
 
 cat > allocf1.c << END
 #include <stdio.h>
+#include <err_msg.h>
 #include <allocf.h>
 
 int main(void)
 {
-    long lmax, kmax, jmax, imax;
-    long l, k, j, i;
-    float **x2 = NULL;
-    float ***x3 = NULL;
-    float ****x4 = NULL;
+    long jmax, imax;
+    long j, i;
+    float *p, *pe;
+    float **dat = NULL, **p2, **p2_;
 
-    lmax = 10;
-    kmax = 100;
     jmax = 100;
     imax = 100;
 
-    x2 = mallocf2(jmax, imax);
-    if ( !x2 ) {
-	fprintf(stderr, "Could not allocate x2\n");
+    dat = mallocf2(jmax, imax);
+    if ( !dat ) {
+	fprintf(stderr, "Could not allocate dat\n%s\n", err_get());
 	return 1;
     }
-    for (j = 0; j < jmax; j++) {
-	for (i = 0; i < imax; i++) {
-	    x2[j][i] = 100 * j + 10 * i;
+    j = 0;
+    for (p2 = dat, p2_ = p2 + 1; *p2 ; p2++, p2_++) {
+	i = 0;
+	for (p = *p2, pe = *p2_; p < pe; p++) {
+	    *p = j + i;
+	    i += 1;
 	}
+	j += 10;
     }
-    printf("x2[1][1] = %f\n", x2[1][1]);
-    printf("x2[9][9] = %f\n", x2[9][9]);
-    printf("x2[jmax-1][imax-1] = %f\n", x2[jmax-1][imax-1]);
-    freef2(x2);
-
-    x3 = mallocf3(kmax, jmax, imax);
-    if ( !x3 ) {
-	fprintf(stderr, "Could not allocate x3\n");
-	return 1;
-    }
-    for (k = 0; k < kmax; k++) {
-	for (j = 0; j < jmax; j++) {
-	    for (i = 0; i < imax; i++) {
-		x3[k][j][i] = 100 * k + 10 * j + i;
-	    }
-	}
-    }
-    printf("x3[1][1][1] = %f\n", x3[1][1][1]);
-    printf("x3[9][9][9] = %f\n", x3[9][9][9]);
-    printf("x3[kmax-1][jmax-1][imax-1] = %f\n", x3[kmax-1][jmax-1][imax-1]);
-    freef3(x3);
-
-    x4 = mallocf4(lmax, kmax, jmax, imax);
-    if ( !x4 ) {
-	fprintf(stderr, "Could not allocate x4\n");
-	return 1;
-    }
-    for (l = 0; l < lmax; l++) {
-	for (k = 0; k < kmax; k++) {
-	    for (j = 0; j < jmax; j++) {
-		for (i = 0; i < imax; i++) {
-		    x4[l][k][j][i] = 1000 * l + 100 * k + 10 * j + i;
-		}
-	    }
-	}
-    }
-    printf("x4[1][1][1][1] = %f\n", x4[1][1][1][1]);
-    printf("x4[9][9][9][9] = %f\n", x4[9][9][9][9]);
-    printf("x4[lmax-1][kmax-1][jmax-1][imax-1] = %f\n",
-	    x4[lmax-1][kmax-1][jmax-1][imax-1]);
-    freef4(x4);
-
+    printf("dat[1][1] = %f\n", dat[1][1]);
+    printf("dat[9][9] = %f\n", dat[9][9]);
+    printf("dat[jmax-1][imax-1] = %f\n", dat[jmax-1][imax-1]);
+    freef2(dat);
     return 0;
 }
 END
@@ -127,7 +91,7 @@ $RM allocf1
 unset MEM_DEBUG
 
 echo test4: simulate allocation failure in allocf1
-echo This should produce a warning about failure to allocate x2.
+echo This should produce a warning about failure to allocate dat.
 cc -Isrc -o allocf1 allocf1.c src/allocf.c src/alloc.c src/err_msg.c
 export MEM_FAIL="src/allocf.c:41"
 echo ""
@@ -139,7 +103,7 @@ $RM allocf1
 unset MEM_FAIL
 
 echo test5: simulate a later allocation failure in allocf1
-echo This should produce a warning about failure to allocate x2.
+echo This should produce a warning about failure to allocate dat.
 cc -Isrc -o allocf1 allocf1.c src/allocf.c src/alloc.c src/err_msg.c
 export MEM_FAIL="src/allocf.c:46"
 echo ""
@@ -151,7 +115,7 @@ $RM allocf1
 unset MEM_FAIL
 
 echo test6: simulate later allocation failure in allocf1 with memory tracing
-echo This should produce a warning about failure to allocate x2.
+echo This should produce a warning about failure to allocate dat.
 echo Trace output should show no leaks
 cc -Isrc -o allocf1 allocf1.c src/allocf.c src/alloc.c src/err_msg.c
 export MEM_FAIL="src/allocf.c:46"
