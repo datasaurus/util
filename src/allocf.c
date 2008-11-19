@@ -10,7 +10,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: allocf.c,v 1.12 2008/11/17 04:49:21 gcarrie Exp $
+ * $Id: allocf.c,v 1.13 2008/11/19 03:57:03 gcarrie Exp $
  *
  **********************************************************************
  *
@@ -38,7 +38,7 @@ float ** mallocf2(long j, long i)
 	err_append("Dimensions too big for pointer arithmetic.\n");
 	return NULL;
     }
-    dat = (float **)CALLOC(jj + 1, sizeof(float *));
+    dat = (float **)CALLOC(jj + 2, sizeof(float *));
     if ( !dat ) {
 	err_append("Could not allocate memory.\n");
 	return NULL;
