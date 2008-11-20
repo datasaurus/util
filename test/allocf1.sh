@@ -8,14 +8,14 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: allocf1.sh,v 1.6 2008/11/17 04:56:22 gcarrie Exp $
+# $Id: allocf1.sh,v 1.7 2008/11/19 04:07:16 gcarrie Exp $
 #
 ########################################################################
 
 # This is the remove command.  Change this to : to retain intermediate results.
 
-RM='rm -f'
-#RM=:
+#RM='rm -f'
+RM=:
 
 # Here is the source code for the driver application.
 # It allocates, accesses, and then frees a some arrays.
@@ -29,8 +29,8 @@ int main(void)
 {
     long jmax, imax;
     long j, i;
-    float *p, *pe;
-    float **dat = NULL, **p2, **p2_;
+    float *p, *q;
+    float **dat = NULL, **p2, **q2;
 
     jmax = 100;
     imax = 100;
@@ -40,14 +40,10 @@ int main(void)
 	fprintf(stderr, "Could not allocate dat\n%s\n", err_get());
 	return 1;
     }
-    j = 0;
-    for (p2 = dat, p2_ = p2 + 1; *p2 ; p2++, p2_++) {
-	i = 0;
-	for (p = *p2, pe = *p2_; p < pe; p++) {
-	    *p = j + i;
-	    i += 1;
+    for (p2 = dat, q2 = p2 + 1, j = 0; *q2 ; p2++, q2++, j++) {
+	for (p = *p2, q = *q2, i = 0; p < q; p++, i++) {
+	    *p = 10 * j + i;
 	}
-	j += 10;
     }
     printf("dat[1][1] = %f\n", dat[1][1]);
     printf("dat[9][9] = %f\n", dat[9][9]);
