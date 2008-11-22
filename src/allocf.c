@@ -10,7 +10,7 @@
  *
  * Please send feedback to user0@tkgeomap.org
  *
- * $Id: allocf.c,v 1.13 2008/11/19 03:57:03 gcarrie Exp $
+ * $Id: allocf.c,v 1.14 2008/11/19 04:03:23 gcarrie Exp $
  *
  **********************************************************************
  *
