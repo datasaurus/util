@@ -9,12 +9,7 @@
   
    Please send feedback to user0@tkgeomap.org
   
-   $Id: $
- */
-
-/*
-   Sample compile line:
-   cc -o allocfvi allocfvi.c alloc2f.c alloc.c err_msg.c
+   $Id: allocfvi.c,v 1.1 2008/11/22 19:16:03 gcarrie Exp $
  */
 
 #include <stdlib.h>
@@ -29,7 +24,6 @@ int main(void)
     long j, i;
 
     /* Create an array */
-
     dat = (float **)calloc2f(jmax, imax);
     if ( !dat ) {
 	fprintf(stderr, "%s.\nCould not allocate memory.\n", err_get());
@@ -37,7 +31,6 @@ int main(void)
     }
 
     /* Assign random values */
-
     for (j = 0; j < jmax; j++) {
 	for (i = 0; i < imax; i++) {
 	    dat[j][i] = 8.0 * rand() / RAND_MAX;
@@ -45,7 +38,6 @@ int main(void)
     }
 
     /* Print a picture showing where things are stored */
-
     printf("           dat       %12p\n", dat);
     for (j = 0; j < jmax + 2; j++) {
 	printf("%p dat[%ld]    %12p\n", &dat[j], j, dat[j]);
