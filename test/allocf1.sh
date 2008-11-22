@@ -8,7 +8,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: allocf1.sh,v 1.7 2008/11/19 04:07:16 gcarrie Exp $
+# $Id: allocf1.sh,v 1.8 2008/11/20 19:35:30 gcarrie Exp $
 #
 ########################################################################
 
