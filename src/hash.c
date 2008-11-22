@@ -1,23 +1,19 @@
 /*
- * hash --
- *
- * 	This file defines hash table functions.
- *
- * 	Reference:
- * 	Kernighan, Brian W. and Rob Pike
- * 	The Practice of Programming
- * 	Reading, Massachusetts
- * 	1999
- *
- * Copyright (c) 2008 Gordon D. Carrie
- *
- * Licensed under the Open Software License version 3.0
- *
- * Please send feedback to user0@tkgeomap.org
- *
- * $Id: hash.c,v 1.16 2008/11/11 22:52:10 gcarrie Exp $
- *
- *************************************************************************
+ - hash.c --
+ - 	This file defines hash table functions.
+ -
+   Copyright (c) 2008 Gordon D. Carrie
+   Licensed under the Open Software License version 3.0
+
+   Please send feedback to user0@tkgeomap.org
+
+   $Id: hash.c,v 1.17 2008/11/11 22:57:23 gcarrie Exp $
+*/
+
+/*
+   Reference:
+	Kernighan, Brian W. and Rob Pike. The Practice of Programming.
+	Reading, Massachusetts. 1999
  */
 
 #include <stdlib.h>

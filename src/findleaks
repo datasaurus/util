@@ -1,15 +1,15 @@
 #!/usr/bin/awk -f
 #
-#	This script reads output from the diagnostic allocators.  It reports
-#	on any leaks it finds.  A leak is an allocation that is never freed.
-# 
+#- findleaks --
+#-	This script reads output from the diagnostic allocators.  It reports
+#-	on any leaks it finds.  A leak is an allocation that is never freed.
+#- 
 # Copyright (c) 2008 Gordon D. Carrie
-#
 # Licensed under the Open Software License version 3.0
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: findleaks,v 1.2 2008/11/06 17:09:42 gcarrie Exp $
+# $Id: findleaks,v 1.3 2008/11/06 17:55:00 gcarrie Exp $
 
 /(0x)?[0-9]+.* allocated / {
     cnt[$1]++

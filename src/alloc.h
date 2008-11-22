@@ -1,18 +1,13 @@
 /*
- * alloc.c --
- *
- * 	This file declares memory allocators.
- * 
- * Copyright (c) 2007, 2008 Gordon D. Carrie
- *
- * Licensed under the Open Software License version 3.0
- *
- * Please send feedback to user0@tkgeomap.org
- *
- * @(#) $Id: alloc.h,v 1.11 2008/11/06 17:09:42 gcarrie Exp $
- *
- **********************************************************************
- *
+ - alloc.c --
+ - 	This header declares memory allocators.  See alloc (3).
+ - 
+   Copyright (c) 2007, 2008 Gordon D. Carrie
+   Licensed under the Open Software License version 3.0
+  
+   Please send feedback to user0@tkgeomap.org
+  
+   $Id: alloc.h,v 1.12 2008/11/06 18:24:42 gcarrie Exp $
  */
 
 #ifndef ALLOC_H_

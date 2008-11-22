@@ -1,19 +1,14 @@
 /*
- * msg --
- *
- * 	This file defines general purpose functions and macros to
- * 	generate globally visible error messages.
- * 
- * Copyright (c) 2007,2008 Gordon D. Carrie
- *
- * Licensed under the Open Software License version 3.0
- *
- * Please send feedback to user0@tkgeomap.org
- *
- * $Id: err_msg.c,v 1.4 2008/11/07 22:38:01 gcarrie Exp $
- *
- **********************************************************************
- *
+ - err_msg.c --
+ - 	This file defines general purpose functions and macros to
+ - 	generate globally visible error messages.  See err_msg (3).
+ - 
+   Copyright (c) 2007,2008 Gordon D. Carrie
+   Licensed under the Open Software License version 3.0
+  
+   Please send feedback to user0@tkgeomap.org
+  
+   $Id: err_msg.c,v 1.5 2008/11/16 04:45:11 gcarrie Exp $
  */
 
 #include <stdio.h>

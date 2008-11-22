@@ -1,17 +1,13 @@
 /*
- * hash --
- *
- * 	This file declares hash table functions and data structures.
- *
- *  Copyright (c) 2008 Gordon D. Carrie
- *
- * Licensed under the Open Software License version 3.0
- *
- * Please send feedback to user0@tkgeomap.org
- *
- * $Id: hash.h,v 1.9 2008/10/05 21:40:02 tkgeomap Exp $
- *
- *************************************************************************
+ - hash.h --
+ - 	This file declares hash table functions and data structures.
+ -
+   Copyright (c) 2008 Gordon D. Carrie
+   Licensed under the Open Software License version 3.0
+
+   Please send feedback to user0@tkgeomap.org
+
+   $Id: hash.h,v 1.10 2008/11/06 17:09:42 gcarrie Exp $
  */
 
 #ifndef HASH_H_

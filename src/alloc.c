@@ -1,18 +1,13 @@
 /*
- * alloc.c --
- *
- *	This file defines memory allocators.  See the alloc.3 man page.
- * 
- * Copyright (c) 2007, 2008 Gordon D. Carrie
- *
- * Licensed under the Open Software License version 3.0
- *
- * Please send feedback to user0@tkgeomap.org
- *
- * @(#) $Id: alloc.c,v 1.14 2008/11/10 05:13:51 gcarrie Exp $
- *
- **********************************************************************
- *
+ - alloc.c --
+ -	This file defines memory allocators.  See the alloc (3).
+ -
+   Copyright (c) 2007, 2008 Gordon D. Carrie
+   Licensed under the Open Software License version 3.0
+  
+   Please send feedback to user0@tkgeomap.org
+  
+   $Id: alloc.c,v 1.15 2008/11/16 04:16:58 gcarrie Exp $
  */
 
 #include <stdlib.h>

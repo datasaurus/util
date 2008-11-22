@@ -1,19 +1,14 @@
 /*
- * alloc4f.c --
- *
- *	This file defines functions that allocate 4-dimensional
- *	arrays of floating point values.  See alloc4f (3).
- * 
- * Copyright (c) 2008 Gordon D. Carrie
- *
- * Licensed under the Open Software License version 3.0
- *
- * Please send feedback to user0@tkgeomap.org
- *
- * $Id: $
- *
- **********************************************************************
- *
+ - alloc4f.c --
+ -	This file defines functions that allocate 4-dimensional
+ -	arrays of floating point values.  See alloc4f (3).
+ - 
+   Copyright (c) 2008 Gordon D. Carrie
+   Licensed under the Open Software License version 3.0
+  
+   Please send feedback to user0@tkgeomap.org
+  
+   $Id: alloc4f.c,v 1.1 2008/11/22 03:53:08 gcarrie Exp $
  */
 
 #include "alloc.h"
