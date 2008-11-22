@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.5 2008/10/30 16:06:22 gcarrie Exp $
+# $Id: Makefile,v 1.6 2008/11/13 04:40:41 gcarrie Exp $
 
 CFLAGS = -g -Wall -Wmissing-prototypes
 EXECS = geog
@@ -12,8 +12,14 @@ hash.o : hash.c hash.h
 alloc.o : alloc.c alloc.h
 	cc ${CFLAGS} -c alloc.c
 
-allocf.o : allocf.c allocf.h
-	cc ${CFLAGS} -c allocf.c
+alloc2f.o : alloc2f.c alloc2f.h
+	cc ${CFLAGS} -c alloc2f.c
+
+alloc3f.o : alloc3f.c alloc3f.h
+	cc ${CFLAGS} -c alloc3f.c
+
+alloc4f.o : alloc4f.c alloc4f.h
+	cc ${CFLAGS} -c alloc4f.c
 
 err_msg.o : err_msg.c err_msg.h
 	cc ${CFLAGS} -c err_msg.c
