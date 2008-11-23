@@ -9,23 +9,24 @@
   
    Please send feedback to user0@tkgeomap.org
   
-   $Id: allocfvi.c,v 1.1 2008/11/22 19:16:03 gcarrie Exp $
+   $Id: allocfvi.c,v 1.2 2008/11/22 19:23:05 gcarrie Exp $
  */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include "alloc2f.h"
+#include "alloc3f.h"
 #include "err_msg.h"
 
 int main(void)
 {
-    float **dat;
-    long jmax = 2, imax = 3;
-    long j, i;
+    float **dat2, ***dat3;
+    long kmax = 2, jmax = 3, imax = 4;
+    long k, j, i;
 
-    /* Create an array */
-    dat = (float **)calloc2f(jmax, imax);
-    if ( !dat ) {
+    /* Create an array with 2 dimensions */
+    dat2 = calloc2f(jmax, imax);
+    if ( !dat2 ) {
 	fprintf(stderr, "%s.\nCould not allocate memory.\n", err_get());
 	exit(1);
     }
@@ -33,20 +34,58 @@ int main(void)
     /* Assign random values */
     for (j = 0; j < jmax; j++) {
 	for (i = 0; i < imax; i++) {
-	    dat[j][i] = 8.0 * rand() / RAND_MAX;
+	    dat2[j][i] = 8.0 * rand() / RAND_MAX;
 	}
     }
 
     /* Print a picture showing where things are stored */
-    printf("           dat       %12p\n", dat);
+    printf("\njmax = %ld.  imax = %ld\n", jmax, imax);
+    printf("           dat2       %12p\n", dat2);
     for (j = 0; j < jmax + 2; j++) {
-	printf("%p dat[%ld]    %12p\n", &dat[j], j, dat[j]);
+	printf("%p dat2[%ld]    %12p\n", &dat2[j], j, dat2[j]);
     }
     for (j = 0; j < jmax; j++) {
 	for (i = 0; i < imax; i++) {
-	    printf("%p dat[%ld][%ld] %12.1f\n", &dat[j][i], j, i, dat[j][i]);
+	    printf("%p dat2[%ld][%ld] %12.1f\n", &dat2[j][i], j, i, dat2[j][i]);
 	}
     }
-    free2f(dat);
+    free2f(dat2);
+
+    /* Create an array with 3 dimensions */
+    dat3 = calloc3f(kmax, jmax, imax);
+    if ( !dat3 ) {
+	fprintf(stderr, "%s.\nCould not allocate memory.\n", err_get());
+	exit(1);
+    }
+
+    /* Assign random values */
+    for (k = 0; k < kmax; k++) {
+	for (j = 0; j < jmax; j++) {
+	    for (i = 0; i < imax; i++) {
+		dat3[k][j][i] = 8.0 * rand() / RAND_MAX;
+	    }
+	}
+    }
+
+    /* Print a picture showing where things are stored */
+    printf("\nkmax = %ld.  jmax = %ld.  imax = %ld\n", kmax, jmax, imax);
+    printf("           dat3          %12p\n", dat3);
+    for (k = 0; k < kmax + 2; k++) {
+	printf("%p dat3[%ld]       %12p\n", &dat3[k], k, dat3[k]);
+    }
+    for (k = 0; k < kmax; k++) {
+	for (j = 0; j < jmax + 2; j++) {
+	    printf("%p dat3[%ld][%ld]    %12p\n", &dat3[k][j], k, j, dat3[k][j]);
+	}
+    }
+    for (k = 0; k < kmax; k++) {
+	for (j = 0; j < jmax; j++) {
+	    for (i = 0; i < imax; i++) {
+		printf("%p dat3[%ld][%ld][%ld] %12.1f\n",
+			&dat3[k][j][i], k, j, i, dat3[k][j][i]);
+	    }
+	}
+    }
+    free3f(dat3);
     return 0;
 }
