@@ -9,19 +9,23 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: $
+# $Id: alloc2f_1.sh,v 1.1 2008/11/24 02:30:24 gcarrie Exp $
 #
 ########################################################################
 
 # This is the remove command.  Change this to : to retain intermediate results.
-
 RM='rm -f'
 #RM=:
 
+# Array in the test application will have dimensions JMAX by IMAX.
+# Set these to something substantial but not overwhelming.
+JMAX=10000
+IMAX=10000
+
+CC="cc"
 CFLAGS="-g -Wall -Wmissing-prototypes"
 
 # Here is the source code for the driver application.
-
 cat > alloc2f_1.c << END
 #include <stdio.h>
 #include <err_msg.h>
@@ -34,8 +38,10 @@ int main(void)
     float *p, *q;
     float **dat = NULL, **p2, **q2;
 
-    jmax = 100;
-    imax = 100;
+    jmax = ${JMAX};
+    imax = ${IMAX};
+    fprintf(stderr, "Creating a %ld by %ld array (%ld bytes)\n",
+	    jmax, imax, jmax * imax * sizeof(float));
 
     dat = calloc2f(jmax, imax);
     if ( !dat ) {
@@ -57,7 +63,11 @@ int main(void)
 }
 END
 
-cc -Isrc -o alloc2f_1 alloc2f_1.c src/alloc2f.c src/alloc.c src/err_msg.c
+if ! cc -Isrc -o alloc2f_1 alloc2f_1.c src/alloc2f.c src/alloc.c src/err_msg.c
+then
+    echo "Could not compile the test application"
+    exit 1
+fi
 
 echo test1: building and running alloc2f_1
 echo ""
