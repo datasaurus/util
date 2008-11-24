@@ -8,61 +8,55 @@
   
    Please send feedback to user0@tkgeomap.org
   
-   $Id: alloc3f.c,v 1.1 2008/11/22 03:51:25 gcarrie Exp $
+   $Id: alloc3f.c,v 1.2 2008/11/22 18:41:23 gcarrie Exp $
  */
 
 #include "alloc.h"
 #include "err_msg.h"
 #include "alloc3f.h"
 
-float *** calloc3f(long k, long j, long i)
+float *** calloc3f(long kmax, long jmax, long imax)
 {
     float ***dat = NULL;
-    long n, ne;
-    size_t kk, jj, ii;		/* Addends for pointer arithmetic */
-    size_t kj, kji;
+    long k, j;
+    size_t kk, jj, ii;
 
-    /*
-     * Make sure casting to size_t does not overflow anything.
-     */
-
-    if (k <= 0 || j <= 0 || i <= 0) {
+    /* CALLOC casts arguments to size_t. Cast explicitly and check for overflows. */
+    if (kmax <= 0 || jmax <= 0 || imax <= 0) {
 	err_append("Array dimensions must be positive.\n");
 	return NULL;
     }
-    kk = (size_t)k;
-    jj = (size_t)j;
-    ii = (size_t)i;
-    kj = kk * jj;
-    kji = kj * ii;
-    if (kj / kk != jj || kji / kj != ii) {
+    kk = (size_t)kmax;
+    jj = (size_t)jmax;
+    ii = (size_t)imax;
+    if ((kk * jj) / kk != jj || (kk * jj * ii) / (kk * jj) != ii) {
 	err_append("Dimensions too big for pointer arithmetic.\n");
 	return NULL;
     }
 
-    dat = (float ***)CALLOC(kk + 1, sizeof(float **));
+    dat = (float ***)CALLOC(kk + 2, sizeof(float **));
     if ( !dat ) {
-	err_append("Could not allocate memory.\n");
+	err_append("Could not allocate 2nd dimension.\n");
 	return NULL;
     }
-    dat[0] = (float **)CALLOC(kj + 1, sizeof(float *));
+    dat[0] = (float **)CALLOC(kk * jj + 1, sizeof(float *));
     if ( !dat[0] ) {
 	FREE(dat);
-	err_append("Could not allocate memory.\n");
+	err_append("Could not allocate 1st dimension.\n");
 	return NULL;
     }
-    dat[0][0] = (float *)CALLOC(kji + 1, sizeof(float));
+    dat[0][0] = (float *)CALLOC(kk * jj * ii, sizeof(float));
     if ( !dat[0][0] ) {
 	FREE(dat[0]);
 	FREE(dat);
-	err_append("Could not allocate memory.\n");
+	err_append("Could not allocate array of values.\n");
 	return NULL;
     }
-    for (n = 1; n < k; n++) {
-	dat[n] = dat[n - 1] + j;
+    for (k = 1; k <= kmax; k++) {
+	dat[k] = dat[k - 1] + jmax;
     }
-    for (n = 1, ne = k * j; n < ne; n++) {
-	dat[0][n] = dat[0][n - 1] + i;
+    for (j = 1; j <= kmax * jmax; j++) {
+	dat[0][j] = dat[0][j - 1] + imax;
     }
     return dat;
 }
