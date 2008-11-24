@@ -1,14 +1,15 @@
 #!/bin/sh
 #
-# This script tests the allocators defined in src/alloc.c
-#
+#- alloc1.sh --
+#-	This script tests the allocators defined in src/alloc.c
+#-	It creates and frees some memory while checking for leaks.
+#-
 # Copyright (c) 2008 Gordon D. Carrie
-#
 # Licensed under the Open Software License version 3.0
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: alloc1.sh,v 1.5 2008/11/10 05:24:34 gcarrie Exp $
+# $Id: alloc1.sh,v 1.6 2008/11/11 22:31:41 gcarrie Exp $
 #
 ########################################################################
 
@@ -19,8 +20,6 @@ RM='rm -f'
 $RM alloc1.out
 
 # Here is the source code for the driver application.
-# It allocates some memory, and then frees it.
-
 cat > alloc1.c << END
 #include <stdio.h>
 #include <alloc.h>

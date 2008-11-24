@@ -1,14 +1,16 @@
 #!/bin/sh
 #
-# This script tests the allocators defined in src/alloc2f.c
-#
+#- alloc2f_2.sh --
+#-	This script tests the allocators defined in src/alloc2f.c
+#-	It attempts to allocate some impossibly large arrays.
+#-
 # Copyright (c) 2008 Gordon D. Carrie
 #
 # Licensed under the Open Software License version 3.0
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: $
+# $Id: alloc2f_2.sh,v 1.1 2008/11/22 04:25:14 gcarrie Exp $
 #
 ########################################################################
 
@@ -17,7 +19,6 @@
 RM='rm -f'
 
 # Here is the source code for the test application.
-# It attempts to allocate some impossibly large arrays.
 
 cat > alloc2f_2.c << END
 #include <limits.h>

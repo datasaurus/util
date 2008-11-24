@@ -1,14 +1,14 @@
 #!/bin/sh
 #
-# This script runs a test application that leaks memory.
-#
+#- alloc2.sh --
+#-	This script runs a test application that leaks memory.
+#-
 # Copyright (c) 2008 Gordon D. Carrie
-#
 # Licensed under the Open Software License version 3.0
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: alloc2.sh,v 1.5 2008/11/11 22:31:41 gcarrie Exp $
+# $Id: alloc2.sh,v 1.6 2008/11/11 22:33:02 gcarrie Exp $
 #
 ########################################################################
 
