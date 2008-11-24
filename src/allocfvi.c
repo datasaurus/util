@@ -9,7 +9,7 @@
   
    Please send feedback to user0@tkgeomap.org
   
-   $Id: allocfvi.c,v 1.2 2008/11/22 19:23:05 gcarrie Exp $
+   $Id: allocfvi.c,v 1.3 2008/11/23 06:10:38 gcarrie Exp $
  */
 
 #include <stdlib.h>
@@ -70,11 +70,11 @@ int main(void)
     /* Print a picture showing where things are stored */
     printf("\nkmax = %ld.  jmax = %ld.  imax = %ld\n", kmax, jmax, imax);
     printf("           dat3          %12p\n", dat3);
-    for (k = 0; k < kmax + 2; k++) {
+    for (k = 0; k <= kmax; k++) {
 	printf("%p dat3[%ld]       %12p\n", &dat3[k], k, dat3[k]);
     }
     for (k = 0; k < kmax; k++) {
-	for (j = 0; j < jmax + 2; j++) {
+	for (j = 0; j <= jmax; j++) {
 	    printf("%p dat3[%ld][%ld]    %12p\n", &dat3[k][j], k, j, dat3[k][j]);
 	}
     }
