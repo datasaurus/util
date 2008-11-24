@@ -9,7 +9,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: alloc2f_1.sh,v 1.1 2008/11/24 02:30:24 gcarrie Exp $
+# $Id: alloc2f_1.sh,v 1.2 2008/11/24 02:49:29 gcarrie Exp $
 #
 ########################################################################
 
@@ -48,9 +48,9 @@ int main(void)
 	fprintf(stderr, "Could not allocate dat\n%s\n", err_get());
 	return 1;
     }
-    for (p2 = dat, q2 = dat + 1, j = 0; *q2 ; p2++, q2++) {
+    for (p2 = dat, q2 = dat + 1; *q2 ; p2++, q2++) {
 	j = p2 - dat;
-	for (p = *p2, q = *q2, i = 0; p < q; p++) {
+	for (p = *p2; p < *q2; p++) {
 	    i = p - *p2;
 	    *p = 10 * j + i;
 	}
