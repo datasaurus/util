@@ -9,7 +9,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: alloc2f_1.sh,v 1.2 2008/11/24 02:49:29 gcarrie Exp $
+# $Id: alloc2f_1.sh,v 1.3 2008/11/24 04:15:43 gcarrie Exp $
 #
 ########################################################################
 
@@ -35,8 +35,8 @@ int main(void)
 {
     long jmax, imax;
     long j, i;
-    float *p, *q;
-    float **dat = NULL, **p2, **q2;
+    float *d;
+    float **dat = NULL, **d2, **e2;
 
     jmax = ${JMAX};
     imax = ${IMAX};
@@ -48,11 +48,11 @@ int main(void)
 	fprintf(stderr, "Could not allocate dat\n%s\n", err_get());
 	return 1;
     }
-    for (p2 = dat, q2 = dat + 1; *q2 ; p2++, q2++) {
-	j = p2 - dat;
-	for (p = *p2; p < *q2; p++) {
-	    i = p - *p2;
-	    *p = 10 * j + i;
+    for (d2 = dat, e2 = d2 + 1; *e2 ; d2++, e2++) {
+	j = d2 - dat;
+	for (d = *d2; d < *e2; d++) {
+	    i = d - *d2;
+	    *d = 10 * j + i;
 	}
     }
     printf("dat[1][1] = %8.1f\n", dat[1][1]);
@@ -63,7 +63,7 @@ int main(void)
 }
 END
 
-if ! cc -Isrc -o alloc2f_1 alloc2f_1.c src/alloc2f.c src/alloc.c src/err_msg.c
+if ! $CC $CFLAGS -Isrc -o alloc2f_1 alloc2f_1.c src/alloc2f.c src/alloc.c src/err_msg.c
 then
     echo "Could not compile the test application"
     exit 1

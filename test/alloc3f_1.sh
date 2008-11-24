@@ -9,7 +9,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: $
+# $Id: alloc3f_1.sh,v 1.1 2008/11/24 04:12:12 gcarrie Exp $
 #
 ########################################################################
 
@@ -36,13 +36,13 @@ int main(void)
 {
     long kmax, jmax, imax;
     long k, j, i;
-    float *p, *q;
-    float **p2, **q2;
-    float ***dat = NULL, ***p3, ***q3;
+    float *d;
+    float **d2, **e2;
+    float ***dat = NULL, ***d3, ***e3;
 
-    kmax = ${KMAX};
-    jmax = ${JMAX};
-    imax = ${IMAX};
+    kmax = $KMAX;
+    jmax = $JMAX;
+    imax = $IMAX;
     fprintf(stderr, "Creating a %ld by %ld by %ld array (%ld bytes)\n",
 	    kmax, jmax, imax, kmax * jmax * imax * sizeof(float));
 
@@ -51,13 +51,13 @@ int main(void)
 	fprintf(stderr, "Could not allocate dat\n%s\n", err_get());
 	return 1;
     }
-    for (p3 = dat, q3 = dat + 1; *q3; p3++, q3++) {
-	k = p3 - dat;
-	for (p2 = *p3, q2 = *p3 + 1; p2 < *q3; p2++, q2++) {
-	    j = p2 - *p3;
-	    for (p = *p2; p < *q2; p++) {
-		i = p - *p2;
-		*p = 100 * k + 10 * j + i;
+    for (d3 = dat, e3 = d3 + 1; *e3; d3++, e3++) {
+	k = d3 - dat;
+	for (d2 = *d3, e2 = d2 + 1; d2 < *e3; d2++, e2++) {
+	    j = d2 - *d3;
+	    for (d = *d2; d < *e2; d++) {
+		i = d - *d2;
+		*d = 100 * k + 10 * j + i;
 	    }
 	}
     }
