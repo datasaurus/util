@@ -8,7 +8,7 @@
   
    Please send feedback to user0@tkgeomap.org
   
-   $Id: alloc3f.c,v 1.2 2008/11/22 18:41:23 gcarrie Exp $
+   $Id: alloc3f.c,v 1.3 2008/11/24 04:18:54 gcarrie Exp $
  */
 
 #include "alloc.h"
@@ -34,12 +34,12 @@ float *** calloc3f(long kmax, long jmax, long imax)
 	return NULL;
     }
 
-    dat = (float ***)CALLOC(kk + 2, sizeof(float **));
+    dat = (float ***)CALLOC(kk, sizeof(float **));
     if ( !dat ) {
 	err_append("Could not allocate 2nd dimension.\n");
 	return NULL;
     }
-    dat[0] = (float **)CALLOC(kk * jj + 1, sizeof(float *));
+    dat[0] = (float **)CALLOC(kk * jj, sizeof(float *));
     if ( !dat[0] ) {
 	FREE(dat);
 	err_append("Could not allocate 1st dimension.\n");
@@ -52,10 +52,10 @@ float *** calloc3f(long kmax, long jmax, long imax)
 	err_append("Could not allocate array of values.\n");
 	return NULL;
     }
-    for (k = 1; k <= kmax; k++) {
+    for (k = 1; k < kmax; k++) {
 	dat[k] = dat[k - 1] + jmax;
     }
-    for (j = 1; j <= kmax * jmax; j++) {
+    for (j = 1; j < kmax * jmax; j++) {
 	dat[0][j] = dat[0][j - 1] + imax;
     }
     return dat;
