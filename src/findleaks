@@ -9,7 +9,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: findleaks,v 1.4 2008/11/22 18:45:48 gcarrie Exp $
+# $Id: findleaks,v 1.5 2008/11/23 19:41:45 gcarrie Exp $
 
 /(0x)?[0-9]+.* allocated / {
     cnt[$1]++
@@ -21,6 +21,8 @@ END {
     for (a in cnt) {
 	if (cnt[a] > 0) {
 	    printf "Leak at %s\n", a
+	    exit 0
 	}
     }
 }
+exit 1
