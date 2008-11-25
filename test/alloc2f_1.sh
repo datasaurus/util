@@ -9,7 +9,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: alloc2f_1.sh,v 1.4 2008/11/24 06:10:55 gcarrie Exp $
+# $Id: alloc2f_1.sh,v 1.5 2008/11/25 19:41:27 gcarrie Exp $
 #
 ########################################################################
 
@@ -35,24 +35,21 @@ int main(void)
 {
     long jmax, imax;
     long j, i;
-    float *d;
-    float **dat = NULL, **d2, **e2;
+    float **dat = NULL;
 
     jmax = ${JMAX};
     imax = ${IMAX};
-    fprintf(stderr, "Creating a %ld by %ld array (%ld bytes)\n",
-	    jmax, imax, jmax * imax * sizeof(float));
+    fprintf(stderr, "Creating a %ld by %ld array (%.1f bytes)\n",
+	    jmax, imax, (jmax * imax * sizeof(float)) / 1048576.0);
 
     dat = calloc2f(jmax, imax);
     if ( !dat ) {
 	fprintf(stderr, "Could not allocate dat\n%s\n", err_get());
 	return 1;
     }
-    for (d2 = dat, e2 = d2 + 1; *e2 ; d2++, e2++) {
-	j = d2 - dat;
-	for (d = *d2; d < *e2; d++) {
-	    i = d - *d2;
-	    *d = 10 * j + i;
+    for (j = 0; j < jmax; j++) {
+	for (i = 0; i < imax; i++) {
+	    dat[j][i] = 10 * j + i;
 	}
     }
     printf("dat[1][1] = %8.1f\n", dat[1][1]);

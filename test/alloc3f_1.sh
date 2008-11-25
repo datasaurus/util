@@ -9,13 +9,13 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: alloc3f_1.sh,v 1.2 2008/11/24 06:10:55 gcarrie Exp $
+# $Id: alloc3f_1.sh,v 1.3 2008/11/25 19:45:00 gcarrie Exp $
 #
 ########################################################################
 
 # This is the remove command.  Change this to : to retain intermediate results.
-RM='rm -f'
-#RM=:
+#RM='rm -f'
+RM=:
 
 # Array in the test application will have dimensions KMAX by JMAX by IMAX.
 # Set these to something substantial but not overwhelming.
@@ -36,28 +36,22 @@ int main(void)
 {
     long kmax, jmax, imax;
     long k, j, i;
-    float *d;
-    float **d2, **e2;
-    float ***dat = NULL, ***d3, ***e3;
+    float ***dat = NULL;
 
-    kmax = $KMAX;
-    jmax = $JMAX;
-    imax = $IMAX;
-    fprintf(stderr, "Creating a %ld by %ld by %ld array (%ld bytes)\n",
-	    kmax, jmax, imax, kmax * jmax * imax * sizeof(float));
-
+    kmax = ${KMAX};
+    jmax = ${JMAX};
+    imax = ${IMAX};
+    fprintf(stderr, "Creating a %ld by %ld by %ld array (%.1f MB)\n",
+	    kmax, jmax, imax, (kmax * jmax * imax * sizeof(float)) / 1048576.0);
     dat = calloc3f(kmax, jmax, imax);
     if ( !dat ) {
 	fprintf(stderr, "Could not allocate dat\n%s\n", err_get());
 	return 1;
     }
-    for (d3 = dat, e3 = d3 + 1; *e3; d3++, e3++) {
-	k = d3 - dat;
-	for (d2 = *d3, e2 = d2 + 1; d2 < *e3; d2++, e2++) {
-	    j = d2 - *d3;
-	    for (d = *d2; d < *e2; d++) {
-		i = d - *d2;
-		*d = 100 * k + 10 * j + i;
+    for (k = 0; k < kmax; k++) {
+	for (j = 0; j < jmax; j++) {
+	    for (i = 0; i < imax; i++) {
+		dat[k][j][i] = 100 * k + 10 * j + i;
 	    }
 	}
     }
