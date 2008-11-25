@@ -8,7 +8,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: alloc2.sh,v 1.6 2008/11/11 22:33:02 gcarrie Exp $
+# $Id: alloc2.sh,v 1.7 2008/11/24 02:28:10 gcarrie Exp $
 #
 ########################################################################
 
@@ -67,7 +67,12 @@ echo Sending memory trace to findleaks, which should report a leak.
 export MEM_DEBUG=2
 cc -Isrc -o alloc2 src/alloc.c alloc2.c
 echo Starting test3
-alloc2 2>&1 | $FINDLEAKS
+if alloc2 2>&1 | $FINDLEAKS
+then
+    echo Program leaks!
+else
+    echo ERROR: Failed to find memory leaks!
+fi
 echo Done with test3
 echo ""
 $RM alloc2

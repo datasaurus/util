@@ -9,7 +9,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: alloc1.sh,v 1.6 2008/11/11 22:31:41 gcarrie Exp $
+# $Id: alloc1.sh,v 1.7 2008/11/24 02:28:10 gcarrie Exp $
 #
 ########################################################################
 
@@ -83,6 +83,8 @@ cc -Isrc -o alloc1 src/alloc.c alloc1.c
 echo Starting test3
 alloc1
 echo Here are the contents of alloc1.out
+echo The output should look like that from test2, although the addresses are
+echo probably different.
 cat alloc1.out
 echo Done with test3
 echo ""
@@ -94,14 +96,19 @@ echo Sending memory trace to findleaks, which should not find anything.
 export MEM_DEBUG=2
 cc -Isrc -o alloc1 src/alloc.c alloc1.c
 echo Starting test4
-alloc1 2>&1 | src/findleaks
+if alloc1 2>&1 | src/findleaks
+then
+    echo findleaks found leaks!
+else
+    echo findleaks did not find any leaks.
+fi
 echo Done with test4
 echo ""
 $RM alloc1
 unset MEM_DEBUG
 
 echo test5: building and running alloc1.
-echo Sending memory trace to an unusable file.
+echo Sending memory trace to an unwritable file.
 echo There should be no diagnostic output, only a warning.
 export MEM_DEBUG=alloc1.out
 cc -Isrc -o alloc1 src/alloc.c alloc1.c
