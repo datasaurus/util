@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to user0@tkgeomap.org
 .\" 
-.\" $Id: findleaks.1,v 1.4 2008/11/07 22:46:21 gcarrie Exp $
+.\" $Id: findleaks.1,v 1.5 2008/11/25 22:36:04 gcarrie Exp $
 .\"
 .TH findleaks 1 "Find leaks"
 .SH NAME
@@ -19,6 +19,9 @@ should manage memory only with \fBMALLOC\fP (3), \fBCALLOC\fP (3),
 \fBMEM_DEBUG\fP environment variable defined.  When \fIprog\fP
 exits, \fBfindleaks\fP prints a list of any allocations that were never
 freed.  These are possible memory leaks.
+.SH RETURN VALUES
+If \fBfindleaks\fP finds memory leaks, it returns \fB0\fP (true).  Otherwise
+it returns \fB1\fP.
 .SH SEE ALSO
 \fBMALLOC\fP (3), \fBCALLOC\fP (3), \fBREALLOC\fP (3), \fBFREE\fP (3)
 .SH AUTHOR
