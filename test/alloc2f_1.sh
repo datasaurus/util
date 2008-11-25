@@ -9,7 +9,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: alloc2f_1.sh,v 1.3 2008/11/24 04:15:43 gcarrie Exp $
+# $Id: alloc2f_1.sh,v 1.4 2008/11/24 06:10:55 gcarrie Exp $
 #
 ########################################################################
 
@@ -19,8 +19,8 @@ RM='rm -f'
 
 # Array in the test application will have dimensions JMAX by IMAX.
 # Set these to something substantial but not overwhelming.
-JMAX=10000
-IMAX=10000
+JMAX=${JMAX:-"10000"}
+IMAX=${IMAX:-"10000"}
 
 CC="cc"
 CFLAGS="-g -Wall -Wmissing-prototypes"

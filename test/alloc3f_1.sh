@@ -9,7 +9,7 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: alloc3f_1.sh,v 1.1 2008/11/24 04:12:12 gcarrie Exp $
+# $Id: alloc3f_1.sh,v 1.2 2008/11/24 06:10:55 gcarrie Exp $
 #
 ########################################################################
 
@@ -17,11 +17,11 @@
 RM='rm -f'
 #RM=:
 
-# Array in the test application will have dimensions JMAX by IMAX.
+# Array in the test application will have dimensions KMAX by JMAX by IMAX.
 # Set these to something substantial but not overwhelming.
-KMAX=400
-JMAX=400
-IMAX=400
+KMAX=${KMAX:-"400"}
+JMAX=${JMAX:-"400"}
+IMAX=${IMAX:-"400"}
 
 CC="cc"
 CFLAGS="-g -Wall -Wmissing-prototypes"
