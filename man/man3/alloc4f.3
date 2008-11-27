@@ -1,0 +1,36 @@
+.\" 
+.\" Copyright (c) 2008 Gordon D. Carrie.  All rights reserved.
+.\" 
+.\" Licensed under the Open Software License version 3.0
+.\" 
+.\" Please address questions and feedback to user0@tkgeomap.org
+.\" 
+.\" $Id: $
+.\"
+.TH allocf 3 "Dynamic multidimensional allocators"
+.SH NAME
+calloc4f, free4f \- dynamic allocators for three dimensional arrays of floats
+.SH SYNOPSIS
+.nf
+\fB#include "allocf.h"\fP
+\fBfloat ****calloc4f(size_t\fP \fIl\fP, \fBsize_t\fP \fIk\fP, \fBsize_t\fP \fIj\fP, \fBsize_t\fP \fIi\fP);
+\fBvoid free4f(float ****\fP\fId\fP);
+.fi
+.SH DESCRIPTION
+These allocators create multidimensional arrays of float values.
+.PP
+\fBcalloc4f\fP allocates a four dimensional array of float values.  If the
+return value is assigned to \fId\fP, then the highest index of the array
+will be \fId\fP[\fIl\fP-1][\fIk\fP-1][\fIj\fP-1][\fIi\fP-1].
+terminated.
+\fId\fP[\fB0\fP][\fB0\fP][\fB0\fP]  will be a contiguous block of
+\fIl\fP \fB*\fP \fIk\fP \fB*\fP \fIj\fP \fB*\fP \fIi\fP floats.
+If something goes wrong, the function generates an error message that can be
+retrieved with a call to \fBerr_get\fR, and returns \fBNULL\fR.
+\fBfree4f\fP frees all memory associated with \fId\fP,
+which should be a return value of \fBmalloc4f\fP.
+.SH SEE ALSO
+\fBMALLOC\fP (3), \fBCALLOC\fP (3), \fBREALLOC\fP (3), \fBFREE\fP (3),
+\fBerr_msg\fP (3)
+.SH AUTHOR
+Gordon Carrie (user0@tkgeomap.org)
