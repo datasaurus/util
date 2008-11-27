@@ -10,13 +10,12 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: alloc2f_2.sh,v 1.1 2008/11/22 04:25:14 gcarrie Exp $
+# $Id: alloc2f_2.sh,v 1.2 2008/11/24 02:28:10 gcarrie Exp $
 #
 ########################################################################
 
-# This is the remove command.  Change this to : to retain intermediate results.
-
-RM='rm -f'
+# Set RM to : to save intermediate files
+RM=${RM:-'rm -f'}
 
 # Here is the source code for the test application.
 

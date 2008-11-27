@@ -9,13 +9,12 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: alloc3f_1.sh,v 1.4 2008/11/25 22:22:57 gcarrie Exp $
+# $Id: alloc3f_1.sh,v 1.5 2008/11/25 22:30:46 gcarrie Exp $
 #
 ########################################################################
 
-# This is the remove command.  Change this to : to retain intermediate results.
-RM='rm -f'
-#RM=:
+# Set RM to : to save intermediate files
+RM=${RM:-'rm -f'}
 
 # Array in the test application will have dimensions KMAX by JMAX by IMAX.
 # Set these to something substantial but not overwhelming.

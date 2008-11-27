@@ -9,14 +9,13 @@
 #
 # Please send feedback to user0@tkgeomap.org
 #
-# $Id: alloc1.sh,v 1.8 2008/11/25 22:51:20 gcarrie Exp $
+# $Id: alloc1.sh,v 1.9 2008/11/27 05:42:36 gcarrie Exp $
 #
 ########################################################################
 
 # This is the remove command.  Change this to : to retain intermediate results.
 
-RM=:
-#RM='rm -f'
+RM=${RM:-'rm -f'}
 
 CC="cc"
 CFLAGS="-g -Wall -Wmissing-prototypes"
@@ -122,13 +121,17 @@ chmod 644 alloc1.out
 $RM alloc1.out
 unset MEM_DEBUG
 
-echo test6: simulate allocation failure in alloc1
-echo This should produce a warning about failure to allocate x3.
-export MEM_FAIL="alloc1.c:22"
+echo test6: simulate allocation failures in alloc1
+echo Each sub-test should produce a warnings about failure to allocate x3.
 echo Starting test6
-alloc1
+for n in `egrep -n 'MALLOC|CALLOC|REALLOC' alloc1.c | sed 's/:.*//'`
+do
+    echo "Simulating allocation failure at alloc1.c:$n"
+    export MEM_FAIL="alloc1.c:$n"
+    alloc1
+    unset MEM_FAIL
+done
 echo Done with test6
 echo ""
-unset MEM_FAIL
 
 $RM alloc1.c alloc1
