@@ -1,0 +1,34 @@
+.\" 
+.\" Copyright (c) 2008 Gordon D. Carrie.  All rights reserved.
+.\" 
+.\" Licensed under the Open Software License version 3.0
+.\" 
+.\" Please address questions and feedback to user0@tkgeomap.org
+.\" 
+.\" $Id: $
+.\"
+.TH alloc2f 3 "Dynamic two dimensional allocator"
+.SH NAME
+calloc2f, free2f, \- dynamic allocators for two dimensional arrays of floats
+.SH SYNOPSIS
+.nf
+\fB#include "allocf.h"\fP
+\fBfloat **calloc2f(size_t\fP \fIj\fP, \fBsize_t\fP \fIi\fP);
+\fBvoid free2f(float **\fP\fId\fP);
+.fi
+.SH DESCRIPTION
+These allocators create multidimensional arrays of float values.
+.PP
+\fBcalloc2f\fP allocates a two dimensional array of float values dimensioned
+\fIj\fP by \fIi\fP.  If the return value is assigned to \fId\fP, then the
+highest index of the array will be \fId\fP[\fIj\fP-1][\fIi\fP-1].
+\fId\fP[\fB0\fP] will be a contiguous block of \fIj\fP \fB*\fP \fIi\fP floats.
+If something goes wrong, the function generates an error message that can be
+retrieved with a call to \fBerr_get\fP, and returns \fBNULL\fP.
+\fBfree2f\fP frees all memory associated with \fId\fP,
+which should be a return value of \fBcalloc2f\fP.
+.SH SEE ALSO
+\fBMALLOC\fP (3), \fBCALLOC\fP (3), \fBREALLOC\fP (3), \fBFREE\fP (3),
+\fBerr_msg\fP (3)
+.SH AUTHOR
+Gordon Carrie (user0@tkgeomap.org)
