@@ -8,9 +8,9 @@
 #
 # Licensed under the Open Software License version 3.0
 #
-# Please send feedback to user0@tkgeomap.org
+# Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_2.sh,v 1.2 2008/11/24 02:28:10 gcarrie Exp $
+# $Id: alloc2f_2.sh,v 1.3 2008/11/27 05:54:34 gcarrie Exp $
 #
 ########################################################################
 

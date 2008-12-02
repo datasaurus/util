@@ -7,9 +7,9 @@
 # Copyright (c) 2008 Gordon D. Carrie
 # Licensed under the Open Software License version 3.0
 #
-# Please send feedback to user0@tkgeomap.org
+# Please send feedback to dev0@trekix.net
 #
-# $Id: alloc3f_1.sh,v 1.5 2008/11/25 22:30:46 gcarrie Exp $
+# $Id: alloc3f_1.sh,v 1.6 2008/11/27 05:54:34 gcarrie Exp $
 #
 ########################################################################
 

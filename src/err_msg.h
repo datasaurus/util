@@ -6,9 +6,9 @@
    Copyright (c) 2007,2008 Gordon D. Carrie
    Licensed under the Open Software License version 3.0
   
-   Please send feedback to user0@tkgeomap.org
+   Please send feedback to dev0@trekix.net
   
-   $Id: err_msg.h,v 1.2 2008/11/06 17:09:42 gcarrie Exp $
+   $Id: err_msg.h,v 1.3 2008/11/22 18:41:23 gcarrie Exp $
  */
 
 #ifndef ERR_MSG_H_

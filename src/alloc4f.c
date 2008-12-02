@@ -6,9 +6,9 @@
    Copyright (c) 2008 Gordon D. Carrie
    Licensed under the Open Software License version 3.0
   
-   Please send feedback to user0@tkgeomap.org
+   Please send feedback to dev0@trekix.net
   
-   $Id: alloc4f.c,v 1.1 2008/11/22 03:53:08 gcarrie Exp $
+   $Id: alloc4f.c,v 1.2 2008/11/22 18:41:23 gcarrie Exp $
  */
 
 #include "alloc.h"

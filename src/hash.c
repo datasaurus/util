@@ -5,9 +5,9 @@
    Copyright (c) 2008 Gordon D. Carrie
    Licensed under the Open Software License version 3.0
 
-   Please send feedback to user0@tkgeomap.org
+   Please send feedback to dev0@trekix.net
 
-   $Id: hash.c,v 1.17 2008/11/11 22:57:23 gcarrie Exp $
+   $Id: hash.c,v 1.18 2008/11/22 18:41:23 gcarrie Exp $
 */
 
 /*

@@ -6,9 +6,9 @@
 #
 # Licensed under the Open Software License version 3.0
 #
-# Please send feedback to user0@tkgeomap.org
+# Please send feedback to dev0@trekix.net
 #
-# $Id: hash1.sh,v 1.6 2008/11/11 21:08:35 gcarrie Exp $
+# $Id: hash1.sh,v 1.7 2008/11/11 22:15:54 gcarrie Exp $
 #
 ########################################################################
 
