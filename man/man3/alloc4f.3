@@ -5,11 +5,11 @@
 .\" 
 .\" Please address questions and feedback to user0@tkgeomap.org
 .\" 
-.\" $Id: $
+.\" $Id: alloc4f.3,v 1.1 2008/11/27 04:55:06 gcarrie Exp $
 .\"
-.TH allocf 3 "Dynamic multidimensional allocators"
+.TH allocf 3 "Dynamic four dimensional allocators"
 .SH NAME
-calloc4f, free4f \- dynamic allocators for three dimensional arrays of floats
+calloc4f, free4f \- dynamic allocators for four dimensional arrays of floats
 .SH SYNOPSIS
 .nf
 \fB#include "allocf.h"\fP
@@ -17,7 +17,7 @@ calloc4f, free4f \- dynamic allocators for three dimensional arrays of floats
 \fBvoid free4f(float ****\fP\fId\fP);
 .fi
 .SH DESCRIPTION
-These allocators create multidimensional arrays of float values.
+These allocators create four dimensional arrays of float values.
 .PP
 \fBcalloc4f\fP allocates a four dimensional array of float values.  If the
 return value is assigned to \fId\fP, then the highest index of the array

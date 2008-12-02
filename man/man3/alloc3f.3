@@ -5,11 +5,11 @@
 .\" 
 .\" Please address questions and feedback to user0@tkgeomap.org
 .\" 
-.\" $Id: $
+.\" $Id: alloc3f.3,v 1.1 2008/11/27 04:52:23 gcarrie Exp $
 .\"
-.TH alloc3f 3 "Dynamic multidimensional allocators"
+.TH alloc3f 3 "Dynamic three dimensional allocators"
 .SH NAME
-calloc3f, freef3, \- dynamic allocators for three arrays of floats
+calloc3f, freef3, \- dynamic allocators for three dimensional arrays of floats
 .SH SYNOPSIS
 .nf
 \fB#include "alloc3f.h"\fP
@@ -17,7 +17,7 @@ calloc3f, freef3, \- dynamic allocators for three arrays of floats
 \fBvoid freef3(float ***\fP\fId\fP);
 .fi
 .SH DESCRIPTION
-These allocators create multidimensional arrays of float values.
+These allocators create three dimensional arrays of float values.
 .PP
 \fBcalloc3f\fP allocates a three dimensional array of float values.  If the
 return value is assigned to \fId\fP, then the highest index of the array
