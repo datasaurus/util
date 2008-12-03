@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_1.sh,v 1.10 2008/12/03 22:22:55 gcarrie Exp $
+# $Id: alloc2f_1.sh,v 1.11 2008/12/03 22:35:09 gcarrie Exp $
 #
 ########################################################################
 
@@ -34,13 +34,14 @@ int main(int argc, char *argv[])
 {
     long jmax, imax;
     long j, i;
-    float **dat = NULL;
+    float **dat = NULL, **p2, **q2, *p, *q;
 
-    jmax = ${JMAX};
-    imax = ${IMAX};
+    jmax = $JMAX;
+    imax = $IMAX;
     fprintf(stderr, "Creating a %ld by %ld array (%.4g MB)\n",
 	    jmax, imax, ((double)jmax * (double)imax * sizeof(float)) / 1048576.0);
 
+    /* Create array and access with conventional indexing */
     dat = calloc2f(jmax, imax);
     if ( !dat ) {
 	fprintf(stderr, "%s: Could not allocate dat.\n%s", argv[0], err_get());
@@ -49,6 +50,24 @@ int main(int argc, char *argv[])
     for (j = 0; j < jmax; j++) {
 	for (i = 0; i < imax; i++) {
 	    dat[j][i] = 10 * j + i;
+	}
+    }
+    printf("dat[1][1] = %8.1f\n", dat[1][1]);
+    printf("dat[9][9] = %8.1f\n", dat[9][9]);
+    printf("dat[jmax-1][imax-1] = %8.1f\n", dat[jmax-1][imax-1]);
+    free2f(dat);
+
+    /* Create array and access with pointers */
+    dat = calloc2f(jmax, imax);
+    if ( !dat ) {
+	fprintf(stderr, "%s: Could not allocate dat.\n%s", argv[0], err_get());
+	return 1;
+    }
+    for (p2 = dat, q2 = p2 + 1; p2 < dat + jmax; p2++, q2++) {
+	j = p2 - dat;
+	for (p = *p2, q = *q2; p < *p2 + imax; p++, q++) {
+	    i = p - *p2;
+	    *p = 10 * j + i;
 	}
     }
     printf("dat[1][1] = %8.1f\n", dat[1][1]);
