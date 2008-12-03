@@ -8,7 +8,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: alloc2f.c,v 1.3 2008/12/02 17:19:39 gcarrie Exp $
+   $Id: alloc2f.c,v 1.4 2008/12/03 17:06:49 gcarrie Exp $
  */
 
 #include "alloc.h"
@@ -36,7 +36,7 @@ float ** calloc2f(long j, long i)
 	return NULL;
     }
 
-    dat = (float **)CALLOC(jj + 2, sizeof(float *));
+    dat = (float **)CALLOC(jj + 1, sizeof(float *));
     if ( !dat ) {
 	err_append("Could not allocate memory for 1st dimension of two dimensional"
 		" array.\n");
