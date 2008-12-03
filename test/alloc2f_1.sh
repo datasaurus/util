@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_1.sh,v 1.9 2008/12/03 22:18:28 gcarrie Exp $
+# $Id: alloc2f_1.sh,v 1.10 2008/12/03 22:22:55 gcarrie Exp $
 #
 ########################################################################
 
@@ -38,8 +38,8 @@ int main(int argc, char *argv[])
 
     jmax = ${JMAX};
     imax = ${IMAX};
-    fprintf(stderr, "Creating a %ld by %ld array (%.2g MB)\n",
-	    jmax, imax, (jmax * imax * sizeof(float)) / 1048576.0);
+    fprintf(stderr, "Creating a %ld by %ld array (%.4g MB)\n",
+	    jmax, imax, ((double)jmax * (double)imax * sizeof(float)) / 1048576.0);
 
     dat = calloc2f(jmax, imax);
     if ( !dat ) {
