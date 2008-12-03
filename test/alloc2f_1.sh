@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_1.sh,v 1.7 2008/11/27 05:54:34 gcarrie Exp $
+# $Id: alloc2f_1.sh,v 1.8 2008/12/02 17:19:39 gcarrie Exp $
 #
 ########################################################################
 
@@ -30,7 +30,7 @@ cat > alloc2f_1.c << END
 #include <err_msg.h>
 #include <alloc2f.h>
 
-int main(void)
+int main(int argc, char *argv[])
 {
     long jmax, imax;
     long j, i;
@@ -38,12 +38,12 @@ int main(void)
 
     jmax = ${JMAX};
     imax = ${IMAX};
-    fprintf(stderr, "Creating a %ld by %ld array (%.1f bytes)\n",
+    fprintf(stderr, "Creating a %ld by %ld array (%.2g MB)\n",
 	    jmax, imax, (jmax * imax * sizeof(float)) / 1048576.0);
 
     dat = calloc2f(jmax, imax);
     if ( !dat ) {
-	fprintf(stderr, "Could not allocate dat\n%s\n", err_get());
+	fprintf(stderr, "%s: Could not allocate dat.\n%s", argv[0], err_get());
 	return 1;
     }
     for (j = 0; j < jmax; j++) {
@@ -66,63 +66,77 @@ then
     exit 1
 fi
 
-echo test1: building and running alloc2f_1
+echo "test1: building and running alloc2f_1"
 echo ""
-echo Starting test1
+echo "Starting test1"
 alloc2f_1
-echo Done with test1
+echo "Done with test1"
 echo ""
 
-echo test2: building and running allocf1 with memory trace.
-echo An account of allocations and calls to free should appear on terminal
+echo "test2: building and running allocf1 with memory trace."
+echo "An account of allocations and calls to free should appear on terminal"
 echo ""
-echo Starting test2
+echo "Starting test2"
 export MEM_DEBUG=2
 alloc2f_1
-echo Done with test2
+echo "Done with test2"
 echo ""
 unset MEM_DEBUG
 
-echo test3: building and running alloc2f_1.
-echo Sending memory trace to findleaks, which should not find anything.
+echo "test3: building and running alloc2f_1."
+echo "Sending memory trace to findleaks, which should not find anything."
 export MEM_DEBUG=2
 echo ""
-echo Starting test3
-alloc2f_1 2>&1 | src/findleaks
-echo Done with test3
+echo "Starting test3"
+if alloc2f_1 2>&1 | src/findleaks
+then
+    echo "Program leaks!"
+else
+    echo "No leaks"
+fi
+echo "Done with test3"
 echo ""
 unset MEM_DEBUG
 
-echo test4: simulate allocation failure in alloc2f_1
-echo This should produce a warning about failure to allocate dat.
-export MEM_FAIL="src/alloc2f.c:41"
-echo ""
-echo Starting test4
-alloc2f_1
-echo Done with test4
-echo ""
-unset MEM_FAIL
+# The next tests simulate memory failures at lines where src/alloc2f.c
+# calls CALLOC.  The MEM_FAIL specifications are stored in ll.
+ll=`grep -n CALLOC src/alloc2f.c | sed 's/^\([0-9][0-9]*\):.*/src\/alloc2f.c:\1/'`
 
-echo test5: simulate a later allocation failure in alloc2f_1
-echo This should produce a warning about failure to allocate dat.
-export MEM_FAIL="src/alloc2f.c:46"
+echo "test4: simulate every possible allocation failure in alloc2f_1"
+echo "This should produce several warnings about failure to allocate dat."
+for l in $ll
+do
+    export MEM_FAIL=$l
+    echo ""
+    echo "    Starting test4 simulating failure at $l"
+    alloc2f_1 2>&1 | sed 's/^/    /'
+    echo "    Done with test4 simulating failure at $l"
+    unset MEM_FAIL
+done
 echo ""
-echo Starting test5
-alloc2f_1
-echo Done with test5
+echo "All done with test4"
 echo ""
-unset MEM_FAIL
 
-echo test6: simulate later allocation failure in alloc2f_1 with memory tracing
-echo This should produce a warning about failure to allocate dat.
-echo Trace output should show no leaks
-export MEM_FAIL="src/alloc2f.c:46"
+echo "test5: simulate later allocation failure in alloc2f_1 with memory tracing."
+echo "alloc2f_1 should exit gracefully without leaking."
 export MEM_DEBUG=3
+for l in $ll
+do
+    export MEM_FAIL=$l
+    echo ""
+    echo "    Starting test5 simulating failure at $l"
+    if alloc2f_1 3>&1 > /dev/null 2>&1 | src/findleaks
+    then
+	echo "Program leaks!"
+    else
+	echo "    No leaks"
+    fi
+    echo "    Done with test5 simulating failure at $l"
+    unset MEM_FAIL
+done
+unset MEM_DEBUG
 echo ""
-echo Starting test6
-alloc2f_1 3>&1
-echo Done with test6
+echo "All done with test5"
 echo ""
-unset MEM_FAIL
 
 $RM alloc2f_1.c alloc2f_1
