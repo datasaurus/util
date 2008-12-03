@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_1.sh,v 1.8 2008/12/02 17:19:39 gcarrie Exp $
+# $Id: alloc2f_1.sh,v 1.9 2008/12/03 22:18:28 gcarrie Exp $
 #
 ########################################################################
 
@@ -117,7 +117,7 @@ echo ""
 echo "All done with test4"
 echo ""
 
-echo "test5: simulate later allocation failure in alloc2f_1 with memory tracing."
+echo "test5: repeat test4 with memory tracing."
 echo "alloc2f_1 should exit gracefully without leaking."
 export MEM_DEBUG=3
 for l in $ll
