@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_1.sh,v 1.11 2008/12/03 22:35:09 gcarrie Exp $
+# $Id: alloc2f_1.sh,v 1.12 2008/12/03 23:17:45 gcarrie Exp $
 #
 ########################################################################
 
@@ -78,6 +78,16 @@ int main(int argc, char *argv[])
 }
 END
 
+(
+    printf 'dat[1][1] = %8.1f\n' 11.0
+    printf 'dat[9][9] = %8.1f\n' 99.0
+    printf 'dat[jmax-1][imax-1] = %8.1f\n' `expr 10 \* \( $JMAX - 1 \) + $IMAX - 1`
+    printf 'dat[1][1] = %8.1f\n' 11.0
+    printf 'dat[9][9] = %8.1f\n' 99.0
+    printf 'dat[jmax-1][imax-1] = %8.1f\n' `expr 10 \* \( $JMAX - 1 \) + $IMAX - 1`
+) \
+> correct
+
 SRC="alloc2f_1.c src/alloc2f.c src/alloc.c src/err_msg.c"
 if ! $CC $CFLAGS -Isrc -o alloc2f_1 $SRC
 then
@@ -88,7 +98,13 @@ fi
 echo "test1: building and running alloc2f_1"
 echo ""
 echo "Starting test1"
-alloc2f_1
+alloc2f_1 > attempt
+if diff correct attempt
+then
+    echo "alloc2f_1 produced correct output"
+else
+    echo "alloc2f_1 FAILED!"
+fi
 echo "Done with test1"
 echo ""
 
@@ -97,7 +113,7 @@ echo "An account of allocations and calls to free should appear on terminal"
 echo ""
 echo "Starting test2"
 export MEM_DEBUG=2
-alloc2f_1
+alloc2f_1 > /dev/null
 echo "Done with test2"
 echo ""
 unset MEM_DEBUG
@@ -158,4 +174,4 @@ echo ""
 echo "All done with test5"
 echo ""
 
-$RM alloc2f_1.c alloc2f_1
+$RM alloc2f_1.c alloc2f_1 correct attempt
