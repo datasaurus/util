@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_1.sh,v 1.12 2008/12/03 23:17:45 gcarrie Exp $
+# $Id: alloc2f_1.sh,v 1.13 2008/12/04 01:04:33 gcarrie Exp $
 #
 ########################################################################
 
@@ -135,7 +135,15 @@ unset MEM_DEBUG
 
 # The next tests simulate memory failures at lines where src/alloc2f.c
 # calls CALLOC.  The MEM_FAIL specifications are stored in ll.
-ll=`grep -n CALLOC src/alloc2f.c | sed 's/^\([0-9][0-9]*\):.*/src\/alloc2f.c:\1/'`
+ll=""
+printf "Will simulate memory failure at:\n"
+for f in $SRC
+do
+    l=`egrep -n 'MALLOC|CALLOC|REALLOC' $f | sed "s!^\([0-9][0-9]*\):.*!${f}:\1!"`
+    printf "%s\n" $l
+    ll="$ll $l"
+done
+printf "\n"
 
 echo "test4: simulate every possible allocation failure in alloc2f_1"
 echo "This should produce several warnings about failure to allocate dat."
