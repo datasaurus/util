@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc3f_1.sh,v 1.6 2008/11/27 05:54:34 gcarrie Exp $
+# $Id: alloc3f_1.sh,v 1.7 2008/12/02 17:19:39 gcarrie Exp $
 #
 ########################################################################
 
@@ -69,7 +69,8 @@ dat[9][9][9] =    999.0
 dat[kmax-1][jmax-1][imax-1] =  44289.0
 END
 
-if ! cc -Isrc -o alloc3f_1 alloc3f_1.c src/alloc3f.c src/alloc.c src/err_msg.c
+SRC="alloc3f_1.c src/alloc3f.c src/alloc.c src/err_msg.c"
+if ! $CC $CFLAGS -Isrc -o alloc3f_1 $SRC
 then
     echo "Could not compile the test application"
     exit 1
