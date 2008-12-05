@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc3f_1.sh,v 1.9 2008/12/05 18:17:44 gcarrie Exp $
+# $Id: alloc3f_1.sh,v 1.10 2008/12/05 18:20:04 gcarrie Exp $
 #
 ########################################################################
 
@@ -37,9 +37,9 @@ int main(int argc, char *argv[])
     long k, j, i;
     float ***dat = NULL, ***p3, **p2, *p;
 
-    kmax = 379;
-    jmax = 383;
-    imax = 421;
+    kmax = ${KMAX};
+    jmax = ${JMAX};
+    imax = ${IMAX};
     fprintf(stderr, "Creating a %ld by %ld by %ld array (%.1f MB)\n",
 	    kmax, jmax, imax, (kmax * jmax * imax * sizeof(float)) / 1048576.0);
 
