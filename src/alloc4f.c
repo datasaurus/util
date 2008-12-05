@@ -8,69 +8,66 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: alloc4f.c,v 1.2 2008/11/22 18:41:23 gcarrie Exp $
+   $Id: alloc4f.c,v 1.3 2008/12/02 17:19:39 gcarrie Exp $
  */
 
 #include "alloc.h"
 #include "err_msg.h"
 #include "alloc4f.h"
 
-float **** calloc4f(long l, long k, long j, long i)
+float **** calloc4f(long lmax, long kmax, long jmax, long imax)
 {
     float ****dat;
-    long n, ne;
-    size_t ll, kk, jj, ii;	/* Addends for pointer arithmetic */
-    size_t lk, lkj, lkji;
+    long k, j, l;
+    size_t ll, kk, jj, ii;
 
-    if (l <= 0 || k <= 0 || j <= 0 || i <= 0) {
+    if (lmax <= 0 || kmax <= 0 || jmax <= 0 || imax <= 0) {
 	err_append("Array dimensions must be positive.\n");
 	return NULL;
     }
-    ll = (size_t)l;
-    kk = (size_t)k;
-    jj = (size_t)j;
-    ii = (size_t)i;
-    lk = ll * kk;
-    lkj = lk * jj;
-    lkji = lkj * ii;
-    if (lk / ll != kk || lkj / lk != jj || lkji / lkj != ii) {
+    ll = (size_t)lmax;
+    kk = (size_t)kmax;
+    jj = (size_t)jmax;
+    ii = (size_t)imax;
+    if ((ll * kk) / ll != kk || (ll * kk * jj) / (ll * kk) != jj
+	    || (ll * kk * jj * ii) / (ll * kk * jj) != ii) {
 	err_append("Dimensions too big for pointer arithmetic.\n");
 	return NULL;
     }
-    dat = (float ****)CALLOC(ll + 1, sizeof(float ***));
+    dat = (float ****)CALLOC(ll + 2, sizeof(float ***));
     if ( !dat ) {
-	err_append("Could not allocate memory.\n");
+	err_append("Could not allocate 3rd dimension.\n");
 	return NULL;
     }
-    dat[0] = (float ***)CALLOC(lk + 1, sizeof(float **));
+    dat[0] = (float ***)CALLOC(ll * kk + 1, sizeof(float **));
     if ( !dat[0] ) {
 	FREE(dat);
-	err_append("Could not allocate memory.\n");
+	err_append("Could not allocate 2nd dimension.\n");
 	return NULL;
     }
-    dat[0][0] = (float **)CALLOC(lkj + 1, sizeof(float *));
+    dat[0][0] = (float **)CALLOC(ll * kk * jj + 1, sizeof(float *));
     if ( !dat[0][0] ) {
 	FREE(dat[0]);
 	FREE(dat);
-	err_append("Could not allocate memory.\n");
+	err_append("Could not allocate 1st dimension.\n");
 	return NULL;
     }
-    dat[0][0][0] = (float *)CALLOC(lkji + 1, sizeof(float));
+    dat[0][0][0] = (float *)CALLOC(ll * kk * jj * ii, sizeof(float));
     if ( !dat[0][0][0] ) {
 	FREE(dat[0][0]);
 	FREE(dat[0]);
 	FREE(dat);
-	err_append("Could not allocate memory.\n");
+	err_append("Could not allocate array of values.\n");
 	return NULL;
     }
-    for (n = 1; n < l; n++) {
-	dat[n] = dat[n - 1] + k;
+    for (l = 1; l <= lmax; l++) {
+	dat[l] = dat[l - 1] + kmax;
     }
-    for (n = 1, ne = l * k; n < ne; n++) {
-	dat[0][n] = dat[0][n - 1] + j;
+    for (k = 1; k <= lmax * kmax; k++) {
+	dat[0][k] = dat[0][k - 1] + jmax;
     }
-    for (n = 1, ne = l * k * j; n < ne; n++) {
-	dat[0][0][n] = dat[0][0][n - 1] + i;
+    for (j = 1; j <= lmax * kmax * jmax; j++) {
+	dat[0][0][j] = dat[0][0][j - 1] + imax;
     }
     return dat;
 }
