@@ -2,7 +2,7 @@
 #
 #- alloc2f_3.sh --
 #-	This script tests the allocators defined in src/alloc2f.c
-#-	It is like alloc2f_3.sh, except that it tests a small, one by one
+#-	It is like alloc2f_1.sh, except that it tests a small, one by one
 #-	array.
 #-
 # Copyright (c) 2008 Gordon D. Carrie
@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: $
+# $Id: alloc2f_3.sh,v 1.1 2008/12/05 20:52:11 gcarrie Exp $
 #
 ########################################################################
 
