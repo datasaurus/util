@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc3f_1.sh,v 1.7 2008/12/02 17:19:39 gcarrie Exp $
+# $Id: alloc3f_1.sh,v 1.8 2008/12/05 16:36:56 gcarrie Exp $
 #
 ########################################################################
 
@@ -18,9 +18,9 @@ RM=${RM:-'rm -f'}
 
 # Array in the test application will have dimensions KMAX by JMAX by IMAX.
 # Set these to something substantial but not overwhelming.
-KMAX=${KMAX:-"400"}
-JMAX=${JMAX:-"400"}
-IMAX=${IMAX:-"400"}
+KMAX=${KMAX:-"379"}
+JMAX=${JMAX:-"383"}
+IMAX=${IMAX:-"421"}
 
 CC="cc"
 CFLAGS="-g -Wall -Wmissing-prototypes"
