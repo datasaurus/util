@@ -8,7 +8,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: alloc2f.c,v 1.5 2008/12/03 22:55:36 gcarrie Exp $
+   $Id: alloc2f.c,v 1.6 2008/12/05 19:04:32 gcarrie Exp $
  */
 
 #include "alloc.h"
@@ -23,7 +23,6 @@ float ** calloc2f(long j, long i)
     size_t ji;
 
     /* Make sure casting to size_t does not overflow anything.  */
-
     if (j <= 0 || i <= 0) {
 	err_append("Array dimensions must be positive.\n");
 	return NULL;

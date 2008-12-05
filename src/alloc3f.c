@@ -8,7 +8,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: alloc3f.c,v 1.5 2008/12/02 17:19:39 gcarrie Exp $
+   $Id: alloc3f.c,v 1.6 2008/12/05 18:21:44 gcarrie Exp $
  */
 
 #include "alloc.h"
@@ -21,7 +21,7 @@ float *** calloc3f(long kmax, long jmax, long imax)
     long k, j;
     size_t kk, jj, ii;
 
-    /* CALLOC casts arguments to size_t. Cast explicitly and check for overflows. */
+    /* Make sure casting to size_t does not overflow anything.  */
     if (kmax <= 0 || jmax <= 0 || imax <= 0) {
 	err_append("Array dimensions must be positive.\n");
 	return NULL;
