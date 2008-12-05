@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc3f_1.sh,v 1.10 2008/12/05 18:20:04 gcarrie Exp $
+# $Id: alloc3f_1.sh,v 1.11 2008/12/05 19:02:37 gcarrie Exp $
 #
 ########################################################################
 
@@ -94,93 +94,119 @@ int main(int argc, char *argv[])
 END
 
 # Standard output from the test program should match contents of file correct.
-cat > correct << END
-dat[1][1][1] =    111.0
-dat[9][9][9] =    999.0
-dat[kmax-1][jmax-1][imax-1] =  42040.0
-dat[1][1][1] =    111.0
-dat[9][9][9] =    999.0
-dat[kmax-1][jmax-1][imax-1] =  42040.0
-END
+(
+    printf 'dat[1][1][1] = %8.1f\n' 111.0
+    printf 'dat[9][9][9] = %8.1f\n' 999.0
+    printf 'dat[kmax-1][jmax-1][imax-1] = %8.1f\n' \
+	    `expr 100 \* \( $KMAX - 1 \) + 10 \* \( $JMAX - 1 \) + $IMAX - 1`
+    printf 'dat[1][1][1] = %8.1f\n' 111.0
+    printf 'dat[9][9][9] = %8.1f\n' 999.0
+    printf 'dat[kmax-1][jmax-1][imax-1] = %8.1f\n' \
+	    `expr 100 \* \( $KMAX - 1 \) + 10 \* \( $JMAX - 1 \) + $IMAX - 1`
+) > correct
 
+echo "building alloc3f_1"
 SRC="alloc3f_1.c src/alloc3f.c src/alloc.c src/err_msg.c"
-if ! $CC $CFLAGS -Isrc -o alloc3f_1 $SRC
+if $CC $CFLAGS -Isrc -o alloc3f_1 $SRC
 then
-    echo "Could not compile the test application"
+    echo "success"
+else
+    echo "Build failed."
     exit 1
 fi
 
-echo test1: building and running alloc3f_1
+echo test1: running alloc3f_1
 echo ""
 echo Starting test1
-alloc3f_1 > attempt
+echo "----------------------------------------------------------------"
+alloc3f_1 | tee attempt
+echo "----------------------------------------------------------------"
 if diff correct attempt
 then
     echo "test program produced correct output"
 else
     echo "test program failed!"
 fi
+$RM attempt
 echo Done with test1
 echo ""
-$RM attempt
 
-echo test2: building and running allocf1 with memory trace.
+echo test2: running allocf1 with memory trace.
 echo An account of allocations and calls to free should appear on terminal
-echo ""
+echo "All other output will be discarded."
 echo Starting test2
 export MEM_DEBUG=2
-alloc3f_1
+echo "----------------------------------------------------------------"
+alloc3f_1 > /dev/null
+echo "----------------------------------------------------------------"
+unset MEM_DEBUG
 echo Done with test2
 echo ""
-unset MEM_DEBUG
 
-echo test3: building and running alloc3f_1.
+echo test3: running alloc3f_1 with memory trace.
 echo Sending memory trace to findleaks, which should not find anything.
 export MEM_DEBUG=2
-echo ""
 echo Starting test3
-(alloc3f_1 > attempt) 2>&1 | src/findleaks
-if diff correct attempt
+if alloc3f_1 2>&1 > /dev/null | src/findleaks
 then
-    echo "test program produced correct output"
+    echo "Program leaks!"
 else
-    echo "test program failed!"
+    echo "No leaks"
 fi
 echo Done with test3
 echo ""
-$RM attempt
 unset MEM_DEBUG
 
-echo test4: simulate allocation failure in alloc3f_1
-echo This should produce a warning about failure to allocate dat.
-export MEM_FAIL="src/alloc3f.c:41"
-echo ""
-echo Starting test4
-alloc3f_1
-echo Done with test4
-echo ""
-unset MEM_FAIL
+# The next tests simulate memory failures at lines where src/alloc2f.c
+# calls CALLOC.  The MEM_FAIL specifications are stored in ll.
+echo "The following tests impose simulated memory failures."
+ll=""
+printf "Will simulate memory failure at:\n"
+for f in $SRC
+do
+    l=`egrep -n 'MALLOC|CALLOC|REALLOC' $f | sed "s!^\([0-9][0-9]*\):.*!${f}:\1!"`
+    printf "%s\n" $l
+    ll="$ll $l"
+done
+printf "\n"
 
-echo test5: simulate a later allocation failure in alloc3f_1
-echo This should produce a warning about failure to allocate dat.
-export MEM_FAIL="src/alloc3f.c:46"
+echo "test4: simulate every possible allocation failure in alloc3f_1"
+echo "This should produce several warnings about failure to allocate dat."
 echo ""
-echo Starting test5
-alloc3f_1
-echo Done with test5
+for l in $ll
+do
+    export MEM_FAIL=$l
+    echo "    Starting test4 simulating failure at $l"
+    echo "    ------------------------------------------------------------"
+    alloc3f_1 2>&1 | sed 's/^/    /'
+    echo "    ------------------------------------------------------------"
+    echo "    Done with test4 simulating failure at $l"
+    echo ""
+    unset MEM_FAIL
+done
 echo ""
-unset MEM_FAIL
+echo "All done with test4"
+echo ""
 
-echo test6: simulate later allocation failure in alloc3f_1 with memory tracing
-echo This should produce a warning about failure to allocate dat.
-echo Trace output should show no leaks
-export MEM_FAIL="src/alloc3f.c:46"
+echo "test5: repeat test4 with memory tracing."
+echo "alloc3f_1 should exit gracefully without leaking."
+echo ""
 export MEM_DEBUG=3
-echo ""
-echo Starting test6
-alloc3f_1 3>&1
-echo Done with test6
-echo ""
-unset MEM_FAIL
+for l in $ll
+do
+    export MEM_FAIL=$l
+    echo "    Starting test5 simulating failure at $l"
+    if alloc3f_1 3>&1 > /dev/null 2>&1 | src/findleaks
+    then
+	echo "Program leaks!"
+    else
+	echo "    No leaks"
+    fi
+    echo "    Done with test5 simulating failure at $l"
+    echo ""
+    unset MEM_FAIL
+done
+unset MEM_DEBUG
+echo "All done with test5"
 
 $RM alloc3f_1.c alloc3f_1 correct
