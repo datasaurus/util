@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Id: alloc2f.3,v 1.2 2008/12/02 17:15:48 gcarrie Exp $
+.\" $Id: alloc2f.3,v 1.3 2008/12/02 17:19:39 gcarrie Exp $
 .\"
 .TH alloc2f 3 "Dynamic two dimensional allocator"
 .SH NAME
@@ -13,22 +13,38 @@ calloc2f, free2f, \- dynamic allocators for two dimensional arrays of floats
 .SH SYNOPSIS
 .nf
 \fB#include "allocf.h"\fP
-\fBfloat **calloc2f(size_t\fP \fIj\fP, \fBsize_t\fP \fIi\fP);
+\fBfloat **calloc2f(size_t\fP \fIjmax\fP, \fBsize_t\fP \fIimax\fP);
 \fBvoid free2f(float **\fP\fId\fP);
 .fi
 .SH DESCRIPTION
 These allocators create two dimensional arrays of float values.
 .PP
 \fBcalloc2f\fP allocates a two dimensional array of float values dimensioned
-\fIj\fP by \fIi\fP.  If the return value is assigned to \fId\fP, then the
-highest index of the array will be \fId\fP[\fIj\fP-1][\fIi\fP-1].
-\fId\fP[\fB0\fP] will be a contiguous block of \fIj\fP \fB*\fP \fIi\fP floats.
+\fIjmax\fP by \fIimax\fP.  If the return value is assigned to \fId\fP, then the
+highest index of the array will be \fId\fP[\fIjmax\fP-1][\fIimax\fP-1].
+\fId\fP[\fB0\fP] will be a contiguous block of \fIjmax\fP \fB*\fP \fIimax\fP floats.
+\fId\fP[\fIjmax\fP]  will point to \fId\fP[\fIjmax-1\fP][\fIimax\fP],
+\fId\fP[\fIjmax\fP+1] will be \fBNULL\fP.  This facilitates looping with
+pointers.  The following loops are equivalent.
+
+.nf
+    for (j = 0; j < jmax; j++)
+        for (i = 0; i < imax; i++)
+            use(dat[j][i]);
+    for (p2 = dat; p2[1]; p2++)
+        for (p = p2[0]; p < p2[1]; p++)
+            use(*p);
+.fi
+
+The second loop might be faster for some compilers and options.
+.PP
 If something goes wrong, the function generates an error message that can be
 retrieved with a call to \fBerr_get\fP, and returns \fBNULL\fP.
+.PP
 \fBfree2f\fP frees all memory associated with \fId\fP,
 which should be a return value of \fBcalloc2f\fP.
 .SH SEE ALSO
 \fBMALLOC\fP (3), \fBCALLOC\fP (3), \fBREALLOC\fP (3), \fBFREE\fP (3),
-\fBerr_msg\fP (3)
+\fBerr_msg\fP (3), \fBallocfvi.c\fP
 .SH AUTHOR
 Gordon Carrie (dev0@trekix.net)
