@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Id: alloc3f.3,v 1.5 2008/12/05 19:49:13 gcarrie Exp $
+.\" $Id: alloc3f.3,v 1.6 2008/12/05 19:52:17 gcarrie Exp $
 .\"
 .TH alloc3f 3 "Dynamic three dimensional allocators"
 .SH NAME
@@ -29,8 +29,9 @@ The pointer arrays have extra elements to facilitate looping with pointers.
 First, \fBd\fP[\fIkmax\fP] will point to \fBd\fP[\fIkmax\fP-1][\fIjmax\fP].
 Also, \fBd\fP[\fIkmax\fP+1] will be \fBNULL\fP.
 Finally, \fBd\fP[\fIkmax\fP-1][\fIjmax\fP] will point to
-\fBd\fP[\fIkmax\fP-1][\fIjmax\fP-1][\fIimax\fP]. Thus, the following two loops
+\fBd\fP[\fIkmax\fP-1][\fIjmax\fP-1][\fIimax\fP]. Thus, the following loops
 are equivalent.
+
 .nf
     for (k = 0; k < kmax; k++)
         for (j = 0; j < jmax; j++)
@@ -41,14 +42,16 @@ are equivalent.
             for (p = p2[0]; p < p2[1]; p++)
                 use(*p);
 .fi
+
 The second loop might be faster for some compilers and options.
 .PP
 If something goes wrong, the function generates an error message that can be
 retrieved with a call to \fBerr_get\fP, and returns \fBNULL\fP.
+.PP
 \fBfreef3\fP frees all memory associated with \fId\fP,
 which should be a return value of \fBmalloc3f\fP.
 .SH SEE ALSO
 \fBMALLOC\fP (3), \fBCALLOC\fP (3), \fBREALLOC\fP (3), \fBFREE\fP (3),
-\fBerr_msg\fP (3)
+\fBerr_msg\fP (3) \fBallocfvi.c\fP
 .SH AUTHOR
 Gordon Carrie (dev0@trekix.net)
