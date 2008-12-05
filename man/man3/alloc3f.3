@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Id: alloc3f.3,v 1.4 2008/12/05 18:43:51 gcarrie Exp $
+.\" $Id: alloc3f.3,v 1.5 2008/12/05 19:49:13 gcarrie Exp $
 .\"
 .TH alloc3f 3 "Dynamic three dimensional allocators"
 .SH NAME
@@ -25,7 +25,7 @@ will be \fId\fP[\fIkmax\fP-1][\fIjmax\fP-1][\fIimax\fP-1].
 \fId\fP[\fB0\fP][\fB0\fP] will be a contiguous block of
 \fIkmax\fP \fB*\fP \fIjmax\fP \fB*\fP \fIimax\fP floats.
 .PP
-The pointer arrays have extra elements for more convenient looping with pointers.
+The pointer arrays have extra elements to facilitate looping with pointers.
 First, \fBd\fP[\fIkmax\fP] will point to \fBd\fP[\fIkmax\fP-1][\fIjmax\fP].
 Also, \fBd\fP[\fIkmax\fP+1] will be \fBNULL\fP.
 Finally, \fBd\fP[\fIkmax\fP-1][\fIjmax\fP] will point to
