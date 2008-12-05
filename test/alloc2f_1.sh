@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_1.sh,v 1.15 2008/12/05 19:01:59 gcarrie Exp $
+# $Id: alloc2f_1.sh,v 1.16 2008/12/05 20:42:20 gcarrie Exp $
 #
 ########################################################################
 
@@ -78,6 +78,7 @@ int main(int argc, char *argv[])
 }
 END
 
+# Standard output from the test program should match contents of file correct.
 (
     printf 'dat[1][1] = %8.1f\n' 11.0
     printf 'dat[9][9] = %8.1f\n' 99.0
@@ -85,8 +86,7 @@ END
     printf 'dat[1][1] = %8.1f\n' 11.0
     printf 'dat[9][9] = %8.1f\n' 99.0
     printf 'dat[jmax-1][imax-1] = %8.1f\n' `expr 10 \* \( $JMAX - 1 \) + $IMAX - 1`
-) \
-> correct
+) > correct
 
 echo "building alloc2f_1"
 SRC="alloc2f_1.c src/alloc2f.c src/alloc.c src/err_msg.c"
