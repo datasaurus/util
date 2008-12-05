@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_1.sh,v 1.13 2008/12/04 01:04:33 gcarrie Exp $
+# $Id: alloc2f_1.sh,v 1.14 2008/12/04 03:12:21 gcarrie Exp $
 #
 ########################################################################
 
@@ -18,8 +18,8 @@ RM=${RM:-'rm -f'}
 
 # Array in the test application will have dimensions JMAX by IMAX.
 # Set these to something substantial but not overwhelming.
-JMAX=${JMAX:-"10000"}
-IMAX=${IMAX:-"10000"}
+JMAX=${JMAX:-"7907"}
+IMAX=${IMAX:-"7919"}
 
 CC="cc"
 CFLAGS="-g -Wall -Wmissing-prototypes"
@@ -34,10 +34,10 @@ int main(int argc, char *argv[])
 {
     long jmax, imax;
     long j, i;
-    float **dat = NULL, **p2, **q2, *p, *q;
+    float **dat = NULL, **p2, *p;
 
-    jmax = $JMAX;
-    imax = $IMAX;
+    jmax = ${JMAX};
+    imax = ${IMAX};
     fprintf(stderr, "Creating a %ld by %ld array (%.4g MB)\n",
 	    jmax, imax, ((double)jmax * (double)imax * sizeof(float)) / 1048576.0);
 
@@ -63,9 +63,9 @@ int main(int argc, char *argv[])
 	fprintf(stderr, "%s: Could not allocate dat.\n%s", argv[0], err_get());
 	return 1;
     }
-    for (p2 = dat, q2 = p2 + 1; p2 < dat + jmax; p2++, q2++) {
+    for (p2 = dat; p2[1]; p2++) {
 	j = p2 - dat;
-	for (p = *p2, q = *q2; p < *p2 + imax; p++, q++) {
+	for (p = p2[0]; p < p2[1]; p++) {
 	    i = p - *p2;
 	    *p = 10 * j + i;
 	}
