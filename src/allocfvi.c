@@ -9,7 +9,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: allocfvi.c,v 1.5 2008/11/25 22:43:35 gcarrie Exp $
+   $Id: allocfvi.c,v 1.6 2008/12/02 17:19:39 gcarrie Exp $
  */
 
 #include <stdlib.h>
@@ -73,11 +73,14 @@ int main(void)
     for (k = 0; k < kmax; k++) {
 	printf("%p dat3[%ld]       %12p\n", &dat3[k], k, dat3[k]);
     }
+    printf("%p dat3[%ld]       %12p\n", &dat3[kmax], kmax, dat3[kmax]);
     for (k = 0; k < kmax; k++) {
 	for (j = 0; j < jmax; j++) {
 	    printf("%p dat3[%ld][%ld]    %12p\n", &dat3[k][j], k, j, dat3[k][j]);
 	}
     }
+    printf("%p dat3[%ld][%ld]    %12p\n",
+	    &dat3[kmax-1][jmax], kmax-1, jmax, dat3[kmax-1][jmax]);
     for (k = 0; k < kmax; k++) {
 	for (j = 0; j < jmax; j++) {
 	    for (i = 0; i < imax; i++) {
