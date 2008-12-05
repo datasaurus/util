@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc3f_1.sh,v 1.8 2008/12/05 16:36:56 gcarrie Exp $
+# $Id: alloc3f_1.sh,v 1.9 2008/12/05 18:17:44 gcarrie Exp $
 #
 ########################################################################
 
@@ -31,17 +31,19 @@ cat > alloc3f_1.c << END
 #include <err_msg.h>
 #include <alloc3f.h>
 
-int main(void)
+int main(int argc, char *argv[])
 {
     long kmax, jmax, imax;
     long k, j, i;
-    float ***dat = NULL;
+    float ***dat = NULL, ***p3, **p2, *p;
 
-    kmax = ${KMAX};
-    jmax = ${JMAX};
-    imax = ${IMAX};
+    kmax = 379;
+    jmax = 383;
+    imax = 421;
     fprintf(stderr, "Creating a %ld by %ld by %ld array (%.1f MB)\n",
 	    kmax, jmax, imax, (kmax * jmax * imax * sizeof(float)) / 1048576.0);
+
+    /* Create array and access with conventional indexing */
     dat = calloc3f(kmax, jmax, imax);
     if ( !dat ) {
 	fprintf(stderr, "Could not allocate dat\n%s\n", err_get());
@@ -54,8 +56,37 @@ int main(void)
 	    }
 	}
     }
-    printf("dat[1][1][1] = %8.1f\n", dat[1][1][1]);
-    printf("dat[9][9][9] = %8.1f\n", dat[9][9][9]);
+    if (kmax > 1 && jmax > 1 && imax > 1) {
+	printf("dat[1][1][1] = %8.1f\n", dat[1][1][1]);
+    }
+    if (kmax > 9 && jmax > 9 && imax > 9) {
+	printf("dat[9][9][9] = %8.1f\n", dat[9][9][9]);
+    }
+    printf("dat[kmax-1][jmax-1][imax-1] = %8.1f\n", dat[kmax-1][jmax-1][imax-1]);
+    free3f(dat);
+    
+    /* Create array and access with pointers */
+    dat = calloc3f(kmax, jmax, imax);
+    if ( !dat ) {
+        fprintf(stderr, "%s: Could not allocate dat.\n%s", argv[0], err_get());
+        return 1;
+    }
+    for (p3 = dat; p3[1]; p3++) {
+	k = p3 - dat;
+	for (p2 = p3[0]; p2 < p3[1]; p2++) {
+	    j = p2 - *p3;
+	    for (p = p2[0]; p < p2[1]; p++) {
+		i = p - *p2;
+		*p = 100 * k + 10 * j + i;
+	    }
+	}
+    }
+    if (kmax > 1 && jmax > 1 && imax > 1) {
+	printf("dat[1][1][1] = %8.1f\n", dat[1][1][1]);
+    }
+    if (kmax > 9 && jmax > 9 && imax > 9) {
+	printf("dat[9][9][9] = %8.1f\n", dat[9][9][9]);
+    }
     printf("dat[kmax-1][jmax-1][imax-1] = %8.1f\n", dat[kmax-1][jmax-1][imax-1]);
     free3f(dat);
     return 0;
@@ -66,7 +97,10 @@ END
 cat > correct << END
 dat[1][1][1] =    111.0
 dat[9][9][9] =    999.0
-dat[kmax-1][jmax-1][imax-1] =  44289.0
+dat[kmax-1][jmax-1][imax-1] =  42040.0
+dat[1][1][1] =    111.0
+dat[9][9][9] =    999.0
+dat[kmax-1][jmax-1][imax-1] =  42040.0
 END
 
 SRC="alloc3f_1.c src/alloc3f.c src/alloc.c src/err_msg.c"
