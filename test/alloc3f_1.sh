@@ -2,14 +2,14 @@
 #
 #- alloc3f_1.sh --
 #-	This script tests the allocators defined in src/alloc3f.c
-#-	It allocates, accesses, and then frees a two dimensional array.
+#-	It allocates, accesses, and then frees a three dimensional array.
 #-
 # Copyright (c) 2008 Gordon D. Carrie
 # Licensed under the Open Software License version 3.0
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc3f_1.sh,v 1.11 2008/12/05 19:02:37 gcarrie Exp $
+# $Id: alloc3f_1.sh,v 1.12 2008/12/05 21:08:44 gcarrie Exp $
 #
 ########################################################################
 
