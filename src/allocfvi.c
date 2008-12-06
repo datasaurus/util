@@ -9,7 +9,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: allocfvi.c,v 1.7 2008/12/05 18:44:42 gcarrie Exp $
+   $Id: allocfvi.c,v 1.8 2008/12/06 06:11:49 gcarrie Exp $
  */
 
 #include <stdlib.h>
@@ -22,10 +22,12 @@
 int main(void)
 {
     float **dat2, ***dat3, ****dat4;
-    long lmax = 2, kmax = 3, jmax = 4, imax = 5;
+    long lmax, kmax, jmax, imax;
     long l, k, j, i;
 
     /* Create an array with 2 dimensions */
+    jmax = 2;
+    imax = 3;
     dat2 = calloc2f(jmax, imax);
     if ( !dat2 ) {
 	fprintf(stderr, "%s.\nCould not allocate memory.\n", err_get());
@@ -53,6 +55,9 @@ int main(void)
     free2f(dat2);
 
     /* Create an array with 3 dimensions */
+    kmax = 2;
+    jmax = 3;
+    imax = 4;
     dat3 = calloc3f(kmax, jmax, imax);
     if ( !dat3 ) {
 	fprintf(stderr, "%s.\nCould not allocate memory.\n", err_get());
@@ -93,6 +98,10 @@ int main(void)
     free3f(dat3);
 
     /* Create an array with 4 dimensions */
+    lmax = 2;
+    kmax = 3;
+    jmax = 4;
+    imax = 5;
     dat4 = calloc4f(lmax, kmax, jmax, imax);
     if ( !dat4 ) {
 	fprintf(stderr, "%s.\nCould not allocate memory.\n", err_get());
