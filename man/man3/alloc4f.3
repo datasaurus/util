@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Id: alloc4f.3,v 1.3 2008/12/02 17:19:39 gcarrie Exp $
+.\" $Id: alloc4f.3,v 1.4 2008/12/05 23:12:29 gcarrie Exp $
 .\"
 .TH allocf 3 "Dynamic four dimensional allocators"
 .SH NAME
@@ -21,20 +21,20 @@ These allocators create four dimensional arrays of float values.
 .PP
 \fBcalloc4f\fP allocates a four dimensional array of float values.  If the
 return value is assigned to \fId\fP, then the highest index of the array
-will be \fId\fP[\fIl\fP-1][\fIk\fP-1][\fIj\fP-1][\fIi\fP-1].
+is \fId\fP[\fIl\fP-1][\fIk\fP-1][\fIj\fP-1][\fIi\fP-1].
 terminated.
-\fId\fP[\fB0\fP][\fB0\fP][\fB0\fP]  will be a contiguous block of
+\fId\fP[\fB0\fP][\fB0\fP][\fB0\fP]  is a contiguous block of
 \fIl\fP \fB*\fP \fIk\fP \fB*\fP \fIj\fP \fB*\fP \fIi\fP floats.
 .PP
-The pointer arrays have extra elements to facilitate looping with pointers.
-First, \fBd\fP[\fIlmax\fP] will point to
-\fBd\fP[\fIlmax\fP-1][\fIkmax\fP].
-Also, \fBd\fP[\fIlmax\fP+1] will be \fBNULL\fP.
-Second, \fBd\fP[\fIlmax\fP-1][\fIkmax\fP] will point to
+The pointer arrays in \fId\fP have extra elements to facilitate looping
+with pointers.
+\fBd\fP[\fIlmax\fP] points to \fBd\fP[\fIlmax\fP-1][\fIkmax\fP].
+\fBd\fP[\fIlmax\fP+1] is \fBNULL\fP.
+\fBd\fP[\fIlmax\fP-1][\fIkmax\fP] points to
 \fBd\fP[\fIlmax\fP-1][\fIkmax\fP-1][\fIjmax\fP].
-Finally, \fBd\fP[\fIlmax\fP-1][\fIkmax\fP-1][\fIjmax\fP] will point to
+\fBd\fP[\fIlmax\fP-1][\fIkmax\fP-1][\fIjmax\fP] points to
 \fBd\fP[\fIlmax\fP-1][\fIkmax\fP-1][\fIjmax\fP-1][\fIimax\fP].
-Thus, the following loops are equivalent.
+In this scheme, the following loops are equivalent.
 
 .nf
     for (l = 0; l < lmax; l++)

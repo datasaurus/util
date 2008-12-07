@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Id: alloc2f.3,v 1.3 2008/12/02 17:19:39 gcarrie Exp $
+.\" $Id: alloc2f.3,v 1.4 2008/12/05 20:06:27 gcarrie Exp $
 .\"
 .TH alloc2f 3 "Dynamic two dimensional allocator"
 .SH NAME
@@ -20,12 +20,14 @@ calloc2f, free2f, \- dynamic allocators for two dimensional arrays of floats
 These allocators create two dimensional arrays of float values.
 .PP
 \fBcalloc2f\fP allocates a two dimensional array of float values dimensioned
-\fIjmax\fP by \fIimax\fP.  If the return value is assigned to \fId\fP, then the
-highest index of the array will be \fId\fP[\fIjmax\fP-1][\fIimax\fP-1].
-\fId\fP[\fB0\fP] will be a contiguous block of \fIjmax\fP \fB*\fP \fIimax\fP floats.
-\fId\fP[\fIjmax\fP]  will point to \fId\fP[\fIjmax-1\fP][\fIimax\fP],
-\fId\fP[\fIjmax\fP+1] will be \fBNULL\fP.  This facilitates looping with
-pointers.  The following loops are equivalent.
+\fIjmax\fP by \fIimax\fP.  If the return value is assigned to \fId\fP, then
+the highest index of the array is \fId\fP[\fIjmax\fP-1][\fIimax\fP-1].
+\fId\fP[\fB0\fP] is a contiguous block of \fIjmax\fP \fB*\fP \fIimax\fP
+float values.
+.PP
+\fId\fP[\fIjmax\fP]  points to \fId\fP[\fIjmax-1\fP][\fIimax\fP].
+\fId\fP[\fIjmax\fP+1] is \fBNULL\fP.  This facilitates looping with
+pointers.  In this scheme, the following loops are equivalent.
 
 .nf
     for (j = 0; j < jmax; j++)
@@ -38,8 +40,8 @@ pointers.  The following loops are equivalent.
 
 The second loop might be faster for some compilers and options.
 .PP
-If something goes wrong, the function generates an error message that can be
-retrieved with a call to \fBerr_get\fP, and returns \fBNULL\fP.
+If something goes wrong, the function generates an error message that can
+be retrieved with a call to \fBerr_get\fP, and returns \fBNULL\fP.
 .PP
 \fBfree2f\fP frees all memory associated with \fId\fP,
 which should be a return value of \fBcalloc2f\fP.
