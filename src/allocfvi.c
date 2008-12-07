@@ -9,7 +9,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: allocfvi.c,v 1.9 2008/12/06 15:45:12 gcarrie Exp $
+   $Id: allocfvi.c,v 1.10 2008/12/06 15:51:50 gcarrie Exp $
  */
 
 #include <stdlib.h>
@@ -45,7 +45,7 @@ int main(void)
     printf("\njmax = %ld.  imax = %ld\n\n", jmax, imax);
     printf("           dat2       %12p\n", dat2);
     printf("\n");
-    for (j = 0; j < jmax; j++) {
+    for (j = 0; j < jmax + 2; j++) {
 	printf("%p dat2[%ld]    %12p\n", &dat2[j], j, dat2[j]);
     }
     printf("\n");
@@ -80,10 +80,9 @@ int main(void)
     printf("\nkmax = %ld.  jmax = %ld.  imax = %ld\n\n", kmax, jmax, imax);
     printf("           dat3          %12p\n", dat3);
     printf("\n");
-    for (k = 0; k < kmax; k++) {
+    for (k = 0; k < kmax + 2; k++) {
 	printf("%p dat3[%ld]       %12p\n", &dat3[k], k, dat3[k]);
     }
-    printf("%p dat3[%ld]       %12p\n", &dat3[kmax], kmax, dat3[kmax]);
     printf("\n");
     for (k = 0; k < kmax; k++) {
 	for (j = 0; j < jmax; j++) {
@@ -131,10 +130,9 @@ int main(void)
 	    lmax, kmax, jmax, imax);
     printf("           dat4             %12p\n", dat4);
     printf("\n");
-    for (l = 0; l < lmax; l++) {
+    for (l = 0; l < lmax + 2; l++) {
 	printf("%p dat4[%ld]          %12p\n", &dat4[l], l, dat4[l]);
     }
-    printf("%p dat4[%ld]          %12p\n", &dat4[lmax], lmax, dat4[lmax]);
     printf("\n");
     for (l = 0; l < lmax; l++) {
 	for (k = 0; k < kmax; k++) {
