@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.10 2008/11/24 02:35:08 gcarrie Exp $
+# $Id: Makefile,v 1.11 2008/11/25 22:44:29 gcarrie Exp $
 
 CFLAGS = -g -Wall -Wmissing-prototypes
 #LFLAGS = -L/usr/local/lib -lefence
@@ -7,7 +7,7 @@ EXECS = geog allocfvi
 geog : geog_app.c  geog_lib.c
 	cc ${CFLAGS} -o geog geog_app.c  geog_lib.c -lm
 
-SRC = allocfvi.c alloc3f.c alloc2f.c alloc.c err_msg.c
+SRC = allocfvi.c alloc4f.c alloc3f.c alloc2f.c alloc.c err_msg.c
 allocfvi : ${SRC}
 	cc ${CFLAGS} -o allocfvi ${SRC} ${LFLAGS}
 
