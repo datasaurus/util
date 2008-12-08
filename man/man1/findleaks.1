@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Id: findleaks.1,v 1.6 2008/11/25 22:38:42 gcarrie Exp $
+.\" $Id: findleaks.1,v 1.7 2008/12/02 17:19:39 gcarrie Exp $
 .\"
 .TH findleaks 1 "Find leaks"
 .SH NAME
@@ -20,8 +20,9 @@ should manage memory only with \fBMALLOC\fP (3), \fBCALLOC\fP (3),
 exits, \fBfindleaks\fP prints a list of any allocations that were never
 freed.  These are possible memory leaks.
 .SH RETURN VALUES
-If \fBfindleaks\fP finds memory leaks, it returns \fB0\fP (true).  Otherwise
-it returns \fB1\fP.
+If \fBfindleaks\fP finds memory leaks, it returns \fB0\fP (true).
+It returns \fB1\fP if it does not find any leaks.
+It returns \fB2\fP if something goes wrong.
 .SH SEE ALSO
 \fBMALLOC\fP (3), \fBCALLOC\fP (3), \fBREALLOC\fP (3), \fBFREE\fP (3)
 .SH AUTHOR
