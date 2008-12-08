@@ -9,15 +9,38 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_1.sh,v 1.16 2008/12/05 20:42:20 gcarrie Exp $
+# $Id: alloc2f_1.sh,v 1.17 2008/12/05 20:57:17 gcarrie Exp $
 #
 ########################################################################
 
-# Set RM to : to save intermediate files
+echo "
+alloc2f_1.sh --
+
+This script tests the functions defined in src/alloc2f.c.
+See alloc2f (3) for information on these functions.
+
+The script temporarily creates a source file named alloc2f.c and executable
+named alloc2f. alloc2f allocates, accesses, and then frees a two dimensional
+array.  The script checks for normal output, memory leaks, and proper error
+handling if an allocation fails.  The program files are normally deleted when
+the script exits.  To preserve program and temporary files for post mortem
+troubleshooting, set RM in the environment to a command that does not delete
+anything, e.g. ':'.
+
+Usage suggestions:
+./alloc2f_1.sh 2>&1 | less
+env RM=: ./alloc2f_1.sh 2>&1 | less
+
+Copyright (c) 2008 Gordon D. Carrie
+Licensed under the Open Software License version 3.0
+
+--------------------------------------------------------------------------------
+"
+
 RM=${RM:-'rm -f'}
 
 # Array in the test application will have dimensions JMAX by IMAX.
-# Set these to something substantial but not overwhelming.
+# Set these in the environment if they are too big.
 JMAX=${JMAX:-"7907"}
 IMAX=${IMAX:-"7919"}
 
