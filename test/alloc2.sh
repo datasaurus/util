@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2.sh,v 1.10 2008/12/02 17:19:39 gcarrie Exp $
+# $Id: alloc2.sh,v 1.11 2008/12/07 21:45:15 gcarrie Exp $
 #
 ########################################################################
 
@@ -35,8 +35,8 @@ Usage suggestions:
 ./alloc2.sh 2>&1 | less
 env RM=: ./alloc2.sh 2>&1 | less
 
-Copyright (c) 2008 Gordon D. Carrie Licensed under the Open Software
-License version 3.0
+Copyright (c) 2008 Gordon D. Carrie
+Licensed under the Open Software License version 3.0
 
 --------------------------------------------------------------------------------
 "

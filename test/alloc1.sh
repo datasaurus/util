@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc1.sh,v 1.11 2008/12/02 17:19:39 gcarrie Exp $
+# $Id: alloc1.sh,v 1.12 2008/12/07 19:20:40 gcarrie Exp $
 #
 ########################################################################
 
@@ -17,11 +17,12 @@ echo "
 alloc1.sh --
 
 This script tests the allocators defined in src/alloc.c.  See
-alloc (3) for information about these functions.  The script creates
-a test program that allocates and frees memory using functions in alloc.c.
-It checks for leaks and imposes various failures.  Output varies with
-system.  You must read the output and check for error messages and
-inconsistencies.
+alloc (3) for information about these functions.
+
+The script creates a test program that allocates and frees memory using
+functions in alloc.c.  It checks for leaks and imposes various failures.
+Output varies with system.  You must read the output and check for error
+messages and inconsistencies.
 
 The script puts source code for the test program into a source file
 named alloc1.c and creates an executable named alloc1.  Some output
@@ -35,8 +36,8 @@ Usage suggestions:
 ./alloc1.sh 2>&1 | less
 env RM=: ./alloc1.sh 2>&1 | less
 
-Copyright (c) 2008 Gordon D. Carrie Licensed under the Open Software
-License version 3.0
+Copyright (c) 2008 Gordon D. Carrie
+Licensed under the Open Software License version 3.0
 
 --------------------------------------------------------------------------------
 "
