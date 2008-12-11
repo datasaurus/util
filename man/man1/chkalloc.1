@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Id: chkalloc.1,v 1.8 2008/12/08 06:03:07 gcarrie Exp $
+.\" $Id: chkalloc.1,v 1.1 2008/12/11 17:28:31 gcarrie Exp $
 .\"
 .TH chkalloc 1 "Check allocations"
 .SH NAME
@@ -22,7 +22,7 @@ freed.  These are possible memory leaks.
 .SH RETURN VALUES
 If \fBchkalloc\fP finds no memory leaks, it returns \fB0\fP (success).
 It returns \fB1\fP if it finds memory leaks.
-It returns \fB-1\fP if something goes wrong.
+It returns \fB2\fP if something goes wrong.
 .SH SEE ALSO
 \fBMALLOC\fP (3), \fBCALLOC\fP (3), \fBREALLOC\fP (3), \fBFREE\fP (3)
 .SH AUTHOR

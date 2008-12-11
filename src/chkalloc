@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: $
+# $Id: chkalloc,v 1.1 2008/12/11 17:29:44 gcarrie Exp $
 
 /(0x)?[0-9]+.* allocated / {
     cnt[$1]++
@@ -22,7 +22,7 @@
 END {
     if (tot == 0) {
 	printf "Warning chkalloc did not receive input.\n" >"/dev/stderr"
-	exit -1
+	exit 2
     }
     leak=0
     for (a in cnt) {
