@@ -10,24 +10,46 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_2.sh,v 1.4 2008/12/02 17:19:39 gcarrie Exp $
+# $Id: alloc2f_2.sh,v 1.5 2008/12/05 21:17:40 gcarrie Exp $
 #
 ########################################################################
+
+echo "
+alloc2f_2.sh --
+
+This script tests the functions defined in src/alloc2f.c.
+See alloc2f (3) for information on these functions.
+
+It creates a test application named alloc2f_2 that attempts to make some
+impossibly large arrays.
+
+Usage suggestions:
+./alloc2f_2.sh 2>&1 | less
+To save temporary files:
+env RM=: ./alloc2f_2.sh 2>&1 | less
+
+Copyright (c) 2008 Gordon D. Carrie
+Licensed under the Open Software License version 3.0
+
+--------------------------------------------------------------------------------
+"
 
 # Set RM to : to save intermediate files
 RM=${RM:-'rm -f'}
 
-# Here is the source code for the test application.
+CC="cc"
+CFLAGS="-g -Wall -Wmissing-prototypes"
 
+# Here is the source code for the test application.
 cat > alloc2f_2.c << END
 #include <limits.h>
 #include <stdio.h>
+#include <err_msg.h>
 #include <alloc2f.h>
 
 int main(void)
 {
     size_t j_max, i_max;
-    int j, i;
     float **x = NULL;
 
     j_max = ULONG_MAX - 1;
@@ -66,13 +88,42 @@ int main(void)
 }
 END
 
-echo test1: building and running alloc2f_2.
-echo It should complain about excessively large or non-positive dimensions.
-echo ""
-cc -Isrc -o alloc2f_2 alloc2f_2.c src/alloc2f.c src/alloc.c src/err_msg.c
-echo Starting test1
-alloc2f_2
-echo Done with test1
-echo ""
+SRC="alloc2f_2.c src/alloc2f.c src/alloc.c src/err_msg.c"
+if ! $CC $CFLAGS -Isrc -o alloc2f_2 $SRC
+then
+    echo "Build failed."
+    exit 1
+fi
+
+
+echo "test1: attempting to run alloc2f_2."
+cat > correct1.out << END
+Could not allocate x:
+Array dimensions must be positive.
+
+Could not allocate x:
+Dimensions too big for pointer arithmetic.
+
+Could not allocate x:
+Array dimensions must be positive.
+
+Could not allocate x:
+Dimensions too big for pointer arithmetic.
+
+END
+if ./alloc2f_2 2>&1 | diff correct1.out -
+then
+    echo "alloc2f_1 produced correct output."
+    result1=success
+else
+    echo "alloc2f_1 produced bad output!"
+    result1=fail
+fi
+$RM correct1.out
+echo "test1 result = $result1
+Done with test1
+
+--------------------------------------------------------------------------------
+"
 
 $RM alloc2f_2 alloc2f_2.c
