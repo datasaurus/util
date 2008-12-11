@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: chkalloc.sh,v 1.2 2008/12/11 19:48:12 gcarrie Exp $
+# $Id: chkalloc.sh,v 1.3 2008/12/11 19:53:43 gcarrie Exp $
 #
 ########################################################################
 
@@ -35,8 +35,7 @@ CC="cc"
 CFLAGS="-g -Wall -Wmissing-prototypes"
 
 echo "test1: evaluate output from a normal process."
-
-result=success
+result1=success
 correct=0
 cat /dev/null > correct1.out
 $FINDLEAKS > test1.out << END
@@ -50,25 +49,24 @@ then
     echo "chkalloc gave correct return value ($correct)"
 else
     echo "chkalloc gave wrong return value ($? instead of $correct)"
-    result=fail
+    result1=fail
 fi
 if diff test1.out correct1.out
 then
     echo "chkalloc output was correct."
 else
     echo "chkalloc output was wrong."
-    result=fail
+    result1=fail
 fi
-echo "test1 result = $result"
 $RM test1.out correct2.out
-echo "Done with test1
+echo "test1 result = $result1
+Done with test1
 
 --------------------------------------------------------------------------------
 "
 
 echo "test2: evaluate output from a process that leaks memory."
-
-result=success
+result2=success
 correct=1
 $FINDLEAKS > test2.out << END
 0x00000001 (000000001) allocated at makebelieve.c:10
@@ -80,25 +78,25 @@ then
     echo "chkalloc gave correct return value ($correct)"
 else
     echo "chkalloc gave wrong return value ($? instead of $correct)"
-    result=fail
+    result2=fail
 fi
 if egrep -q "Leak at [0-9x]+" test2.out
 then
     echo "chkalloc output was correct."
 else
     echo "chkalloc output was wrong."
-    result=fail
+    result2=fail
 fi
-echo "test2 result = $result"
 $RM test2.out
-echo "Done with test2
+echo "test2 result = $result2
+Done with test2
 
 --------------------------------------------------------------------------------
 "
 
 echo "test3: make sure chkalloc complains if there is no input"
 
-result=success
+result3=success
 correct=2
 echo "Warning chkalloc did not receive input." > correct3.out
 : | $FINDLEAKS > test3.out 2>&1
@@ -107,18 +105,24 @@ then
     echo "chkalloc gave correct return value ($correct)"
 else
     echo "chkalloc gave wrong return value ($? instead of $correct)"
-    result=fail
+    result3=fail
 fi
 if diff test3.out correct3.out
 then
     echo "chkalloc output was correct."
 else
     echo "chkalloc output was wrong."
-    result=fail
+    result3=fail
 fi
-echo "test3 result = $result"
 $RM test3.out correct3.out
-echo "Done with test3
+echo "test3 result = $result3
+Done with test3
 
 --------------------------------------------------------------------------------
+"
+
+echo "Summary:
+test1 result = $result1
+test2 result = $result2
+test3 result = $result3
 "
