@@ -8,32 +8,23 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2.sh,v 1.11 2008/12/07 21:45:15 gcarrie Exp $
+# $Id: alloc2.sh,v 1.12 2008/12/08 05:52:56 gcarrie Exp $
 #
 ########################################################################
 
 echo "
 alloc2.sh --
 
-This script tests the allocators defined in src/alloc.c and the findleaks
-application.  See alloc (3) and findleaks (1) for more information.
+This script tests the allocators defined in src/alloc.c.  See
+alloc (3) for information about these functions.
 
-The script creates a test program that allocates and frees memory using
-functions in alloc.c.  The test program intentionally fails to free
-memory that it allocates.  The failures should be apparent in output from
-the program and findleaks.  You must read the output and check for error
-messages and inconsistencies.
-
-The script puts source code for the test program into a source file
-named alloc2.c and creates an executable named alloc2.  The program
-files are normally deleted when the script exits.  To preserve
-program and temporary files for post mortem troubleshooting, set
-RM in the environment to a command that does not delete anything,
-e.g. ':'.
+The script creates a test program that intentionally fails to free
+memory that it allocates.
 
 Usage suggestions:
-./alloc2.sh 2>&1 | less
-env RM=: ./alloc2.sh 2>&1 | less
+./alloc1.sh 2>&1 | less
+To save temporary files:
+env RM=: ./alloc1.sh 2>&1 | less
 
 Copyright (c) 2008 Gordon D. Carrie
 Licensed under the Open Software License version 3.0
@@ -41,7 +32,16 @@ Licensed under the Open Software License version 3.0
 --------------------------------------------------------------------------------
 "
 
+CHKALLOC=src/chkalloc
+if ! test -x $CHKALLOC
+then
+    echo "No executable named $CHKALLOC"
+    exit 1
+fi
+
+# Set RM to : in environment to save temporary files.
 RM=${RM:-'rm -f'}
+
 FINDLEAKS=src/findleaks
 CC="cc"
 CFLAGS="-g -Wall -Wmissing-prototypes"
@@ -75,41 +75,52 @@ fi
 
 # Run the tests
 
-echo "test1: This is a dry run alloc2.  There should not be any output,
-error messages, or crashes.
-Starting test1"
-alloc2
-echo "Done with test1
-
---------------------------------------------------------------------------------
-"
-
-echo "test2: building and running alloc2 with memory trace.
-An account of allocations and calls to free should appear on terminal
-the terminal.  The format of this account is described in alloc (3).
-Starting test2"
-export MEM_DEBUG=2
-alloc2
-unset MEM_DEBUG
-echo "Done with test2
-
---------------------------------------------------------------------------------
-"
-
-echo "test3: building and running alloc2.
-Sending memory trace to findleaks, which should report a leak.
-Starting test3"
-export MEM_DEBUG=2
-if alloc2 2>&1 | $FINDLEAKS
+echo "test1: normal run of alloc2."
+result1=success
+if ./alloc2
 then
-    echo Program leaks!
+    echo "alloc2 ran."
 else
-    echo ERROR: Failed to find memory leaks!
+    echo "alloc2 failed."
+    result1=fail
+fi
+echo "test1 result = $result1
+Done with test1
+
+--------------------------------------------------------------------------------
+"
+
+echo "test2: running alloc2 with memory trace."
+result2=success
+export MEM_DEBUG=2
+if ./alloc2 2>&1 | $CHKALLOC
+then
+    echo "chkalloc failed to find a leak"
+    result2=fail
+else
+    status=$?
+    if [ $status -eq 1 ]
+    then
+	echo "chkalloc found leak (as it should have)"
+    elif [ $status -eq 2 ]
+    then
+	echo "chkalloc did not receive input"
+	result2=fail
+    else
+	echo "chkalloc returned unknown value $?"
+	result2=fail
+    fi
 fi
 unset MEM_DEBUG
-echo "Done with test3
+echo "test2 result = $result2
+Done with test2
 
 --------------------------------------------------------------------------------
 "
 
-$RM alloc2.c
+echo "Summary:
+test1 result = $result1
+test2 result = $result2
+"
+
+$RM alloc2.c alloc2
