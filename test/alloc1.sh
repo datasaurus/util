@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc1.sh,v 1.13 2008/12/08 05:52:56 gcarrie Exp $
+# $Id: alloc1.sh,v 1.14 2008/12/11 21:01:23 gcarrie Exp $
 #
 ########################################################################
 
@@ -39,6 +39,13 @@ RM=${RM:-'rm -f'}
 
 CC="cc"
 CFLAGS="-g -Wall -Wmissing-prototypes"
+
+CHKALLOC=src/chkalloc
+if ! test -x $CHKALLOC
+then
+    echo "No executable named $CHKALLOC"
+    exit 1
+fi
 
 # Here is the source code for the driver application.
 cat > alloc1.c << END
@@ -142,7 +149,7 @@ Done with test3
 echo "test4: running alloc1 with memory trace going to chkalloc."
 result4=success
 export MEM_DEBUG=2
-if ./alloc1 2>&1 | src/chkalloc
+if ./alloc1 2>&1 | $CHKALLOC
 then
     echo "chkalloc reports that alloc1 did not leak memory."
 else
