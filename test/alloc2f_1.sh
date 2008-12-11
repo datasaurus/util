@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_1.sh,v 1.17 2008/12/05 20:57:17 gcarrie Exp $
+# $Id: alloc2f_1.sh,v 1.18 2008/12/08 05:53:30 gcarrie Exp $
 #
 ########################################################################
 
@@ -19,17 +19,16 @@ alloc2f_1.sh --
 This script tests the functions defined in src/alloc2f.c.
 See alloc2f (3) for information on these functions.
 
-The script temporarily creates a source file named alloc2f.c and executable
-named alloc2f. alloc2f allocates, accesses, and then frees a two dimensional
-array.  The script checks for normal output, memory leaks, and proper error
-handling if an allocation fails.  The program files are normally deleted when
-the script exits.  To preserve program and temporary files for post mortem
-troubleshooting, set RM in the environment to a command that does not delete
-anything, e.g. ':'.
+It creates a test application named alloc2f_1 that allocates, accesses, and frees
+a two dimensional array.  It runs the application while checking for memory leaks
+and evaluating responses to variable simulated failures.
 
 Usage suggestions:
 ./alloc2f_1.sh 2>&1 | less
+To save temporary files:
 env RM=: ./alloc2f_1.sh 2>&1 | less
+To override default dimensions of the test array:
+env JMAX=100 IMAX=100 ./alloc2f_1.sh 2>&1 | less
 
 Copyright (c) 2008 Gordon D. Carrie
 Licensed under the Open Software License version 3.0
@@ -37,6 +36,7 @@ Licensed under the Open Software License version 3.0
 --------------------------------------------------------------------------------
 "
 
+# Set RM to : in environment to save temporary files.
 RM=${RM:-'rm -f'}
 
 # Array in the test application will have dimensions JMAX by IMAX.
@@ -46,6 +46,13 @@ IMAX=${IMAX:-"7919"}
 
 CC="cc"
 CFLAGS="-g -Wall -Wmissing-prototypes"
+
+CHKALLOC=src/chkalloc
+if ! test -x $CHKALLOC
+then
+    echo "No executable named $CHKALLOC"
+    exit 1
+fi
 
 # Here is the source code for the driver application.
 cat > alloc2f_1.c << END
@@ -101,7 +108,15 @@ int main(int argc, char *argv[])
 }
 END
 
-# Standard output from the test program should match contents of file correct.
+SRC="alloc2f_1.c src/alloc2f.c src/alloc.c src/err_msg.c"
+if ! $CC $CFLAGS -Isrc -o alloc2f_1 $SRC
+then
+    echo "Build failed."
+    exit 1
+fi
+
+echo "test1: normal run of alloc2f_1"
+result1=success
 (
     printf 'dat[1][1] = %8.1f\n' 11.0
     printf 'dat[9][9] = %8.1f\n' 99.0
@@ -109,67 +124,47 @@ END
     printf 'dat[1][1] = %8.1f\n' 11.0
     printf 'dat[9][9] = %8.1f\n' 99.0
     printf 'dat[jmax-1][imax-1] = %8.1f\n' `expr 10 \* \( $JMAX - 1 \) + $IMAX - 1`
-) > correct
-
-echo "building alloc2f_1"
-SRC="alloc2f_1.c src/alloc2f.c src/alloc.c src/err_msg.c"
-if $CC $CFLAGS -Isrc -o alloc2f_1 $SRC
-then
-    echo "success"
-else
-    echo "Build failed."
-    exit 1
-fi
-echo ""
-
-echo "test1: running alloc2f_1"
-echo ""
-echo "Starting test1"
-echo "----------------------------------------------------------------"
-alloc2f_1 | tee attempt
-echo "----------------------------------------------------------------"
-if diff correct attempt
+) > correct1.out
+if ./alloc2f_1 | diff correct1.out -
 then
     echo "alloc2f_1 produced correct output."
 else
     echo "alloc2f_1 produced bad output!"
+    result1=fail
 fi
-$RM attempt
-echo "Done with test1"
-echo ""
+$RM correct1.out
+echo "test1 result = $result1
+Done with test1
+
+--------------------------------------------------------------------------------
+"
 
 echo "test2: running allocf1 with memory trace"
-echo "An account of allocations and calls to free should appear on terminal."
-echo "All other output will be discarded."
-echo "Starting test2"
+result2=success
 export MEM_DEBUG=2
-echo "----------------------------------------------------------------"
-alloc2f_1 > /dev/null
-echo "----------------------------------------------------------------"
-unset MEM_DEBUG
-echo "Done with test2"
-echo ""
-
-echo "test3: running allocf1 with memory trace"
-echo "Sending memory trace to findleaks, which should not find anything."
-export MEM_DEBUG=2
-echo "Starting test3"
-if alloc2f_1 2>&1 > /dev/null | src/findleaks
+if ./alloc2f_1 2>&1 > /dev/null | $CHKALLOC
 then
-    echo "Program leaks!"
-else
     echo "No leaks"
+else
+    echo "alloc2f_1 leaks!"
+    result1=fail
 fi
-echo "Done with test3"
-echo ""
 unset MEM_DEBUG
+echo "test2 result = $result2
+Done with test2
 
-# The next tests simulate memory failures at lines where src/alloc2f.c
-# calls CALLOC.  The MEM_FAIL specifications are stored in ll.
-echo "The following tests impose simulated memory failures."
+--------------------------------------------------------------------------------
+"
+
+# The next tests simulate memory failures at lines where source code
+# invokes a memory allocator.  These lines are stored in ll, which will
+# be assigned to MEM_FAIL in the tests.
+#
+# This test will not simulate failure in err_msg.c because the driver
+# application does not allocate memory for error messages.
 ll=""
-printf "Will simulate memory failure at:\n"
-for f in $SRC
+printf "Will simulate memory failures at:\n"
+for f in alloc2f_1.c src/alloc2f.c src/alloc.c
 do
     l=`egrep -n 'MALLOC|CALLOC|REALLOC' $f | sed "s!^\([0-9][0-9]*\):.*!${f}:\1!"`
     printf "%s\n" $l
@@ -177,43 +172,64 @@ do
 done
 printf "\n"
 
-echo "test4: simulate every possible allocation failure in alloc2f_1"
-echo "This should produce several warnings about failure to allocate dat."
-echo ""
+echo "test3: simulate allocation failures in alloc2f_1"
+result3=success
 for l in $ll
 do
     export MEM_FAIL=$l
-    echo "    Starting test4 simulating failure at $l"
-    echo "    ------------------------------------------------------------"
-    alloc2f_1 2>&1 | sed 's/^/    /'
-    echo "    ------------------------------------------------------------"
-    echo "    Done with test4 simulating failure at $l"
-    echo ""
+    if ./alloc2f_1 > /dev/null 2>&1
+    then
+	echo "alloc2f_1 ran normally when it should have failed at $MEM_FAIL"
+	result4=fail
+    else
+	echo "alloc2f_1 failed as expected for failure at $MEM_FAIL"
+    fi
     unset MEM_FAIL
 done
-echo ""
-echo "All done with test4"
-echo ""
+echo "test3 result = $result3
+All done with test3
 
-echo "test5: repeat test4 with memory tracing."
-echo "alloc2f_1 should exit gracefully without leaking."
-echo ""
+--------------------------------------------------------------------------------
+"
+
+echo "test4: repeat test4 with memory tracing."
+result4=success
 export MEM_DEBUG=3
 for l in $ll
 do
     export MEM_FAIL=$l
-    echo "    Starting test5 simulating failure at $l"
-    if alloc2f_1 3>&1 > /dev/null 2>&1 | src/findleaks
+    if ./alloc2f_1 3>&1 > /dev/null 2>&1 | $CHKALLOC
     then
-	echo "Program leaks!"
+	echo "alloc2f_1 exits without leaks when simulating failure at $MEM_FAIL"
     else
-	echo "    No leaks"
+	status=$?
+	if [ $status -eq 1 ]
+	then
+	    echo "alloc2f_1 leaks when simulating failure at $MEM_FAIL"
+	elif [ $status -eq 2 ]
+	then
+	    printf "%s%s\n" "chkalloc did not receive input from alloc2f_1" \
+		    " when simulating failure at $MEM_FAIL"
+	    result4=fail
+	else
+	    echo "chkalloc returned unknown value $?"
+	    result4=fail
+	fi
     fi
-    echo "    Done with test5 simulating failure at $l"
-    echo ""
     unset MEM_FAIL
 done
 unset MEM_DEBUG
-echo "All done with test5"
+echo "test4 result=$result4
+All done with test4
 
-$RM alloc2f_1.c alloc2f_1 correct
+--------------------------------------------------------------------------------
+"
+
+echo "Summary:
+test1 result = $result1
+test2 result = $result2
+test3 result = $result3
+test4 result = $result4
+"
+
+$RM alloc2f_1.c alloc2f_1
