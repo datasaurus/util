@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: chkalloc.sh,v 1.3 2008/12/11 19:53:43 gcarrie Exp $
+# $Id: chkalloc.sh,v 1.4 2008/12/11 21:04:30 gcarrie Exp $
 #
 ########################################################################
 
@@ -58,7 +58,7 @@ else
     echo "chkalloc output was wrong."
     result1=fail
 fi
-$RM test1.out correct2.out
+$RM test1.out correct1.out
 echo "test1 result = $result1
 Done with test1
 
