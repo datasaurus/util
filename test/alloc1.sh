@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc1.sh,v 1.12 2008/12/07 19:20:40 gcarrie Exp $
+# $Id: alloc1.sh,v 1.13 2008/12/08 05:52:56 gcarrie Exp $
 #
 ########################################################################
 
@@ -19,21 +19,13 @@ alloc1.sh --
 This script tests the allocators defined in src/alloc.c.  See
 alloc (3) for information about these functions.
 
-The script creates a test program that allocates and frees memory using
-functions in alloc.c.  It checks for leaks and imposes various failures.
-Output varies with system.  You must read the output and check for error
-messages and inconsistencies.
-
-The script puts source code for the test program into a source file
-named alloc1.c and creates an executable named alloc1.  Some output
-is also saved into temporary files.  These program and temporary
-files are normally deleted when the script exits.  To preserve
-program and temporary files for post mortem troubleshooting, set
-RM in the environment to a command that does not delete anything,
-e.g. ':'.
+It creates a test application that allocates and frees memory.  It runs
+the application while checking for memory leaks.  It also checks for
+proper responses to errors and failures.
 
 Usage suggestions:
 ./alloc1.sh 2>&1 | less
+To save temporary files:
 env RM=: ./alloc1.sh 2>&1 | less
 
 Copyright (c) 2008 Gordon D. Carrie
@@ -42,7 +34,9 @@ Licensed under the Open Software License version 3.0
 --------------------------------------------------------------------------------
 "
 
+# Set RM to : in environment to save temporary files.
 RM=${RM:-'rm -f'}
+
 CC="cc"
 CFLAGS="-g -Wall -Wmissing-prototypes"
 
@@ -90,93 +84,127 @@ then
     exit 1
 fi
 
-echo "test1: building and running alloc1.  There should be no output,
-error messages or crashes.
-Starting test1"
-alloc1
-echo "Done with test1
-
---------------------------------------------------------------------------------
-"
-
-echo "test2: building and running alloc1 with memory trace, i.e. MEM_DEBUG
-is set.  account of allocations and calls to free should appear on
-the terminal.  The format of this account is described in alloc (3).
-Starting test2"
-export MEM_DEBUG=2
-alloc1
-unset MEM_DEBUG
-echo "Done with test2
-
---------------------------------------------------------------------------------
-"
-
-echo "test3: building and running alloc1 with memory trace going to a
-file.  An account of allocations and calls to free should appear
-in alloc3.out
-Starting test3"
-export MEM_DEBUG=alloc3.out
-alloc1
-unset MEM_DEBUG
-echo "Here are the contents of alloc3.out.  The output should look like that
-from test2, although the addresses are probably different."
-cat alloc3.out
-$RM alloc3.out
-echo "Done with test3
-
---------------------------------------------------------------------------------
-"
-
-echo "test4: building and running alloc1 with memory trace and leak
-checking.  This time the memory trace is being piped to findleaks,
-which will look for allocations that are never freed.  See findleaks
-(1).  findleaks should not find any leaks.
-Starting test4"
-export MEM_DEBUG=2
-if alloc1 2>&1 | src/findleaks
+echo "test1: normal run of alloc1"
+result1=success
+if ./alloc1
 then
-    echo "findleaks found leaks!"
+    echo "alloc1 ran."
 else
-    echo "findleaks did not find any leaks."
+    echo "alloc1 failed."
+    result1=fail
+fi
+echo "test1 result = $result1
+Done with test1
+
+--------------------------------------------------------------------------------
+"
+
+echo "test2: running alloc1 with memory trace going to stderr."
+result2=success
+export MEM_DEBUG=2
+./alloc1 2> test2.err
+unset MEM_DEBUG
+ptn='[0-9x]+ \([0-9]+\) (allocated|freed) (by realloc )?at alloc1\.c:[0-9]+'
+if [ `egrep -c "$ptn" test2.err` -eq 8 ]
+then
+    echo "alloc1 error output was correct."
+else
+    echo "alloc1 error output was wrong."
+    result2=fail
+fi
+$RM test2.err
+echo "test2 result = $result2
+Done with test2
+
+--------------------------------------------------------------------------------
+"
+
+echo "test3: running alloc1 with memory trace going to a file."
+result3=success
+export MEM_DEBUG=test3.out
+./alloc1
+unset MEM_DEBUG
+ptn='[0-9x]+ \([0-9]+\) (allocated|freed) (by realloc )?at alloc1\.c:[0-9]+'
+if [ `egrep -c "$ptn" test3.out` -eq 8 ]
+then
+    echo "alloc1 output was correct."
+else
+    echo "alloc1 output was wrong."
+    result3=fail
+fi
+$RM test3.out
+echo "test3 result = $result3
+Done with test3
+
+--------------------------------------------------------------------------------
+"
+
+echo "test4: running alloc1 with memory trace going to chkalloc."
+result4=success
+export MEM_DEBUG=2
+if ./alloc1 2>&1 | src/chkalloc
+then
+    echo "chkalloc reports that alloc1 did not leak memory."
+else
+    echo "alloc1 leaks."
+    result4=fail
 fi
 unset MEM_DEBUG
-echo "Done with test4
+echo "test4 result = $result4
+Done with test4
 
 --------------------------------------------------------------------------------
 "
 
-echo "test5: building and running alloc1 with memory trace.  Sending
-memory trace to an unwritable file.  There should be a message
-announcing failure to produce diagnostic output.
-Starting test5"
+echo "test5: running alloc1, attempting to send memory trace to unwritable file."
+result5=success
 export MEM_DEBUG=alloc5.out
 touch alloc5.out
 chmod 444 alloc5.out
-alloc1
+if ./alloc1 2>&1 \
+	| grep -q "MEM_DEBUG set but unable to open diagnostic memory file:"
+then
+    echo "alloc1 error output was correct."
+else
+    echo "alloc1 error output was wrong."
+    result5=fail
+fi
 chmod 644 alloc5.out
 $RM alloc5.out
 unset MEM_DEBUG
-echo "Done with test5
+echo "test5 result = $result5
+Done with test5
 
 --------------------------------------------------------------------------------
 "
 
-echo "test6: simulate allocation failures in alloc1 This test will run
-alloc1 several times with the MEM_FAIL environment variable set.
-Each time it will impose an apparent allocation failure at a different
-place in the program.  Each time it runs the program should report the
-failure and exit gracefully.
-Starting test6"
+echo "test6: simulate allocation failures"
+result6=success
 for n in `egrep -n 'MALLOC|CALLOC|REALLOC' alloc1.c | sed 's/:.*//'`
 do
-    echo "Running alloc1, simulating allocation failure at alloc1.c:$n"
     export MEM_FAIL="alloc1.c:$n"
-    alloc1
+    if ./alloc1 2>&1 | egrep -q "Could not (re)?allocate x[123]"
+    then
+	echo "alloc1 error output was correct for simulated failure at $MEM_FAIL."
+    else
+	echo "alloc1 error output was wrong for simulated failure at $MEM_FAIL."
+	result6=fail
+    fi
     unset MEM_FAIL
 done
-echo "Done with test6
+echo "test6 result = $result6
+Done with test6
 
 --------------------------------------------------------------------------------
+"
+
+echo "Summary:
+test1 result = $result1
+test2 result = $result2
+test3 result = $result3
+test4 result = $result4
+test5 result = $result5
+test6 result = $result6
 "
 
 $RM alloc1.c alloc1
