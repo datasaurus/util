@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: chkalloc.sh,v 1.4 2008/12/11 21:04:30 gcarrie Exp $
+# $Id: chkalloc.sh,v 1.5 2008/12/11 21:10:36 gcarrie Exp $
 #
 ########################################################################
 
@@ -26,7 +26,12 @@ Licensed under the Open Software License version 3.0
 --------------------------------------------------------------------------------
 "
 
-FINDLEAKS=src/chkalloc
+CHKALLOC=src/chkalloc
+if ! test -x $CHKALLOC
+then
+    echo "No executable named $CHKALLOC"
+    exit 1
+fi
 
 # Set RM to : in environment to save temporary files.
 RM=${RM:-'rm -f'}
@@ -38,7 +43,7 @@ echo "test1: evaluate output from a normal process."
 result1=success
 correct=0
 cat /dev/null > correct1.out
-$FINDLEAKS > test1.out << END
+$CHKALLOC > test1.out << END
 0x00000001 (000000001) allocated at makebelieve.c:10
 0x00000001 (000000002) freed at makebelieve.c:14
 0x00000002 (000000003) allocated at makebelieve.c:16
@@ -68,7 +73,7 @@ Done with test1
 echo "test2: evaluate output from a process that leaks memory."
 result2=success
 correct=1
-$FINDLEAKS > test2.out << END
+$CHKALLOC > test2.out << END
 0x00000001 (000000001) allocated at makebelieve.c:10
 0x00000001 (000000002) freed at makebelieve.c:14
 0x00000002 (000000003) allocated at makebelieve.c:16
@@ -99,7 +104,7 @@ echo "test3: make sure chkalloc complains if there is no input"
 result3=success
 correct=2
 echo "Warning chkalloc did not receive input." > correct3.out
-: | $FINDLEAKS > test3.out 2>&1
+: | $CHKALLOC > test3.out 2>&1
 if [ $? -eq $correct ]
 then
     echo "chkalloc gave correct return value ($correct)"
