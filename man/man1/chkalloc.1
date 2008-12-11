@@ -1,0 +1,29 @@
+.\" 
+.\" Copyright (c) 2008 Gordon D. Carrie.  All rights reserved.
+.\" 
+.\" Licensed under the Open Software License version 3.0
+.\" 
+.\" Please address questions and feedback to dev0@trekix.net
+.\" 
+.\" $Id: chkalloc.1,v 1.8 2008/12/08 06:03:07 gcarrie Exp $
+.\"
+.TH chkalloc 1 "Check allocations"
+.SH NAME
+chkalloc \- search for leaks in output from diagnostic allocators
+.SH SYNOPSIS
+\fIprog\fP \fB2>&1 | chkalloc\fP
+.SH DESCRIPTION
+This script scans error output from \fIprog\fP.  \fIprog\fP
+should manage memory only with \fBMALLOC\fP (3), \fBCALLOC\fP (3), 
+\fBREALLOC\fP (3), and \fBFREE\fP (3), and it should be run with the 
+\fBMEM_DEBUG\fP environment variable defined.  When \fIprog\fP
+exits, \fBchkalloc\fP prints a list of any allocations that were never
+freed.  These are possible memory leaks.
+.SH RETURN VALUES
+If \fBchkalloc\fP finds no memory leaks, it returns \fB0\fP (success).
+It returns \fB1\fP if it finds memory leaks.
+It returns \fB-1\fP if something goes wrong.
+.SH SEE ALSO
+\fBMALLOC\fP (3), \fBCALLOC\fP (3), \fBREALLOC\fP (3), \fBFREE\fP (3)
+.SH AUTHOR
+Gordon Carrie (dev0@trekix.net)
