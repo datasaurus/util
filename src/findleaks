@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: findleaks,v 1.8 2008/12/02 17:19:39 gcarrie Exp $
+# $Id: findleaks,v 1.9 2008/12/08 06:03:07 gcarrie Exp $
 
 /(0x)?[0-9]+.* allocated / {
     cnt[$1]++
