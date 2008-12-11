@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: chkalloc.sh,v 1.1 2008/12/11 17:37:41 gcarrie Exp $
+# $Id: chkalloc.sh,v 1.2 2008/12/11 19:48:12 gcarrie Exp $
 #
 ########################################################################
 
@@ -38,6 +38,7 @@ echo "test1: evaluate output from a normal process."
 
 result=success
 correct=0
+cat /dev/null > correct1.out
 $FINDLEAKS > test1.out << END
 0x00000001 (000000001) allocated at makebelieve.c:10
 0x00000001 (000000002) freed at makebelieve.c:14
@@ -51,7 +52,6 @@ else
     echo "chkalloc gave wrong return value ($? instead of $correct)"
     result=fail
 fi
-cat /dev/null > correct1.out
 if diff test1.out correct1.out
 then
     echo "chkalloc output was correct."
@@ -100,6 +100,7 @@ echo "test3: make sure chkalloc complains if there is no input"
 
 result=success
 correct=2
+echo "Warning chkalloc did not receive input." > correct3.out
 : | $FINDLEAKS > test3.out 2>&1
 if [ $? -eq $correct ]
 then
@@ -108,7 +109,6 @@ else
     echo "chkalloc gave wrong return value ($? instead of $correct)"
     result=fail
 fi
-echo "Warning chkalloc did not receive input." > correct3.out
 if diff test3.out correct3.out
 then
     echo "chkalloc output was correct."
