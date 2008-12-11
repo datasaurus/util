@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: chkalloc.sh,v 1.5 2008/12/11 21:10:36 gcarrie Exp $
+# $Id: chkalloc.sh,v 1.6 2008/12/11 21:17:46 gcarrie Exp $
 #
 ########################################################################
 
@@ -26,18 +26,18 @@ Licensed under the Open Software License version 3.0
 --------------------------------------------------------------------------------
 "
 
+# Set RM to : in environment to save temporary files.
+RM=${RM:-'rm -f'}
+
+CC="cc"
+CFLAGS="-g -Wall -Wmissing-prototypes"
+
 CHKALLOC=src/chkalloc
 if ! test -x $CHKALLOC
 then
     echo "No executable named $CHKALLOC"
     exit 1
 fi
-
-# Set RM to : in environment to save temporary files.
-RM=${RM:-'rm -f'}
-
-CC="cc"
-CFLAGS="-g -Wall -Wmissing-prototypes"
 
 echo "test1: evaluate output from a normal process."
 result1=success
