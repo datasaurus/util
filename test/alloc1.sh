@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc1.sh,v 1.16 2008/12/12 18:42:23 gcarrie Exp gcarrie $
+# $Id: alloc1.sh,v 1.17 2008/12/12 20:23:13 gcarrie Exp $
 #
 ########################################################################
 
@@ -31,7 +31,7 @@ env RM=: ./alloc1.sh 2>&1 | less
 Copyright (c) 2008 Gordon D. Carrie
 Licensed under the Open Software License version 3.0
 
---------------------------------------------------------------------------------
+################################################################################
 "
 
 # Set RM to : in environment to save temporary files.
@@ -115,7 +115,7 @@ fi
 echo "test1 result = $result1
 Done with test1
 
---------------------------------------------------------------------------------
+################################################################################
 "
 
 echo "test2: running alloc1 with memory trace going to stderr."
@@ -134,7 +134,7 @@ $RM test2.err
 echo "test2 result = $result2
 Done with test2
 
---------------------------------------------------------------------------------
+################################################################################
 "
 
 echo "test3: running alloc1 with memory trace going to a file."
@@ -153,7 +153,7 @@ $RM test3.out
 echo "test3 result = $result3
 Done with test3
 
---------------------------------------------------------------------------------
+################################################################################
 "
 
 echo "test4: running alloc1 with memory trace going to chkalloc."
@@ -170,7 +170,7 @@ unset MEM_DEBUG
 echo "test4 result = $result4
 Done with test4
 
---------------------------------------------------------------------------------
+################################################################################
 "
 
 echo "test5: running alloc1, attempting to send memory trace to unwritable file."
@@ -192,7 +192,7 @@ unset MEM_DEBUG
 echo "test5 result = $result5
 Done with test5
 
---------------------------------------------------------------------------------
+################################################################################
 "
 
 echo "test6: simulate allocation failures"
@@ -212,7 +212,7 @@ done
 echo "test6 result = $result6
 Done with test6
 
---------------------------------------------------------------------------------
+################################################################################
 "
 
 echo "Summary:
@@ -225,4 +225,9 @@ test6 result = $result6
 "
 
 $RM alloc1.c alloc1
-echo "$0 all done."
+
+echo "$0 all done.
+
+################################################################################
+################################################################################
+"

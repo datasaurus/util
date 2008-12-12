@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: chkalloc.sh,v 1.6 2008/12/11 21:17:46 gcarrie Exp $
+# $Id: chkalloc.sh,v 1.7 2008/12/11 21:19:20 gcarrie Exp $
 #
 ########################################################################
 
@@ -23,7 +23,7 @@ To save temporary files, set RM to : in environment before running this script.
 Copyright (c) 2008 Gordon D. Carrie
 Licensed under the Open Software License version 3.0
 
---------------------------------------------------------------------------------
+################################################################################
 "
 
 # Set RM to : in environment to save temporary files.
@@ -67,7 +67,7 @@ $RM test1.out correct1.out
 echo "test1 result = $result1
 Done with test1
 
---------------------------------------------------------------------------------
+################################################################################
 "
 
 echo "test2: evaluate output from a process that leaks memory."
@@ -96,7 +96,7 @@ $RM test2.out
 echo "test2 result = $result2
 Done with test2
 
---------------------------------------------------------------------------------
+################################################################################
 "
 
 echo "test3: make sure chkalloc complains if there is no input"
@@ -123,11 +123,17 @@ $RM test3.out correct3.out
 echo "test3 result = $result3
 Done with test3
 
---------------------------------------------------------------------------------
+################################################################################
 "
 
 echo "Summary:
 test1 result = $result1
 test2 result = $result2
 test3 result = $result3
+"
+
+echo "$0 all done.
+
+################################################################################
+################################################################################
 "
