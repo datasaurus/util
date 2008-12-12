@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_2.sh,v 1.5 2008/12/05 21:17:40 gcarrie Exp $
+# $Id: alloc2f_2.sh,v 1.6 2008/12/11 23:11:31 gcarrie Exp $
 #
 ########################################################################
 
@@ -39,9 +39,12 @@ RM=${RM:-'rm -f'}
 
 CC="cc"
 CFLAGS="-g -Wall -Wmissing-prototypes"
+MSRC="alloc2f_2.c"
+SRC="$MSRC src/alloc2f.c src/alloc.c src/err_msg.c"
+EXEC="alloc2f_2"
 
 # Here is the source code for the test application.
-cat > alloc2f_2.c << END
+cat > $MSRC << END
 #include <limits.h>
 #include <stdio.h>
 #include <err_msg.h>
@@ -88,16 +91,8 @@ int main(void)
 }
 END
 
-SRC="alloc2f_2.c src/alloc2f.c src/alloc.c src/err_msg.c"
-if ! $CC $CFLAGS -Isrc -o alloc2f_2 $SRC
-then
-    echo "Build failed."
-    exit 1
-fi
-
-
-echo "test1: attempting to run alloc2f_2."
-cat > correct1.out << END
+# This is standard output from the test application.
+cat > ${EXEC}.out << END
 Could not allocate x:
 Array dimensions must be positive.
 
@@ -111,7 +106,17 @@ Could not allocate x:
 Dimensions too big for pointer arithmetic.
 
 END
-if ./alloc2f_2 2>&1 | diff correct1.out -
+
+# Build the test application
+if ! $CC $CFLAGS -Isrc -o $EXEC $SRC
+then
+    echo "Build failed."
+    exit 1
+fi
+
+# Run the tests
+echo "test1: attempting to run $EXEC."
+if ./$EXEC 2>&1 | diff ${EXEC}.out -
 then
     echo "alloc2f_1 produced correct output."
     result1=success
@@ -119,11 +124,11 @@ else
     echo "alloc2f_1 produced bad output!"
     result1=fail
 fi
-$RM correct1.out
+$RM ${EXEC}.out
 echo "test1 result = $result1
 Done with test1
 
 --------------------------------------------------------------------------------
 "
 
-$RM alloc2f_2 alloc2f_2.c
+$RM $EXEC $MSRC

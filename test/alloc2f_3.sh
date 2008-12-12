@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_3.sh,v 1.3 2008/12/12 19:05:59 gcarrie Exp $
+# $Id: alloc2f_3.sh,v 1.4 2008/12/12 20:04:48 gcarrie Exp $
 #
 ########################################################################
 
@@ -103,26 +103,30 @@ int main(int argc, char *argv[])
 }
 END
 
+# This is standard output from the test application.
+(
+    printf 'dat[jmax-1][imax-1] = %8.1f\n' 0.0
+    printf 'dat[jmax-1][imax-1] = %8.1f\n' 0.0
+) > ${EXEC}.out
+
+# Build the test application
 if ! $CC $CFLAGS -Isrc -o $EXEC $SRC
 then
     echo "Build failed."
     exit 1
 fi
 
+# Run the tests
 echo "test1: normal run of $EXEC"
 result1=success
-(
-    printf 'dat[jmax-1][imax-1] = %8.1f\n' 0.0
-    printf 'dat[jmax-1][imax-1] = %8.1f\n' 0.0
-) > correct1.out
-if ./$EXEC | diff correct1.out -
+if ./$EXEC | diff ${EXEC}.out -
 then
     echo "$EXEC produced correct output."
 else
     echo "$EXEC produced bad output!"
     result1=fail
 fi
-$RM correct1.out
+$RM ${EXEC}.out
 echo "test1 result = $result1
 Done with test1
 
