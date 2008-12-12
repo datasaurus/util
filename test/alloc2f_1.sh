@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_1.sh,v 1.18 2008/12/08 05:53:30 gcarrie Exp $
+# $Id: alloc2f_1.sh,v 1.19 2008/12/11 23:00:41 gcarrie Exp $
 #
 ########################################################################
 
@@ -46,6 +46,10 @@ IMAX=${IMAX:-"7919"}
 
 CC="cc"
 CFLAGS="-g -Wall -Wmissing-prototypes"
+MSRC="alloc2f_1.c"
+ASRC="$MSRC src/alloc2f.c src/alloc.c"
+SRC="$ASRC src/err_msg.c"
+EXEC="alloc2f"
 
 CHKALLOC=src/chkalloc
 if ! test -x $CHKALLOC
@@ -55,7 +59,7 @@ then
 fi
 
 # Here is the source code for the driver application.
-cat > alloc2f_1.c << END
+cat > $MSRC << END
 #include <stdio.h>
 #include <err_msg.h>
 #include <alloc2f.h>
@@ -108,14 +112,13 @@ int main(int argc, char *argv[])
 }
 END
 
-SRC="alloc2f_1.c src/alloc2f.c src/alloc.c src/err_msg.c"
-if ! $CC $CFLAGS -Isrc -o alloc2f_1 $SRC
+if ! $CC $CFLAGS -Isrc -o $EXEC $SRC
 then
     echo "Build failed."
     exit 1
 fi
 
-echo "test1: normal run of alloc2f_1"
+echo "test1: normal run of $EXEC"
 result1=success
 (
     printf 'dat[1][1] = %8.1f\n' 11.0
@@ -125,11 +128,11 @@ result1=success
     printf 'dat[9][9] = %8.1f\n' 99.0
     printf 'dat[jmax-1][imax-1] = %8.1f\n' `expr 10 \* \( $JMAX - 1 \) + $IMAX - 1`
 ) > correct1.out
-if ./alloc2f_1 | diff correct1.out -
+if ./$EXEC | diff correct1.out -
 then
-    echo "alloc2f_1 produced correct output."
+    echo "$EXEC produced correct output."
 else
-    echo "alloc2f_1 produced bad output!"
+    echo "$EXEC produced bad output!"
     result1=fail
 fi
 $RM correct1.out
@@ -142,11 +145,11 @@ Done with test1
 echo "test2: running allocf1 with memory trace"
 result2=success
 export MEM_DEBUG=2
-if ./alloc2f_1 2>&1 > /dev/null | $CHKALLOC
+if ./$EXEC 2>&1 > /dev/null | $CHKALLOC
 then
     echo "No leaks"
 else
-    echo "alloc2f_1 leaks!"
+    echo "$EXEC leaks!"
     result1=fail
 fi
 unset MEM_DEBUG
@@ -164,7 +167,7 @@ Done with test2
 # application does not allocate memory for error messages.
 ll=""
 printf "Will simulate memory failures at:\n"
-for f in alloc2f_1.c src/alloc2f.c src/alloc.c
+for f in $ASRC
 do
     l=`egrep -n 'MALLOC|CALLOC|REALLOC' $f | sed "s!^\([0-9][0-9]*\):.*!${f}:\1!"`
     printf "%s\n" $l
@@ -172,17 +175,17 @@ do
 done
 printf "\n"
 
-echo "test3: simulate allocation failures in alloc2f_1"
+echo "test3: simulate allocation failures in $EXEC"
 result3=success
 for l in $ll
 do
     export MEM_FAIL=$l
-    if ./alloc2f_1 > /dev/null 2>&1
+    if ./$EXEC > /dev/null 2>&1
     then
-	echo "alloc2f_1 ran normally when it should have failed at $MEM_FAIL"
+	echo "$EXEC ran normally when it should have failed at $MEM_FAIL"
 	result4=fail
     else
-	echo "alloc2f_1 failed as expected for failure at $MEM_FAIL"
+	echo "$EXEC failed as expected for failure at $MEM_FAIL"
     fi
     unset MEM_FAIL
 done
@@ -198,17 +201,17 @@ export MEM_DEBUG=3
 for l in $ll
 do
     export MEM_FAIL=$l
-    if ./alloc2f_1 3>&1 > /dev/null 2>&1 | $CHKALLOC
+    if ./$EXEC 3>&1 > /dev/null 2>&1 | $CHKALLOC
     then
-	echo "alloc2f_1 exits without leaks when simulating failure at $MEM_FAIL"
+	echo "$EXEC exits without leaks when simulating failure at $MEM_FAIL"
     else
 	status=$?
 	if [ $status -eq 1 ]
 	then
-	    echo "alloc2f_1 leaks when simulating failure at $MEM_FAIL"
+	    echo "$EXEC leaks when simulating failure at $MEM_FAIL"
 	elif [ $status -eq 2 ]
 	then
-	    printf "%s%s\n" "chkalloc did not receive input from alloc2f_1" \
+	    printf "%s%s\n" "chkalloc did not receive input from $EXEC" \
 		    " when simulating failure at $MEM_FAIL"
 	    result4=fail
 	else
@@ -232,4 +235,4 @@ test3 result = $result3
 test4 result = $result4
 "
 
-$RM alloc2f_1.c alloc2f_1
+$RM $MSRC $EXEC
