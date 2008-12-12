@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc1.sh,v 1.14 2008/12/11 21:01:23 gcarrie Exp $
+# $Id: alloc1.sh,v 1.15 2008/12/11 21:21:56 gcarrie Exp $
 #
 ########################################################################
 
@@ -85,6 +85,18 @@ int main(void)
 }
 END
 
+# This script counts the number of times a memory trace reports an allocation
+# or free.  A reallocation is taken as a free followed by a reallocation,
+# therefore it increments the counter by two.
+AWK_SCR='
+    BEGIN {i=0}
+    /[0-9x]+ \([0-9]+\) allocated at alloc1.c:[0-9]+/ {i++}
+    /[0-9x]+ \([0-9]+\) allocated by realloc at alloc1.c:[0-9]+/ {i++}
+    /[0-9x]+ \([0-9]+\) freed at alloc1.c:[0-9]+/ {i++}
+    /[0-9x]+ \([0-9]+\) freed by realloc at alloc1.c:[0-9]+/ {i++}
+    /[0-9x]+ \([0-9]+\) reallocated at alloc1.c:[0-9]+/ {i += 2}
+    END {print i}'
+
 if ! $CC $CFLAGS -Isrc -o alloc1 src/alloc.c alloc1.c
 then
     echo "Could not compile the test application"
@@ -111,8 +123,7 @@ result2=success
 export MEM_DEBUG=2
 ./alloc1 2> test2.err
 unset MEM_DEBUG
-ptn='[0-9x]+ \([0-9]+\) (allocated|freed) (by realloc )?at alloc1\.c:[0-9]+'
-if [ `egrep -c "$ptn" test2.err` -eq 8 ]
+if [ `awk "$AWK_SCR" test2.err` -eq 8 ]
 then
     echo "alloc1 error output was correct."
 else
@@ -131,8 +142,7 @@ result3=success
 export MEM_DEBUG=test3.out
 ./alloc1
 unset MEM_DEBUG
-ptn='[0-9x]+ \([0-9]+\) (allocated|freed) (by realloc )?at alloc1\.c:[0-9]+'
-if [ `egrep -c "$ptn" test3.out` -eq 8 ]
+if [ `awk "$AWK_SCR" test3.out` -eq 8 ]
 then
     echo "alloc1 output was correct."
 else
