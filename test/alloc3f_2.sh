@@ -10,19 +10,42 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: $
+# $Id: alloc3f_2.sh,v 1.1 2008/12/05 21:30:42 gcarrie Exp $
 #
 ########################################################################
+
+echo "
+alloc3f_2.sh --
+
+This script tests the functions defined in src/alloc3f.c.
+See alloc3f (3) for information on these functions.
+
+It creates a test application named alloc3f_2 that attempts to make some
+impossibly large arrays.
+
+Usage suggestions:
+./alloc3f_2.sh 2>&1 | less
+To save temporary files:
+env RM=: ./alloc3f_2.sh 2>&1 | less
+
+Copyright (c) 2008 Gordon D. Carrie
+Licensed under the Open Software License version 3.0
+
+--------------------------------------------------------------------------------
+"
 
 # Set RM to : to save intermediate files
 RM=${RM:-'rm -f'}
 
 CC="cc"
 CFLAGS="-g -Wall -Wmissing-prototypes"
+MSRC="alloc3f_2.c"
+SRC="$MSRC src/alloc3f.c src/alloc.c src/err_msg.c"
+EXEC="alloc3f_2"
 
 # Here is the source code for the test application.
 
-cat > alloc3f_2.c << END
+cat > $MSRC << END
 #include <limits.h>
 #include <stdio.h>
 #include <err_msg.h>
@@ -91,24 +114,50 @@ int main(void)
 }
 END
 
-echo "building alloc3f_2"
-SRC="alloc3f_2.c src/alloc3f.c src/alloc.c src/err_msg.c"
-if $CC $CFLAGS -Isrc -o alloc3f_2 $SRC
+# This is standard output from the test application.
+cat > ${EXEC}.out << END
+Could not allocate x:
+Array dimensions must be positive.
+
+Could not allocate x:
+Dimensions too big for pointer arithmetic.
+
+Could not allocate x:
+Array dimensions must be positive.
+
+Could not allocate x:
+Dimensions too big for pointer arithmetic.
+
+Could not allocate x:
+Array dimensions must be positive.
+
+Could not allocate x:
+Dimensions too big for pointer arithmetic.
+
+END
+
+# Build the test application
+if ! $CC $CFLAGS -Isrc -o $EXEC $SRC
 then
-    echo "success"
-else
     echo "Build failed."
     exit 1
 fi
-echo ""
 
-echo "running alloc3f_2."
-echo It should complain about excessively large or non-positive dimensions.
-echo ""
-echo Starting test
-echo "------------------------------------------------------------------------"
-alloc3f_2
-echo "------------------------------------------------------------------------"
-echo Done with test
+# Run the tests
+echo "test1: attempting to run $EXEC."
+if ./$EXEC 2>&1 | diff ${EXEC}.out -
+then
+    echo "alloc2f_1 produced correct output."
+    result1=success
+else
+    echo "alloc2f_1 produced bad output!"
+    result1=fail
+fi
+$RM ${EXEC}.out
+echo "test1 result = $result1
+Done with test1
 
-$RM alloc3f_2 alloc3f_2.c
+--------------------------------------------------------------------------------
+"
+
+$RM $EXEC $MSRC
