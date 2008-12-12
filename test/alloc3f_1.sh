@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc3f_1.sh,v 1.13 2008/12/05 22:40:18 gcarrie Exp $
+# $Id: alloc3f_1.sh,v 1.14 2008/12/12 20:28:23 gcarrie Exp $
 #
 ########################################################################
 
@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
 }
 END
 
-# Standard output from the test program should match contents of file correct.
+# This is standard output from the test application.
 (
     printf 'dat[1][1][1] = %8.1f\n' 111.0
     printf 'dat[9][9][9] = %8.1f\n' 999.0
