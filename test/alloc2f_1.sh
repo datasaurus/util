@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_1.sh,v 1.19 2008/12/11 23:00:41 gcarrie Exp $
+# $Id: alloc2f_1.sh,v 1.20 2008/12/12 19:39:57 gcarrie Exp $
 #
 ########################################################################
 
