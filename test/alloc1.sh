@@ -2,16 +2,16 @@
 #
 #- alloc1.sh --
 #-	This script tests the allocators defined in src/alloc.c
-#-	It creates and runs a test application that allocates and
-#-	frees some memory while the script verifies output, confirms
-#-	proper error handling, and checks for leaks.
+#-	Its test program allocates and frees some memory while the
+#-	script verifies output, confirms proper error handling,
+#-	and checks for leaks.
 #-
 # Copyright (c) 2008 Gordon D. Carrie
 # Licensed under the Open Software License version 3.0
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc1.sh,v 1.18 2008/12/12 21:48:37 gcarrie Exp $
+# $Id: alloc1.sh,v 1.19 2008/12/13 20:15:34 gcarrie Exp $
 #
 ########################################################################
 
