@@ -2,15 +2,16 @@
 #
 #- alloc3f_1.sh --
 #-	This script tests the allocators defined in src/alloc3f.c
-#-	It is like alloc3f_1.sh, except that it tests a small, one by one by one
-#-	array.
+#-	It creates and runs a test application similar to the one
+#-	in alloc3f_1.sh, except that it tests a small, one by one
+#-	by one, array.
 #-
 # Copyright (c) 2008 Gordon D. Carrie
 # Licensed under the Open Software License version 3.0
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc3f_3.sh,v 1.5 2008/12/12 21:48:37 gcarrie Exp $
+# $Id: alloc3f_3.sh,v 1.6 2008/12/13 01:01:41 gcarrie Exp $
 #
 ########################################################################
 

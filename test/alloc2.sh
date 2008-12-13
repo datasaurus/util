@@ -1,22 +1,24 @@
 #!/bin/sh
 #
 #- alloc2.sh --
-#-	This script runs a test application that leaks memory.
+#-	This script tests the allocators defined in src/alloc.c
+#-	and script src/chkalloc.  It creates runs a test application
+#-	that leaks memory.
 #-
 # Copyright (c) 2008 Gordon D. Carrie
 # Licensed under the Open Software License version 3.0
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2.sh,v 1.13 2008/12/11 23:12:18 gcarrie Exp $
+# $Id: alloc2.sh,v 1.14 2008/12/12 21:48:37 gcarrie Exp $
 #
 ########################################################################
 
 echo "
 alloc2.sh --
 
-This script tests the allocators defined in src/alloc.c.  See
-alloc (3) for information about these functions.
+This script tests the allocators defined in src/alloc.c and script src/chkalloc.
+See alloc (3) and chkalloc (1).
 
 The script creates a test program that intentionally fails to free
 memory that it allocates.

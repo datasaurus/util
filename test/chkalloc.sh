@@ -1,14 +1,16 @@
 #!/bin/sh
 #
 #- chkalloc.sh --
-#-	This script tests the src/chkalloc script.
+#-	This script tests the src/chkalloc script.  It checks
+#-	chkalloc's ability to correctly process text files with
+#-	various diagnostic outputs.
 #-
 # Copyright (c) 2008 Gordon D. Carrie
 # Licensed under the Open Software License version 3.0
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: chkalloc.sh,v 1.7 2008/12/11 21:19:20 gcarrie Exp $
+# $Id: chkalloc.sh,v 1.8 2008/12/12 21:48:49 gcarrie Exp $
 #
 ########################################################################
 

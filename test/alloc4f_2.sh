@@ -2,7 +2,8 @@
 #
 #- alloc4f_2.sh --
 #-	This script tests the allocators defined in src/alloc4f.c
-#-	It attempts to allocate some impossibly large arrays.
+#-	It creates and runs a test application that attempts to allocate
+#-	some impossibly large arrays.
 #-
 # Copyright (c) 2008 Gordon D. Carrie
 #
@@ -10,7 +11,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc4f_2.sh,v 1.2 2008/12/12 21:16:53 gcarrie Exp $
+# $Id: alloc4f_2.sh,v 1.3 2008/12/12 21:48:37 gcarrie Exp $
 #
 ########################################################################
 
