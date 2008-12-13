@@ -1,0 +1,11 @@
+The scripts in this directory test the allocators defined in 
+src/alloc.[ch], src/alloc2f.[ch], src/alloc3f.[ch], and src/alloc4f.[ch].
+They also test diagnostic script src/chkalloc.
+
+To find out what each script does, search for pattern '^.-', e.g.
+grep '^.-' *.sh
+
+The scripts in this directory are under copyright as indicated in
+the comments in each.
+
+Please send feedback to dev0@trekix.net.
