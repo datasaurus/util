@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc4f_1.sh,v 1.2 2008/12/12 21:13:35 gcarrie Exp $
+# $Id: alloc4f_1.sh,v 1.3 2008/12/12 21:48:37 gcarrie Exp $
 #
 ########################################################################
 
@@ -21,7 +21,7 @@ See alloc4f (3) for information on these functions.
 
 It creates a test application named alloc4f_1 that allocates, accesses, and frees
 a two dimensional array.  It runs the application while checking for memory leaks
-and evaluating responses to variable simulated failures.
+and evaluating responses to various simulated failures.
 
 Usage suggestions:
 ./alloc4f_1.sh 2>&1 | less

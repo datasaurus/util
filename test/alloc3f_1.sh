@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc3f_1.sh,v 1.15 2008/12/12 21:12:28 gcarrie Exp $
+# $Id: alloc3f_1.sh,v 1.16 2008/12/12 21:48:37 gcarrie Exp $
 #
 ########################################################################
 
@@ -21,7 +21,7 @@ See alloc3f (3) for information on these functions.
 
 It creates a test application named alloc3f_1 that allocates, accesses, and frees
 a two dimensional array.  It runs the application while checking for memory leaks
-and evaluating responses to variable simulated failures.
+and evaluating responses to various simulated failures.
 
 Usage suggestions:
 ./alloc3f_1.sh 2>&1 | less
