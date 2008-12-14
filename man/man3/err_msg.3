@@ -5,18 +5,26 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Id: err_msg.3,v 1.1 2008/11/15 22:47:28 gcarrie Exp $
+.\" $Id: err_msg.3,v 1.2 2008/12/02 17:19:39 gcarrie Exp $
 .\"
 .TH err_msg 3 "Error messages"
 .SH NAME
-err_append, err_get, err_destroy \- error message production and retrieval
+err_append, err_get \- error message generation and retrieval
 .SH SYNOPSIS
 .nf
 \fB#include "err_msg.h"\fP
 \fBvoid err_append(const char *\fP\fImsg\fP\fB);\fP
 \fBchar *err_get(void);\fP
-\fBvoid err_destroy(void);\fP
 .fi
 .SH DESCRIPTION
-This function create, modify, and retrieve a global error string.
-.PP
+These functions create, modify, and retrieve a global error string.
+\fBerr_append\fP appends \fImsg\fP to the global error string. \fBerr_get\fP
+returns the global error string and then resets it, so that subsequent calls
+to \fBerr_append\fP over write the previous contents.  The value returned by
+\fBerr_get\fP belongs to the error message facility and should not be modified
+by users.
+
+\fBerr_append\fP does not terminate messages with newlines.  The caller should
+normally do this.
+.SH AUTHOR
+Gordon Carrie (dev0@trekix.net)

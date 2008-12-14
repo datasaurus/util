@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Id: alloc4f.3,v 1.4 2008/12/05 23:12:29 gcarrie Exp $
+.\" $Id: alloc4f.3,v 1.5 2008/12/07 05:06:22 gcarrie Exp $
 .\"
 .TH allocf 3 "Dynamic four dimensional allocators"
 .SH NAME
@@ -18,23 +18,24 @@ calloc4f, free4f \- dynamic allocators for four dimensional arrays of floats
 .fi
 .SH DESCRIPTION
 These allocators create four dimensional arrays of float values.
-.PP
+
 \fBcalloc4f\fP allocates a four dimensional array of float values.  If the
 return value is assigned to \fId\fP, then the highest index of the array
 is \fId\fP[\fIl\fP-1][\fIk\fP-1][\fIj\fP-1][\fIi\fP-1].
 terminated.
 \fId\fP[\fB0\fP][\fB0\fP][\fB0\fP]  is a contiguous block of
 \fIl\fP \fB*\fP \fIk\fP \fB*\fP \fIj\fP \fB*\fP \fIi\fP floats.
-.PP
-The pointer arrays in \fId\fP have extra elements to facilitate looping
-with pointers.
-\fBd\fP[\fIlmax\fP] points to \fBd\fP[\fIlmax\fP-1][\fIkmax\fP].
-\fBd\fP[\fIlmax\fP+1] is \fBNULL\fP.
+
+Each dimension array in \fId\fP is terminated with a pointer to the end of
+the next dimension.  In other words,
+\fBd\fP[\fIlmax\fP] points to \fBd\fP[\fIlmax\fP-1][\fIkmax\fP],
 \fBd\fP[\fIlmax\fP-1][\fIkmax\fP] points to
-\fBd\fP[\fIlmax\fP-1][\fIkmax\fP-1][\fIjmax\fP].
+\fBd\fP[\fIlmax\fP-1][\fIkmax\fP-1][\fIjmax\fP], and
 \fBd\fP[\fIlmax\fP-1][\fIkmax\fP-1][\fIjmax\fP] points to
 \fBd\fP[\fIlmax\fP-1][\fIkmax\fP-1][\fIjmax\fP-1][\fIimax\fP].
-In this scheme, the following loops are equivalent.
+Also, \fBd\fP[\fIlmax\fP+1] is \fBNULL\fP.
+This facilitates array traversal with minimal indexing.  The following loops
+are equivalent.
 
 .nf
     for (l = 0; l < lmax; l++)
@@ -42,6 +43,7 @@ In this scheme, the following loops are equivalent.
 	    for (j = 0; j < jmax; j++)
 		for (i = 0; i < imax; i++)
 		    use(dat[l][k][j][i]);
+
     for (p4 = dat; p4[1]; p4++)
 	for (p3 = p4[0]; p3 < p4[1]; p3++)
 	    for (p2 = p3[0]; p2 < p3[1]; p2++)
@@ -50,14 +52,13 @@ In this scheme, the following loops are equivalent.
 .fi
 
 The second loop might be faster for some compilers and options.
-.PP
+
 If something goes wrong, the function generates an error message that can be
 retrieved with a call to \fBerr_get\fR, and returns \fBNULL\fR.
-.PP
+
 \fBfree4f\fP frees all memory associated with \fId\fP,
 which should be a return value of \fBmalloc4f\fP.
 .SH SEE ALSO
-\fBMALLOC\fP (3), \fBCALLOC\fP (3), \fBREALLOC\fP (3), \fBFREE\fP (3),
-\fBerr_msg\fP (3)
+\fBalloc2f\fP (3), \fBalloc3f\fP (3), \fBerr_msg\fP (3), \fBallocfvi\fP (1).
 .SH AUTHOR
 Gordon Carrie (dev0@trekix.net)

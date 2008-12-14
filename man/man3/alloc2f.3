@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Id: alloc2f.3,v 1.4 2008/12/05 20:06:27 gcarrie Exp $
+.\" $Id: alloc2f.3,v 1.5 2008/12/07 05:06:22 gcarrie Exp $
 .\"
 .TH alloc2f 3 "Dynamic two dimensional allocator"
 .SH NAME
@@ -18,35 +18,37 @@ calloc2f, free2f, \- dynamic allocators for two dimensional arrays of floats
 .fi
 .SH DESCRIPTION
 These allocators create two dimensional arrays of float values.
-.PP
+
 \fBcalloc2f\fP allocates a two dimensional array of float values dimensioned
 \fIjmax\fP by \fIimax\fP.  If the return value is assigned to \fId\fP, then
 the highest index of the array is \fId\fP[\fIjmax\fP-1][\fIimax\fP-1].
 \fId\fP[\fB0\fP] is a contiguous block of \fIjmax\fP \fB*\fP \fIimax\fP
 float values.
-.PP
-\fId\fP[\fIjmax\fP]  points to \fId\fP[\fIjmax-1\fP][\fIimax\fP].
-\fId\fP[\fIjmax\fP+1] is \fBNULL\fP.  This facilitates looping with
-pointers.  In this scheme, the following loops are equivalent.
+
+The dimension array in \fId\fP is terminated with a pointer to the end of
+the value array.  In other words, \fId\fP[\fIjmax\fP]  points to
+\fId\fP[\fIjmax-1\fP][\fIimax\fP].  Also \fId\fP[\fIjmax\fP+1] is \fBNULL\fP.
+This facilitates array traversal with minimal indexing.  The following loops
+are equivalent.
 
 .nf
     for (j = 0; j < jmax; j++)
         for (i = 0; i < imax; i++)
             use(dat[j][i]);
+
     for (p2 = dat; p2[1]; p2++)
         for (p = p2[0]; p < p2[1]; p++)
             use(*p);
 .fi
 
 The second loop might be faster for some compilers and options.
-.PP
+
 If something goes wrong, the function generates an error message that can
 be retrieved with a call to \fBerr_get\fP, and returns \fBNULL\fP.
-.PP
+
 \fBfree2f\fP frees all memory associated with \fId\fP,
 which should be a return value of \fBcalloc2f\fP.
 .SH SEE ALSO
-\fBMALLOC\fP (3), \fBCALLOC\fP (3), \fBREALLOC\fP (3), \fBFREE\fP (3),
-\fBerr_msg\fP (3), \fBallocfvi.c\fP
+\fBalloc3f\fP (3), \fBalloc4f\fP (3), \fBerr_msg\fP (3), \fBallocfvi\fP (1).
 .SH AUTHOR
 Gordon Carrie (dev0@trekix.net)

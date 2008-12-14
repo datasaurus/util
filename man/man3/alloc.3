@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Id: alloc.3,v 1.13 2008/11/27 05:22:23 gcarrie Exp $
+.\" $Id: alloc.3,v 1.14 2008/12/02 17:19:39 gcarrie Exp $
 .\"
 .TH alloc 3 "Allocators with optional diagnostics"
 .SH NAME
@@ -23,19 +23,22 @@ malloc_tkx, calloc_tkx, realloc_tkx, free_tkx, MALLOC, CALLOC, REALLOC, FREE \- 
 \fBvoid FREE(void *\fP \fIp\fP\fB);\fP
 .fi
 .SH DESCRIPTION
-These functions allocate and free memory using the standard library memory
-management functions, and they arrange optional diagnostics described below.
+\fBmalloc_tkx\fP, \fBcalloc_tkx\fP, \fBrealloc_tkx\fP, and \fBfree_tkx\fP
+allocate and free memory using the standard library memory management functions,
+and perform optional diagnostic tasks described below.  They are normally called
+with macros \fBMALLOC\fP, \fBCALLOC\fP, \fBREALLOC\fP, and \fBFREE\fP.
+
 \fBmalloc_tkx\fP calls \fBmalloc\fP with argument \fIs\fP and returns the result.
 \fBcalloc_tkx\fP calls \fBcalloc\fP with arguments \fIn\fP and \fIs\fP and
-returns the result.
-\fBrealloc_tkx\fP calls \fBrealloc\fP with arguments \fIp\fP and \fIs\fP and
-returns the result.
-\fBfree_tkx\fP calls \fBfree\fP with argument \fIp\fP.
-Allocations made with \fBmalloc_tkx\fP, \fBcalloc_tkx\fP, and \fBrealloc_tkx\fP
-should be freed with \fBfree_tkx\fP.
+returns the result.  \fBrealloc_tkx\fP calls \fBrealloc\fP with arguments
+\fIp\fP and \fIs\fP and returns the result.  \fBfree_tkx\fP calls \fBfree\fP
+with argument \fIp\fP.  Allocations made with \fBmalloc_tkx\fP, \fBcalloc_tkx\fP,
+and \fBrealloc_tkx\fP should be freed with \fBfree_tkx\fP.
+
 Arguments \fIf\fP and \fIl\fP are assumed to be set to compiler macros
-\fB__FILE__\fP and \fB__LINE__\fP.  The functions use these values to track leaks
-and simulate failures.
+\fB__FILE__\fP and \fB__LINE__\fP.  The functions use these values in diagnostic
+output or failure simulations.  The macro for each function normally provides
+\fIf\fP and \fIl\fP.
 
 \fBMALLOC(\fP\fIs\fP\fB)\fP is a macro for
 
