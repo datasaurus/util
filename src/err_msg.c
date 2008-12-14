@@ -8,7 +8,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: err_msg.c,v 1.7 2008/12/02 17:19:39 gcarrie Exp $
+   $Id: err_msg.c,v 1.8 2008/12/14 03:41:14 gcarrie Exp $
  */
 
 #include <stdio.h>
@@ -18,33 +18,11 @@
 #include "alloc.h"
 #include "err_msg.h"
 
-static int init;		/* If false, need to initialize interface */
-
 static char *msg;		/* Current error message */
 static size_t alloc;		/* Allocation at msg */
 static size_t len;		/* strlen(msg) */
-
+static int init;		/* If false, need to initialize interface */
 static void err_destroy(void);	/* Clean up at exit */
-
-/*
- *------------------------------------------------------------------------
- *
- * err_append --
- *
- * 	This function appends a string to the current error message.
- *
- * Arguments:
- *	const char *s	- string to append to the error message.
- *
- * Results:
- * 	None.
- *
- * Side effects:
- * 	A string is appended to the string at msg, if any.  Memory is
- * 	reallocated if necessary.  If allocation fails, the application exits.
- *
- *------------------------------------------------------------------------
- */
 
 void err_append(const char *s)
 {
@@ -68,11 +46,7 @@ void err_append(const char *s)
     new_alloc = new_len + 1;
     if (new_alloc > alloc) {
 	msg = REALLOC(msg, new_alloc);
-	if ( !msg ) {
-	    fprintf(stderr, "Unable to allocate memory for error messages."
-		    "Exiting.\n");
-	    exit(1);
-	}
+	assert(msg);
 	alloc = new_alloc;
     }
     ll = (long)l;
@@ -84,24 +58,6 @@ void err_append(const char *s)
     *e = '\0';
     len = new_len;
 }
-
-/*
- *------------------------------------------------------------------------
- *
- * err_get --
- *
- * 	This function returns the current error message.
- *
- *
- * Results:
- *	Return value is the address of the error message.  User should not
- *	modify it.
-
- * Side effects:
- *	Error message is set to zero length, although it remains allocated.
- *
- *------------------------------------------------------------------------
- */
 
 char *err_get(void)
 {
@@ -112,21 +68,8 @@ char *err_get(void)
 	return "";
     }
 }
-
-/*
- *------------------------------------------------------------------------
- *
- * err_destroy --
- *
- * 	This clean up function frees memory allocated in this file.
- *	It should be used when the application exits.
- *
- * Side effects:
- *	The error message is freed.
- *
- *------------------------------------------------------------------------
- */
 
+/* This function is called when the process exits. */
 static void err_destroy(void)
 {
     if (msg) {
