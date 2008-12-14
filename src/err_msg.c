@@ -8,7 +8,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: err_msg.c,v 1.8 2008/12/14 03:41:14 gcarrie Exp $
+   $Id: err_msg.c,v 1.9 2008/12/14 04:06:06 gcarrie Exp $
  */
 
 #include <stdio.h>
@@ -58,7 +58,7 @@ void err_append(const char *s)
     *e = '\0';
     len = new_len;
 }
-
+
 char *err_get(void)
 {
     if (msg) {
