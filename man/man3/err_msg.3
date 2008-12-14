@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Id: err_msg.3,v 1.2 2008/12/02 17:19:39 gcarrie Exp $
+.\" $Id: err_msg.3,v 1.3 2008/12/14 03:38:40 gcarrie Exp $
 .\"
 .TH err_msg 3 "Error messages"
 .SH NAME
@@ -26,5 +26,8 @@ by users.
 
 \fBerr_append\fP does not terminate messages with newlines.  The caller should
 normally do this.
+
+\fBerr_append\fP will cause the process to abort if it cannot allocate memory for
+the global error message.
 .SH AUTHOR
 Gordon Carrie (dev0@trekix.net)
