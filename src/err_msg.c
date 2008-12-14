@@ -8,7 +8,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: err_msg.c,v 1.6 2008/11/22 18:41:23 gcarrie Exp $
+   $Id: err_msg.c,v 1.7 2008/12/02 17:19:39 gcarrie Exp $
  */
 
 #include <stdio.h>
@@ -18,11 +18,13 @@
 #include "alloc.h"
 #include "err_msg.h"
 
-static int init;	/* If false, need to initialize interface */
+static int init;		/* If false, need to initialize interface */
 
-static char *msg;	/* Current error message */
-static size_t alloc;	/* Allocation at msg */
-static size_t len;	/* strlen(msg) */
+static char *msg;		/* Current error message */
+static size_t alloc;		/* Allocation at msg */
+static size_t len;		/* strlen(msg) */
+
+static void err_destroy(void);	/* Clean up at exit */
 
 /*
  *------------------------------------------------------------------------
@@ -125,7 +127,7 @@ char *err_get(void)
  *------------------------------------------------------------------------
  */
 
-void err_destroy(void)
+static void err_destroy(void)
 {
     if (msg) {
 	FREE(msg);

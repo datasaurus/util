@@ -8,22 +8,13 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: err_msg.h,v 1.3 2008/11/22 18:41:23 gcarrie Exp $
+   $Id: err_msg.h,v 1.4 2008/12/02 17:19:39 gcarrie Exp $
  */
 
 #ifndef ERR_MSG_H_
 #define ERR_MSG_H_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 void err_append(const char *msg);
 char *err_get(void);
-void err_destroy(void);
-    
-#ifdef __cplusplus
-}
-#endif
 
 #endif
