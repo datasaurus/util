@@ -1,0 +1,26 @@
+.\" 
+.\" Copyright (c) 2008 Gordon D. Carrie.  All rights reserved.
+.\" 
+.\" Licensed under the Open Software License version 3.0
+.\" 
+.\" Please address questions and feedback to dev0@trekix.net
+.\" 
+.\" $Id: $
+.\"
+.TH allocfvi 1 "Dynamic allocators"
+.SH NAME
+allocfvi \- print pointers and values of a multi-dimensional array.
+.SH SYNOPSIS
+.nf
+\fBallocfvi\fP
+.fi
+.SH DESCRIPTION
+\fBallocfvi\fP prints the contents of all allocations associated with sample calls
+to \fBcalloc2f\fP, \fBcalloc3f\fP, and \fBcalloc4f\fP.  Each line of output has
+three columns - an address, a symbol for the address, and the value stored at
+the address.  It should help visualize the structure of the arrays created with
+the dynamic allocators.
+.SH SEE ALSO
+\fBalloc2f\fP (3), \fBalloc3f\fP (3), \fBalloc3f\fP (3), \fBallocfvi\fP (1).
+.SH AUTHOR
+Gordon Carrie (dev0@trekix.net)
