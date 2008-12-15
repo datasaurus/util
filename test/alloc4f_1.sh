@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc4f_1.sh,v 1.5 2008/12/13 20:15:34 gcarrie Exp $
+# $Id: alloc4f_1.sh,v 1.6 2008/12/13 20:22:56 gcarrie Exp $
 #
 ########################################################################
 
@@ -73,10 +73,10 @@ int main(int argc, char *argv[])
     long l, k, j, i;
     float ****dat = NULL, ****p4, ***p3, **p2, *p;
 
-    lmax = 79;
-    kmax = 83;
-    jmax = 89;
-    imax = 97;
+    lmax = ${LMAX};
+    kmax = ${KMAX};
+    jmax = ${JMAX};
+    imax = ${IMAX};
     fprintf(stderr, "Creating a %ld by %ld by %ld by %ld array (%.1f MB)\n",
 	    lmax, kmax, jmax, imax,
 	    (lmax * kmax * jmax * imax * sizeof(float)) / 1048576.0);
