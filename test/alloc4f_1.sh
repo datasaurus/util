@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc4f_1.sh,v 1.7 2008/12/15 19:44:16 gcarrie Exp $
+# $Id: alloc4f_1.sh,v 1.8 2008/12/16 22:11:14 gcarrie Exp $
 #
 ########################################################################
 
@@ -239,7 +239,7 @@ do
 		    " when simulating failure at $MEM_FAIL"
 	    result4=fail
 	else
-	    echo "chkalloc returned unknown value $?"
+	    echo "chkalloc returned unknown value $status"
 	    result4=fail
 	fi
     fi

@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2.sh,v 1.14 2008/12/12 21:48:37 gcarrie Exp $
+# $Id: alloc2.sh,v 1.15 2008/12/13 20:15:34 gcarrie Exp $
 #
 ########################################################################
 
@@ -109,7 +109,7 @@ else
 	echo "chkalloc did not receive input"
 	result2=fail
     else
-	echo "chkalloc returned unknown value $?"
+	echo "chkalloc returned unknown value $status"
 	result2=fail
     fi
 fi
