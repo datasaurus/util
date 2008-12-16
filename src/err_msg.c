@@ -8,7 +8,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: err_msg.c,v 1.10 2008/12/14 04:09:42 gcarrie Exp $
+   $Id: err_msg.c,v 1.11 2008/12/16 21:05:36 gcarrie Exp $
  */
 
 #include <stdio.h>
@@ -21,8 +21,6 @@
 static char *msg;		/* Current error message */
 static size_t alloc;		/* Allocation at msg */
 static size_t len;		/* strlen(msg) */
-static int init;		/* If false, need to initialize interface */
-static void err_destroy(void);	/* Clean up at exit */
 
 void err_append(const char *s)
 {
@@ -37,10 +35,6 @@ void err_append(const char *s)
     l = strlen(s);
     if (l == 0) {
 	return;
-    }
-    if ( !init ) {
-	atexit(err_destroy);
-	init = 1;
     }
     new_len = len + l;
     new_alloc = new_len + 1;
@@ -69,8 +63,7 @@ char *err_get(void)
     }
 }
 
-/* This function is called when the process exits. */
-static void err_destroy(void)
+void err_destroy(void)
 {
     if (msg) {
 	FREE(msg);
