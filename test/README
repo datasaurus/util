@@ -6,6 +6,6 @@ To find out what each script does, search for pattern '^.-', e.g.
 grep '^.-' *.sh
 
 The scripts in this directory are under copyright as indicated in
-the comments in each.
+the comments in each.  Search for Copyright|License.
 
 Please send feedback to dev0@trekix.net.
