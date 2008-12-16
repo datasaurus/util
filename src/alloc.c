@@ -7,10 +7,11 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: alloc.c,v 1.18 2008/12/16 21:08:00 gcarrie Exp $
+   $Id: alloc.c,v 1.19 2008/12/16 21:45:01 gcarrie Exp $
  */
 
 #include <stdlib.h>
+#include <assert.h>
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
@@ -65,6 +66,7 @@ void alloc_init(void)
     s = getenv("MEM_FAIL");
     if (s) {
 	fail_fnm = malloc(strlen(s) + 1);
+	assert(fail_fnm);
 	if (sscanf(s, "%[^:]:%d", fail_fnm, &fail_line) != 2) {
 	    fprintf(stderr, "Could not get failure spec from %s\n", s);
 	    free(fail_fnm);
