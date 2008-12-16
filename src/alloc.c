@@ -7,7 +7,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: alloc.c,v 1.16 2008/11/22 18:41:23 gcarrie Exp $
+   $Id: alloc.c,v 1.17 2008/12/02 17:19:39 gcarrie Exp $
  */
 
 #include <stdlib.h>
@@ -18,7 +18,6 @@
 
 static int init;
 static void alloc_init(void);
-static void clean(void);
 
 /*
  * This counter records the number of times an allocator
@@ -62,7 +61,6 @@ void alloc_init(void)
 	if ( !diag_out ) {
 	    perror("MEM_DEBUG set but unable to open diagnostic memory file");
 	}
-	atexit(clean);
     }
     s = getenv("MEM_FAIL");
     if (s) {
@@ -73,19 +71,6 @@ void alloc_init(void)
 	}
     }
     init = 1;
-}
-
-/*
- * Clean up when process exits.
- */
-void clean()
-{
-    if (diag_out) {
-	fclose(diag_out);
-    }
-    if (fail_fnm) {
-	free(fail_fnm);
-    }
 }
 
 void *malloc_tkx(size_t sz, char *fnm, int ln)
