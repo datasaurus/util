@@ -8,7 +8,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: err_msg.c,v 1.9 2008/12/14 04:06:06 gcarrie Exp $
+   $Id: err_msg.c,v 1.10 2008/12/14 04:09:42 gcarrie Exp $
  */
 
 #include <stdio.h>
