@@ -5,12 +5,11 @@
 #-	Its test program attempts to allocate some impossibly large arrays.
 #-
 # Copyright (c) 2008 Gordon D. Carrie
-#
 # Licensed under the Open Software License version 3.0
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_2.sh,v 1.9 2008/12/13 20:15:34 gcarrie Exp $
+# $Id: alloc2f_2.sh,v 1.10 2008/12/13 20:22:56 gcarrie Exp $
 #
 ########################################################################
 
