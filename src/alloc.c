@@ -7,7 +7,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: alloc.c,v 1.17 2008/12/02 17:19:39 gcarrie Exp $
+   $Id: alloc.c,v 1.18 2008/12/16 21:08:00 gcarrie Exp $
  */
 
 #include <stdlib.h>
@@ -142,4 +142,16 @@ void free_tkx(void *m, char *fnm, int ln)
 	fprintf(diag_out, "%p (%09x) freed at %s:%d\n", m, ++c, fnm, ln);
     }
     free(m);
+}
+
+void alloc_clean()
+{
+    if (diag_out) {
+	fclose(diag_out);
+	diag_out = NULL;
+    }
+    if (fail_fnm) {
+	free(fail_fnm);
+	fail_fnm = NULL;
+    }
 }
