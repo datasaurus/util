@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc3f_1.sh,v 1.18 2008/12/13 20:15:34 gcarrie Exp $
+# $Id: alloc3f_1.sh,v 1.19 2008/12/13 20:22:56 gcarrie Exp $
 #
 ########################################################################
 
@@ -172,7 +172,7 @@ then
     echo "No leaks"
 else
     echo "$EXEC leaks!"
-    result1=fail
+    result2=fail
 fi
 unset MEM_DEBUG
 echo "test2 result = $result2
@@ -205,7 +205,7 @@ do
     if ./$EXEC > /dev/null 2>&1
     then
 	echo "$EXEC ran normally when it should have failed at $MEM_FAIL"
-	result4=fail
+	result3=fail
     else
 	echo "$EXEC failed as expected for failure at $MEM_FAIL"
     fi
