@@ -11,7 +11,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc1.sh,v 1.19 2008/12/13 20:15:34 gcarrie Exp $
+# $Id: alloc1.sh,v 1.20 2008/12/13 20:22:56 gcarrie Exp $
 #
 ########################################################################
 
