@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: chkalloc.sh,v 1.8 2008/12/12 21:48:49 gcarrie Exp $
+# $Id: chkalloc.sh,v 1.9 2008/12/13 20:15:48 gcarrie Exp $
 #
 ########################################################################
 
@@ -129,9 +129,9 @@ Done with test3
 "
 
 echo "Summary:
-test1 result = $result1
-test2 result = $result2
-test3 result = $result3
+$0 test1 result = $result1
+$0 test2 result = $result2
+$0 test3 result = $result3
 "
 
 echo "$0 all done.

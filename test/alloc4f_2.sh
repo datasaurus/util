@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc4f_2.sh,v 1.7 2008/12/17 05:27:18 gcarrie Exp $
+# $Id: alloc4f_2.sh,v 1.8 2008/12/17 05:44:44 gcarrie Exp $
 #
 ########################################################################
 
@@ -187,7 +187,8 @@ else
     result1=fail
 fi
 $RM ${EXEC}.out
-echo "test1 result = $result1
+echo "Summary:
+$0 test1 result = $result1
 Done with test1
 
 ################################################################################

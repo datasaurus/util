@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc4f_1.sh,v 1.12 2008/12/17 17:45:35 gcarrie Exp $
+# $Id: alloc4f_1.sh,v 1.13 2008/12/17 18:05:11 gcarrie Exp $
 #
 ########################################################################
 
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
     dat = calloc4f(lmax, kmax, jmax, imax);
     if ( !dat ) {
 	fprintf(stderr, "Could not allocate dat\n%s\n", err_get());
-	return 1;
+	goto fail;
     }
     for (l = 0; l < lmax; l++) {
 	for (k = 0; k < kmax; k++) {
@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
     dat = calloc4f(lmax, kmax, jmax, imax);
     if ( !dat ) {
         fprintf(stderr, "%s: Could not allocate dat.\n%s", argv[0], err_get());
-        return 1;
+        goto fail;
     }
     for (p4 = dat; p4[1]; p4++) {
 	l = p4 - dat;
@@ -131,6 +131,11 @@ int main(int argc, char *argv[])
     err_destroy();
     alloc_clean();
     return 0;
+
+fail:
+    err_destroy();
+    alloc_clean();
+    return 1;
 }
 END
 
@@ -258,10 +263,10 @@ All done with test4
 "
 
 echo "Summary:
-test1 result = $result1
-test2 result = $result2
-test3 result = $result3
-test4 result = $result4
+$0 test1 result = $result1
+$0 test2 result = $result2
+$0 test3 result = $result3
+$0 test4 result = $result4
 "
 
 $RM $MSRC $EXEC

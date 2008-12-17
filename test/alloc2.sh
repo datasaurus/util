@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2.sh,v 1.18 2008/12/17 17:39:31 gcarrie Exp $
+# $Id: alloc2.sh,v 1.19 2008/12/17 18:05:11 gcarrie Exp $
 #
 ########################################################################
 
@@ -122,8 +122,8 @@ Done with test2
 "
 
 echo "Summary:
-test1 result = $result1
-test2 result = $result2
+$0 test1 result = $result1
+$0 test2 result = $result2
 "
 
 $RM alloc2.c alloc2

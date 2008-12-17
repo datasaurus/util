@@ -11,7 +11,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc1.sh,v 1.22 2008/12/17 05:44:44 gcarrie Exp $
+# $Id: alloc1.sh,v 1.23 2008/12/17 18:05:11 gcarrie Exp $
 #
 ########################################################################
 
@@ -219,12 +219,12 @@ Done with test6
 "
 
 echo "Summary:
-test1 result = $result1
-test2 result = $result2
-test3 result = $result3
-test4 result = $result4
-test5 result = $result5
-test6 result = $result6
+$0 test1 result = $result1
+$0 test2 result = $result2
+$0 test3 result = $result3
+$0 test4 result = $result4
+$0 test5 result = $result5
+$0 test6 result = $result6
 "
 
 $RM alloc1.c alloc1
