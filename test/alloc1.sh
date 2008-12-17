@@ -11,7 +11,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc1.sh,v 1.21 2008/12/16 22:05:32 gcarrie Exp $
+# $Id: alloc1.sh,v 1.22 2008/12/17 05:44:44 gcarrie Exp $
 #
 ########################################################################
 
@@ -107,10 +107,10 @@ then
 fi
 
 echo "test1: normal run of alloc1"
-result1=success
 if ./alloc1
 then
     echo "alloc1 ran."
+    result1=success
 else
     echo "alloc1 failed."
     result1=fail
@@ -141,13 +141,13 @@ Done with test2
 "
 
 echo "test3: running alloc1 with memory trace going to a file."
-result3=success
 export MEM_DEBUG=test3.out
 ./alloc1
 unset MEM_DEBUG
 if [ `awk "$AWK_SCR" test3.out` -eq 8 ]
 then
     echo "alloc1 output was correct."
+    result3=success
 else
     echo "alloc1 output was wrong."
     result3=fail
@@ -160,11 +160,11 @@ Done with test3
 "
 
 echo "test4: running alloc1 with memory trace going to chkalloc."
-result4=success
 export MEM_DEBUG=2
 if ./alloc1 2>&1 | $CHKALLOC
 then
     echo "chkalloc reports that alloc1 did not leak memory."
+    result4=success
 else
     echo "alloc1 leaks."
     result4=fail
@@ -177,7 +177,6 @@ Done with test4
 "
 
 echo "test5: running alloc1, attempting to send memory trace to unwritable file."
-result5=success
 export MEM_DEBUG=alloc5.out
 touch alloc5.out
 chmod 444 alloc5.out
@@ -185,6 +184,7 @@ if ./alloc1 2>&1 \
 	| grep -q "MEM_DEBUG set but unable to open diagnostic memory file:"
 then
     echo "alloc1 error output was correct."
+    result5=success
 else
     echo "alloc1 error output was wrong."
     result5=fail

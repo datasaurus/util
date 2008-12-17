@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc4f_3.sh,v 1.11 2008/12/17 05:44:44 gcarrie Exp $
+# $Id: alloc4f_3.sh,v 1.12 2008/12/17 17:45:35 gcarrie Exp $
 #
 ########################################################################
 
@@ -205,8 +205,8 @@ All done with test3
 "
 
 echo "test4: repeat test4 with memory tracing."
-result4=success
 export MEM_DEBUG=3
+result4=success
 for l in $ll
 do
     export MEM_FAIL=$l

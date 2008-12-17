@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2.sh,v 1.17 2008/12/17 05:44:44 gcarrie Exp $
+# $Id: alloc2.sh,v 1.18 2008/12/17 17:39:31 gcarrie Exp $
 #
 ########################################################################
 
@@ -79,10 +79,10 @@ fi
 # Run the tests
 
 echo "test1: normal run of alloc2."
-result1=success
 if ./alloc2
 then
     echo "alloc2 ran."
+    result1=success
 else
     echo "alloc2 failed."
     result1=fail
@@ -94,7 +94,6 @@ Done with test1
 "
 
 echo "test2: running alloc2 with memory trace."
-result2=success
 export MEM_DEBUG=2
 if ./alloc2 2>&1 | $CHKALLOC
 then
@@ -105,6 +104,7 @@ else
     if [ $status -eq 1 ]
     then
 	echo "chkalloc found leak (as it should have)"
+	result2=success
     elif [ $status -eq 2 ]
     then
 	echo "chkalloc did not receive input"

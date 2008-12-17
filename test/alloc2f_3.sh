@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_3.sh,v 1.13 2008/12/17 05:44:44 gcarrie Exp $
+# $Id: alloc2f_3.sh,v 1.14 2008/12/17 17:45:35 gcarrie Exp $
 #
 ########################################################################
 
@@ -122,10 +122,10 @@ fi
 
 # Run the tests
 echo "test1: normal run of $EXEC"
-result1=success
 if ./$EXEC | diff ${EXEC}.out -
 then
     echo "$EXEC produced correct output."
+    result1=success
 else
     echo "$EXEC produced bad output!"
     result1=fail
@@ -138,11 +138,11 @@ Done with test1
 "
 
 echo "test2: running allocf1 with memory trace"
-result2=success
 export MEM_DEBUG=2
 if ./$EXEC 2>&1 > /dev/null | $CHKALLOC
 then
     echo "No leaks"
+    result2=success
 else
     echo "$EXEC leaks!"
     result2=fail
@@ -191,8 +191,8 @@ All done with test3
 "
 
 echo "test4: repeat test4 with memory tracing."
-result4=success
 export MEM_DEBUG=3
+result4=success
 for l in $ll
 do
     export MEM_FAIL=$l
