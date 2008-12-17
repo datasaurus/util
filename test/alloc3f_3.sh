@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc3f_3.sh,v 1.11 2008/12/17 05:26:17 gcarrie Exp $
+# $Id: alloc3f_3.sh,v 1.12 2008/12/17 05:44:44 gcarrie Exp $
 #
 ########################################################################
 
@@ -209,6 +209,7 @@ do
 	if [ $status -eq 1 ]
 	then
 	    echo "$EXEC leaks when simulating failure at $MEM_FAIL"
+	    result4=fail
 	elif [ $status -eq 2 ]
 	then
 	    printf "%s%s\n" "chkalloc did not receive input from $EXEC" \
