@@ -11,7 +11,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc1.sh,v 1.23 2008/12/17 18:05:11 gcarrie Exp $
+# $Revision$ $Date$ $State$
 #
 ########################################################################
 
