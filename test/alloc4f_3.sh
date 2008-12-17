@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc4f_3.sh,v 1.8 2008/12/16 22:11:14 gcarrie Exp $
+# $Id: alloc4f_3.sh,v 1.9 2008/12/16 22:48:22 gcarrie Exp $
 #
 ########################################################################
 
@@ -41,7 +41,7 @@ RM=${RM:-'rm -f'}
 
 CC="cc"
 CFLAGS="-g -Wall -Wmissing-prototypes"
-MSRC="alloc4f_1.c"
+MSRC="alloc4f_3.c"
 ASRC="$MSRC src/alloc4f.c src/alloc.c"
 SRC="$ASRC src/err_msg.c"
 EXEC="alloc4f"
@@ -54,7 +54,7 @@ then
 fi
 
 # Here is the source code for the driver application.
-cat > alloc4f_1.c << END
+cat > $MSRC << END
 #include <stdio.h>
 #include <err_msg.h>
 #include <alloc4f.h>

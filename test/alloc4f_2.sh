@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc4f_2.sh,v 1.5 2008/12/13 20:22:56 gcarrie Exp $
+# $Id: alloc4f_2.sh,v 1.6 2008/12/16 23:18:57 gcarrie Exp $
 #
 ########################################################################
 
@@ -43,7 +43,7 @@ SRC="$MSRC src/alloc4f.c src/alloc.c src/err_msg.c"
 EXEC="alloc4f_2"
 
 # Here is the source code for the test application.
-cat > alloc4f_2.c << END
+cat > $MSRC << END
 #include <limits.h>
 #include <stdio.h>
 #include <err_msg.h>
