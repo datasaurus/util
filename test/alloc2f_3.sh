@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_3.sh,v 1.10 2008/12/16 22:11:14 gcarrie Exp $
+# $Id: alloc2f_3.sh,v 1.11 2008/12/16 22:48:22 gcarrie Exp $
 #
 ########################################################################
 
@@ -41,7 +41,7 @@ RM=${RM:-'rm -f'}
 
 CC="cc"
 CFLAGS="-g -Wall -Wmissing-prototypes"
-MSRC="alloc2f_1.c"
+MSRC="alloc2f_3.c"
 ASRC="$MSRC src/alloc2f.c src/alloc.c"
 SRC="$ASRC src/err_msg.c"
 EXEC="alloc2f"
