@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2.sh,v 1.16 2008/12/16 22:48:10 gcarrie Exp $
+# $Id: alloc2.sh,v 1.17 2008/12/17 05:44:44 gcarrie Exp $
 #
 ########################################################################
 
@@ -98,7 +98,7 @@ result2=success
 export MEM_DEBUG=2
 if ./alloc2 2>&1 | $CHKALLOC
 then
-    echo "chkalloc failed to find a leak"
+    echo "chkalloc failed to find the leak"
     result2=fail
 else
     status=$?
