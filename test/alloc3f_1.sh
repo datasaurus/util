@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc3f_1.sh,v 1.20 2008/12/16 22:11:14 gcarrie Exp $
+# $Id: alloc3f_1.sh,v 1.21 2008/12/16 22:48:22 gcarrie Exp $
 #
 ########################################################################
 
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
     jmax = ${JMAX};
     imax = ${IMAX};
     fprintf(stderr, "Creating a %ld by %ld by %ld array (%.1f MB)\n",
-	    kmax, jmax, imax, (kmax * jmax * imax * sizeof(float)) / 1048576.0);
+	    kmax, jmax, imax, kmax * jmax * imax * (sizeof(float) / 1048576.0));
 
     /* Create array and access with conventional indexing */
     dat = calloc3f(kmax, jmax, imax);
