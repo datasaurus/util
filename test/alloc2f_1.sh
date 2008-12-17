@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2f_1.sh,v 1.28 2008/12/16 22:11:14 gcarrie Exp $
+# $Id: alloc2f_1.sh,v 1.29 2008/12/16 22:48:22 gcarrie Exp $
 #
 ########################################################################
 
@@ -63,6 +63,7 @@ fi
 cat > $MSRC << END
 #include <stdio.h>
 #include <err_msg.h>
+#include <alloc.h>
 #include <alloc2f.h>
 
 int main(int argc, char *argv[])
@@ -109,6 +110,9 @@ int main(int argc, char *argv[])
     printf("dat[9][9] = %8.1f\n", dat[9][9]);
     printf("dat[jmax-1][imax-1] = %8.1f\n", dat[jmax-1][imax-1]);
     free2f(dat);
+
+    err_destroy();
+    alloc_clean();
     return 0;
 }
 END

@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc2.sh,v 1.15 2008/12/13 20:15:34 gcarrie Exp $
+# $Id: alloc2.sh,v 1.16 2008/12/16 22:48:10 gcarrie Exp $
 #
 ########################################################################
 
@@ -65,6 +65,7 @@ int main(void)
     i = 2000;
     x3 = REALLOC(x2, i * sizeof(float));
 
+    alloc_clean();
     return 0;
 }
 END

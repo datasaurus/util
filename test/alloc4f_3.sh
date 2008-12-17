@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc4f_3.sh,v 1.9 2008/12/16 22:48:22 gcarrie Exp $
+# $Id: alloc4f_3.sh,v 1.10 2008/12/17 05:26:34 gcarrie Exp $
 #
 ########################################################################
 
@@ -57,6 +57,7 @@ fi
 cat > $MSRC << END
 #include <stdio.h>
 #include <err_msg.h>
+#include <alloc.h>
 #include <alloc4f.h>
 
 int main(int argc, char *argv[])
@@ -113,6 +114,9 @@ int main(int argc, char *argv[])
     printf("dat[lmax-1][kmax-1][jmax-1][imax-1] = %8.1f\n",
 	    dat[lmax-1][kmax-1][jmax-1][imax-1]);
     free4f(dat);
+
+    err_destroy();
+    alloc_clean();
     return 0;
 }
 END

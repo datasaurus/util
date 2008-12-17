@@ -11,7 +11,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc1.sh,v 1.20 2008/12/13 20:22:56 gcarrie Exp $
+# $Id: alloc1.sh,v 1.21 2008/12/16 22:05:32 gcarrie Exp $
 #
 ########################################################################
 
@@ -83,6 +83,7 @@ int main(void)
     }
     FREE(x3);
 
+    alloc_clean();
     return 0;
 }
 END

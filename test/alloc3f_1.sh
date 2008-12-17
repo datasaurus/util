@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc3f_1.sh,v 1.22 2008/12/17 05:25:40 gcarrie Exp $
+# $Id: alloc3f_1.sh,v 1.23 2008/12/17 05:25:58 gcarrie Exp $
 #
 ########################################################################
 
@@ -64,6 +64,7 @@ fi
 cat > $MSRC << END
 #include <stdio.h>
 #include <err_msg.h>
+#include <alloc.h>
 #include <alloc3f.h>
 
 int main(int argc, char *argv[])
@@ -124,6 +125,9 @@ int main(int argc, char *argv[])
     }
     printf("dat[kmax-1][jmax-1][imax-1] = %8.1f\n", dat[kmax-1][jmax-1][imax-1]);
     free3f(dat);
+
+    err_destroy();
+    alloc_clean();
     return 0;
 }
 END

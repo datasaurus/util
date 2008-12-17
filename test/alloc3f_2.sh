@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc3f_2.sh,v 1.5 2008/12/13 20:22:56 gcarrie Exp $
+# $Id: alloc3f_2.sh,v 1.6 2008/12/16 23:18:57 gcarrie Exp $
 #
 ########################################################################
 
@@ -48,6 +48,7 @@ cat > $MSRC << END
 #include <limits.h>
 #include <stdio.h>
 #include <err_msg.h>
+#include <alloc.h>
 #include <alloc3f.h>
 
 int main(void)
@@ -109,6 +110,8 @@ int main(void)
     }
     free3f(x);
 
+    err_destroy();
+    alloc_clean();
     return 0;
 }
 END
