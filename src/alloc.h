@@ -7,7 +7,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: alloc.h,v 1.14 2008/12/02 17:19:39 gcarrie Exp $
+   $Revision$ $Date$
  */
 
 #ifndef ALLOC_H_

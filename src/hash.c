@@ -7,7 +7,7 @@
 
    Please send feedback to dev0@trekix.net
 
-   $Id: hash.c,v 1.18 2008/11/22 18:41:23 gcarrie Exp $
+   $Revision$ $Date$
 */
 
 /*

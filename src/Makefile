@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.11 2008/11/25 22:44:29 gcarrie Exp $
+# $Revision$ $Date$
 
 CFLAGS = -g -Wall -Wmissing-prototypes
 #LFLAGS = -L/usr/local/lib -lefence

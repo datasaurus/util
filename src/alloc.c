@@ -7,7 +7,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: alloc.c,v 1.19 2008/12/16 21:45:01 gcarrie Exp $
+   $Revision$ $Date$
  */
 
 #include <stdlib.h>

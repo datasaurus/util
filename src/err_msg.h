@@ -8,7 +8,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: err_msg.h,v 1.5 2008/12/14 03:41:14 gcarrie Exp $
+   $Revision$ $Date$
  */
 
 #ifndef ERR_MSG_H_

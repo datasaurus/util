@@ -9,7 +9,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: allocfvi.c,v 1.10 2008/12/06 15:51:50 gcarrie Exp $
+   $Revision$ $Date$
  */
 
 #include <stdlib.h>

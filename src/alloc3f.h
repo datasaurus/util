@@ -8,7 +8,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: alloc3f.h,v 1.2 2008/11/22 18:41:23 gcarrie Exp $
+   $Revision$ $Date$
  */
 
 #ifndef ALLOC_3F_H_

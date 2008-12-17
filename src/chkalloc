@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: chkalloc,v 1.1 2008/12/11 17:29:44 gcarrie Exp $
+# $Revision$ $Date$
 
 /(0x)?[0-9]+.* allocated / {
     cnt[$1]++

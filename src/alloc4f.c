@@ -8,7 +8,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: alloc4f.c,v 1.4 2008/12/05 22:07:22 gcarrie Exp $
+   $Revision$ $Date$
  */
 
 #include "alloc.h"

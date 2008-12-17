@@ -8,7 +8,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Id: err_msg.c,v 1.11 2008/12/16 21:05:36 gcarrie Exp $
+   $Revision$ $Date$
  */
 
 #include <stdio.h>

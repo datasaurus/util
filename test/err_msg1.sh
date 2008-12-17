@@ -11,7 +11,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: err_msg1.sh,v 1.1 2008/12/16 22:56:19 gcarrie Exp $
+# $Revision$ $Date$
 #
 ########################################################################
 
