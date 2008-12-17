@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc4f_1.sh,v 1.8 2008/12/16 22:11:14 gcarrie Exp $
+# $Id: alloc4f_1.sh,v 1.9 2008/12/16 22:48:22 gcarrie Exp $
 #
 ########################################################################
 
@@ -62,7 +62,7 @@ then
 fi
 
 # Here is the source code for the driver application.
-cat > alloc4f_1.c << END
+cat > $MSRC << END
 #include <stdio.h>
 #include <err_msg.h>
 #include <alloc4f.h>
@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
     imax = ${IMAX};
     fprintf(stderr, "Creating a %ld by %ld by %ld by %ld array (%.1f MB)\n",
 	    lmax, kmax, jmax, imax,
-	    (lmax * kmax * jmax * imax * sizeof(float)) / 1048576.0);
+	    lmax * kmax * jmax * imax * (sizeof(float) / 1048576.0));
 
     /* Create array and access with conventional indexing */
     dat = calloc4f(lmax, kmax, jmax, imax);
