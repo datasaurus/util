@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc4f_2.sh,v 1.8 2008/12/17 05:44:44 gcarrie Exp $
+# $Revision$ $Date$
 #
 ########################################################################
 

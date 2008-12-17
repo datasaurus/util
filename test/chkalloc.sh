@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: chkalloc.sh,v 1.9 2008/12/13 20:15:48 gcarrie Exp $
+# $Revision$ $Date$
 #
 ########################################################################
 

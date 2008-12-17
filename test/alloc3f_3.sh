@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: alloc3f_3.sh,v 1.14 2008/12/17 18:05:11 gcarrie Exp $
+# $Revision$ $Date$
 #
 ########################################################################
 

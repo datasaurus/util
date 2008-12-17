@@ -11,7 +11,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision$ $Date$ $State$
+# $Revision: 1.25 $ $Date: 2008/12/17 22:41:00 $
 #
 ########################################################################
 
