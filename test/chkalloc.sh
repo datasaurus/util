@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision$ $Date$
+# $Revision: 1.11 $ $Date: 2008/12/17 22:48:02 $
 #
 ########################################################################
 
@@ -101,11 +101,11 @@ Done with test2
 ################################################################################
 "
 
-echo "test3: make sure chkalloc complains if there is no input"
+echo "test3: check chkalloc on no input"
 
 result3=success
-correct=2
-echo "Warning chkalloc did not receive input." > correct3.out
+correct=0
+cat /dev/null > correct3.out
 : | $CHKALLOC > test3.out 2>&1
 if [ $? -eq $correct ]
 then
@@ -128,10 +128,40 @@ Done with test3
 ################################################################################
 "
 
+echo "test4: check chkalloc on no input with CHKALLOC_WARN set"
+
+result4=success
+correct=2
+echo "Warning chkalloc did not receive input." > correct4.out
+export CHKALLOC_WARN=1
+: | $CHKALLOC > test4.out 2>&1
+if [ $? -eq $correct ]
+then
+    echo "chkalloc gave correct return value ($correct)"
+else
+    echo "chkalloc gave wrong return value ($? instead of $correct)"
+    result4=fail
+fi
+unset CHKALLOC_WARN
+if diff test4.out correct4.out
+then
+    echo "chkalloc output was correct."
+else
+    echo "chkalloc output was wrong."
+    result4=fail
+fi
+$RM test4.out correct4.out
+echo "test4 result = $result4
+Done with test4
+
+################################################################################
+"
+
 echo "Summary:
 $0 test1 result = $result1
 $0 test2 result = $result2
 $0 test3 result = $result3
+$0 test4 result = $result4
 "
 
 echo "$0 all done.
