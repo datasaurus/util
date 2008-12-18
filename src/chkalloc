@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision$ $Date$
+# $Revision: 1.3 $ $Date: 2008/12/17 22:55:56 $
 
 /(0x)?[0-9]+.* allocated / {
     cnt[$1]++
@@ -20,7 +20,7 @@
     tot++
 }
 END {
-    if (tot == 0) {
+    if (ENVIRON["CHKALLOC_WARN"] && tot == 0) {
 	printf "Warning chkalloc did not receive input.\n" >"/dev/stderr"
 	exit 2
     }
