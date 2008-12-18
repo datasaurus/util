@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision$ $Date$
+# $Revision: 1.34 $ $Date: 2008/12/17 22:47:50 $
 #
 ########################################################################
 
@@ -50,7 +50,7 @@ CFLAGS="-g -Wall -Wmissing-prototypes"
 MSRC="alloc2f_1.c"
 ASRC="$MSRC src/alloc2f.c src/alloc.c"
 SRC="$ASRC src/err_msg.c"
-EXEC="alloc2f"
+EXEC="alloc2f_1"
 
 CHKALLOC=src/chkalloc
 if ! test -x $CHKALLOC
@@ -111,12 +111,10 @@ int main(int argc, char *argv[])
     printf("dat[jmax-1][imax-1] = %8.1f\n", dat[jmax-1][imax-1]);
     free2f(dat);
 
-    err_destroy();
     alloc_clean();
     return 0;
 
 fail:
-    err_destroy();
     alloc_clean();
     return 1;
 }

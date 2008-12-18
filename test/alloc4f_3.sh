@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision$ $Date$
+# $Revision: 1.15 $ $Date: 2008/12/17 22:47:50 $
 #
 ########################################################################
 
@@ -44,7 +44,7 @@ CFLAGS="-g -Wall -Wmissing-prototypes"
 MSRC="alloc4f_3.c"
 ASRC="$MSRC src/alloc4f.c src/alloc.c"
 SRC="$ASRC src/err_msg.c"
-EXEC="alloc4f"
+EXEC="alloc4f_3"
 
 CHKALLOC=src/chkalloc
 if ! test -x $CHKALLOC
