@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision$ $Date$
+# $Revision: 1.21 $ $Date: 2008/12/17 22:46:33 $
 #
 ########################################################################
 
@@ -65,7 +65,6 @@ int main(void)
     i = 2000;
     x3 = REALLOC(x2, i * sizeof(float));
 
-    alloc_clean();
     return 0;
 }
 END

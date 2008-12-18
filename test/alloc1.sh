@@ -11,7 +11,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.25 $ $Date: 2008/12/17 22:41:00 $
+# $Revision: 1.26 $ $Date: 2008/12/17 22:42:28 $
 #
 ########################################################################
 
@@ -83,7 +83,6 @@ int main(void)
     }
     FREE(x3);
 
-    alloc_clean();
     return 0;
 }
 END

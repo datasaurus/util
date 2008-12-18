@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.16 $ $Date: 2008/12/18 20:08:08 $
+# $Revision: 1.17 $ $Date: 2008/12/18 21:37:05 $
 #
 ########################################################################
 
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
     dat = calloc4f(lmax, kmax, jmax, imax);
     if ( !dat ) {
 	fprintf(stderr, "Could not allocate dat\n%s\n", err_get());
-	goto fail;
+	return 1;
     }
     for (l = 0; l < lmax; l++) {
 	for (k = 0; k < kmax; k++) {
@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
     dat = calloc4f(lmax, kmax, jmax, imax);
     if ( !dat ) {
         fprintf(stderr, "%s: Could not allocate dat.\n%s", argv[0], err_get());
-        goto fail;
+        return 1;
     }
     for (p4 = dat; p4[1]; p4++) {
 	l = p4 - dat;
@@ -128,12 +128,7 @@ int main(int argc, char *argv[])
 	    dat[lmax-1][kmax-1][jmax-1][imax-1]);
     free4f(dat);
 
-    alloc_clean();
     return 0;
-
-fail:
-    alloc_clean();
-    return 1;
 }
 END
 

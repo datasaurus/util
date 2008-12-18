@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.29 $ $Date: 2008/12/18 20:08:08 $
+# $Revision: 1.30 $ $Date: 2008/12/18 21:37:05 $
 #
 ########################################################################
 
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
     dat = calloc3f(kmax, jmax, imax);
     if ( !dat ) {
 	fprintf(stderr, "Could not allocate dat\n%s\n", err_get());
-	goto fail;
+	return 1;
     }
     for (k = 0; k < kmax; k++) {
 	for (j = 0; j < jmax; j++) {
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
     dat = calloc3f(kmax, jmax, imax);
     if ( !dat ) {
         fprintf(stderr, "%s: Could not allocate dat.\n%s", argv[0], err_get());
-        goto fail;
+        return 1;
     }
     for (p3 = dat; p3[1]; p3++) {
 	k = p3 - dat;
@@ -126,12 +126,7 @@ int main(int argc, char *argv[])
     printf("dat[kmax-1][jmax-1][imax-1] = %8.1f\n", dat[kmax-1][jmax-1][imax-1]);
     free3f(dat);
 
-    alloc_clean();
     return 0;
-
-fail:
-    alloc_clean();
-    return 1;
 }
 END
 

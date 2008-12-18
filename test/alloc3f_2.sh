@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.9 $ $Date: 2008/12/17 22:47:50 $
+# $Revision: 1.10 $ $Date: 2008/12/18 21:37:05 $
 #
 ########################################################################
 
@@ -110,7 +110,6 @@ int main(void)
     }
     free3f(x);
 
-    alloc_clean();
     return 0;
 }
 END
