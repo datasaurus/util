@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.15 $ $Date: 2008/12/17 22:47:50 $
+# $Revision: 1.16 $ $Date: 2008/12/18 20:08:08 $
 #
 ########################################################################
 
@@ -115,12 +115,10 @@ int main(int argc, char *argv[])
 	    dat[lmax-1][kmax-1][jmax-1][imax-1]);
     free4f(dat);
 
-    err_destroy();
     alloc_clean();
     return 0;
 
 fail:
-    err_destroy();
     alloc_clean();
     return 1;
 }

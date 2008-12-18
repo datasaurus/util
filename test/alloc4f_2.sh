@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision$ $Date$
+# $Revision: 1.10 $ $Date: 2008/12/17 22:47:50 $
 #
 ########################################################################
 
@@ -135,7 +135,6 @@ int main(void)
     }
     free4f(x);
 
-    err_destroy();
     alloc_clean();
     return 0;
 }

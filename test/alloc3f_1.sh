@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.28 $ $Date: 2008/12/17 22:47:50 $
+# $Revision: 1.29 $ $Date: 2008/12/18 20:08:08 $
 #
 ########################################################################
 
@@ -126,12 +126,10 @@ int main(int argc, char *argv[])
     printf("dat[kmax-1][jmax-1][imax-1] = %8.1f\n", dat[kmax-1][jmax-1][imax-1]);
     free3f(dat);
 
-    err_destroy();
     alloc_clean();
     return 0;
 
 fail:
-    err_destroy();
     alloc_clean();
     return 1;
 }
