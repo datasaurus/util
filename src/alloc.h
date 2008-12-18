@@ -7,7 +7,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Revision$ $Date$
+   $Id: alloc.h,v 1.14 2008/12/02 17:19:39 gcarrie Exp $
  */
 
 #ifndef ALLOC_H_
@@ -28,7 +28,6 @@ void *malloc_tkx(size_t, char *, int);
 void *calloc_tkx(size_t, size_t, char *, int);
 void *realloc_tkx(void *, size_t, char *, int);
 void free_tkx(void *, char *, int);
-void alloc_clean(void);
 
 #ifdef __cplusplus
 }
