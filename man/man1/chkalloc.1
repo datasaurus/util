@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision$ $Date$
+.\" $Revision: 1.3 $ $Date: 2008/12/17 22:55:56 $
 .\"
 .TH chkalloc 1 "Check allocations"
 .SH NAME
@@ -19,10 +19,15 @@ should manage memory only with \fBMALLOC\fP (3), \fBCALLOC\fP (3),
 \fBMEM_DEBUG\fP environment variable defined.  When \fIprog\fP
 exits, \fBchkalloc\fP prints a list of any allocations that were never
 freed.  These are possible memory leaks.
+
+If environment variable \fBCHKALLOC_WARN\fP is set to \fB1\fP, and
+\fBchkalloc\fP receives no input, it prints a warning and returns \fB2\fP.
 .SH RETURN VALUES
-If \fBchkalloc\fP finds no memory leaks, it returns \fB0\fP (success).
-It returns \fB1\fP if it finds memory leaks.
-It returns \fB2\fP if something goes wrong.
+.nf
+\fB0\fP if input shows no evidence of memory leaks.
+\fB1\fP if input shows evidence of memory leaks.
+\fB2\fP if no input and \fBCHKALLOC_WARN\fP is set to \fB1\fP.
+.fi
 .SH SEE ALSO
 \fBMALLOC\fP (3), \fBCALLOC\fP (3), \fBREALLOC\fP (3), \fBFREE\fP (3)
 .SH AUTHOR
