@@ -11,7 +11,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision$ $Date$
+# $Revision: 1.3 $ $Date: 2008/12/17 22:55:56 $
 #
 ########################################################################
 
@@ -71,8 +71,6 @@ int main(void)
     b();
     printf("Error message is\n%s", err_get());
 
-    err_destroy();
-    alloc_clean();
     return 0;
 }
 
