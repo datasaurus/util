@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision$ $Date$
+.\" $Revision: 1.6 $ $Date: 2008/12/17 22:55:56 $
 .\"
 .TH err_msg 3 "Error messages"
 .SH NAME
@@ -15,7 +15,6 @@ err_append, err_get \- error message generation and retrieval
 \fB#include "err_msg.h"\fP
 \fBvoid err_append(const char *\fP\fImsg\fP\fB);\fP
 \fBchar *err_get(void);\fP
-\fBvoid err_destroy(void);\fP
 .fi
 .SH DESCRIPTION
 These functions create, modify, and retrieve a global error string.
@@ -32,7 +31,8 @@ subsequent calls to \fBerr_append\fP over write the previous contents.  The
 value returned by \fBerr_get\fP belongs to the error message facility and
 should not be modified by users.
 
-\fBerr_destroy\fP resets the error message and frees all memory associated with
-it.
+The error message is limited to 64 kilobytes. If it becomes longer than this,
+the application prints a warning followed by the current error message, and then
+the application exits.
 .SH AUTHOR
 Gordon Carrie (dev0@trekix.net)

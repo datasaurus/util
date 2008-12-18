@@ -8,66 +8,53 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Revision$ $Date$
+   $Revision: 1.13 $ $Date: 2008/12/17 22:55:56 $
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
-#include "alloc.h"
+#include <limits.h>
 #include "err_msg.h"
 
-static char *msg;		/* Current error message */
-static size_t alloc;		/* Allocation at msg */
-static size_t len;		/* strlen(msg) */
+#define LEN 65535
+static char msg[LEN];		/* Current error message */
+static size_t msg_len;		/* strlen(msg) */
 
 void err_append(const char *s)
 {
-    size_t l, new_len, new_alloc;
-    long ll, llen;
+    size_t s_len, new_len;
     char *e, *e1;
     const char *m;
 
     if ( !s ) {
 	return;
     }
-    l = strlen(s);
-    if (l == 0) {
+    s_len = strlen(s);
+    if (s_len == 0) {
 	return;
     }
-    new_len = len + l;
-    new_alloc = new_len + 1;
-    if (new_alloc > alloc) {
-	msg = REALLOC(msg, new_alloc);
-	assert(msg);
-	alloc = new_alloc;
+    new_len = msg_len + s_len;
+    if (new_len + 1 > LEN || msg_len > LONG_MAX || s_len > LONG_MAX) {
+	fprintf(stderr, "Ran out of space for error messages.\n");
+	if (msg_len > 0) {
+	    fprintf(stderr, "Last error message was %s", msg);
+	}
+	exit(1);
     }
-    ll = (long)l;
-    llen = (long)len;
-    assert((double)l == (double)ll && (double)len == (double)llen);
-    for (e = msg + llen, m = s, e1 = e + ll; e < e1; e++, m++) {
+    for (e = msg + (long)msg_len, m = s, e1 = e + (long)s_len; e < e1; e++, m++) {
 	*e  = *m;
     }
     *e = '\0';
-    len = new_len;
+    msg_len = new_len;
 }
 
 char *err_get(void)
 {
     if (msg) {
-	len = 0;
+	msg_len = 0;
 	return msg;
     } else {
 	return "";
     }
-}
-
-void err_destroy(void)
-{
-    if (msg) {
-	FREE(msg);
-    }
-    msg = NULL;
-    len = 0;
 }

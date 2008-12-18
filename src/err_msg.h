@@ -8,7 +8,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Revision$ $Date$
+   $Revision: 1.7 $ $Date: 2008/12/17 22:55:56 $
  */
 
 #ifndef ERR_MSG_H_
@@ -16,6 +16,5 @@
 
 void err_append(const char *msg);
 char *err_get(void);
-void err_destroy(void);
 
 #endif
