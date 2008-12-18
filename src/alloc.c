@@ -7,11 +7,10 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Revision$ $Date$
+   $Id: alloc.c,v 1.17 2008/12/02 17:19:39 gcarrie Exp $
  */
 
 #include <stdlib.h>
-#include <assert.h>
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
@@ -19,6 +18,7 @@
 
 static int init;
 static void alloc_init(void);
+static void clean(void);
 
 /*
  * This counter records the number of times an allocator
@@ -62,17 +62,30 @@ void alloc_init(void)
 	if ( !diag_out ) {
 	    perror("MEM_DEBUG set but unable to open diagnostic memory file");
 	}
+	atexit(clean);
     }
     s = getenv("MEM_FAIL");
     if (s) {
 	fail_fnm = malloc(strlen(s) + 1);
-	assert(fail_fnm);
 	if (sscanf(s, "%[^:]:%d", fail_fnm, &fail_line) != 2) {
 	    fprintf(stderr, "Could not get failure spec from %s\n", s);
 	    free(fail_fnm);
 	}
     }
     init = 1;
+}
+
+/*
+ * Clean up when process exits.
+ */
+void clean()
+{
+    if (diag_out) {
+	fclose(diag_out);
+    }
+    if (fail_fnm) {
+	free(fail_fnm);
+    }
 }
 
 void *malloc_tkx(size_t sz, char *fnm, int ln)
@@ -144,16 +157,4 @@ void free_tkx(void *m, char *fnm, int ln)
 	fprintf(diag_out, "%p (%09x) freed at %s:%d\n", m, ++c, fnm, ln);
     }
     free(m);
-}
-
-void alloc_clean()
-{
-    if (diag_out) {
-	fclose(diag_out);
-	diag_out = NULL;
-    }
-    if (fail_fnm) {
-	free(fail_fnm);
-	fail_fnm = NULL;
-    }
 }
