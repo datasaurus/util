@@ -6,7 +6,7 @@
 # Copyright (c) 2008 Gordon D. Carrie
 # Licensed under the Open Software License version 3.0
 #
-# $Revision: 1.3 $ $Date: 2008/12/19 18:05:53 $
+# $Revision: 1.4 $ $Date: 2008/12/19 18:24:27 $
 
 echo ''
 echo '------------------------------- hash1 ----------------------------------'
