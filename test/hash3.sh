@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Id: hash3.sh,v 1.8 2008/11/16 04:45:49 gcarrie Exp $
+# $Revision$ $Date$
 #
 ########################################################################
 

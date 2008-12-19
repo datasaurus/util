@@ -2,7 +2,7 @@
 
 # This script tests the hash table interface in visky3.
 #
-# $Id: hash.sh,v 1.1 2008/10/01 21:10:22 gcarrie Exp $ || exit 1
+# $Revision$ $Date$
 
 echo ''
 echo '------------------------------- hash1 ----------------------------------'
