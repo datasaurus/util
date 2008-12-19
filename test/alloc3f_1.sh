@@ -1,8 +1,8 @@
 #!/bin/sh
 #
 #- alloc3f_1.sh --
-#-	This script tests the allocators defined in src/alloc3f.c
-#-	Its test program allocates, accesses, and then frees a three
+#-	This test application tests the allocators defined in src/alloc3f.c
+#-	It examines a process that allocates, accesses, and then frees a three
 #-	dimensional array.
 #-
 # Copyright (c) 2008 Gordon D. Carrie
@@ -10,14 +10,14 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.30 $ $Date: 2008/12/18 21:37:05 $
+# $Revision: 1.31 $ $Date: 2008/12/18 21:56:45 $
 #
 ########################################################################
 
 echo "
 alloc3f_1.sh --
 
-This script tests the functions defined in src/alloc3f.c.
+This test application tests the functions defined in src/alloc3f.c.
 See alloc3f (3) for information on these functions.
 
 It creates a test application named alloc3f_1 that allocates, accesses, and frees

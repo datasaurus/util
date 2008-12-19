@@ -1,27 +1,27 @@
 #!/bin/sh
 #
 #- alloc2.sh --
-#-	This script tests the allocators defined in src/alloc.c
-#-	and script src/chkalloc.  It creates runs a test application
-#-	that leaks memory.
+#-	This test application tests the allocators defined in src/alloc.c
+#-	and application src/chkalloc.  It examines a process that intentionally
+#-	leaks memory.
 #-
 # Copyright (c) 2008 Gordon D. Carrie
 # Licensed under the Open Software License version 3.0
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.21 $ $Date: 2008/12/17 22:46:33 $
+# $Revision: 1.22 $ $Date: 2008/12/18 21:56:45 $
 #
 ########################################################################
 
 echo "
 alloc2.sh --
 
-This script tests the allocators defined in src/alloc.c and script src/chkalloc.
-See alloc (3) and chkalloc (1).
+This test application tests the allocators defined in src/alloc.c and
+src/chkalloc.  See alloc (3) and chkalloc (1).
 
-The script creates a test program that intentionally fails to free
-memory that it allocates.
+It creates a test program that intentionally fails to free memory that it
+allocates.
 
 Usage suggestions:
 ./alloc1.sh 2>&1 | less
@@ -44,7 +44,6 @@ fi
 # Set RM to : in environment to save temporary files.
 RM=${RM:-'rm -f'}
 
-FINDLEAKS=src/findleaks
 CC="cc"
 CFLAGS="-g -Wall -Wmissing-prototypes"
 

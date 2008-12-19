@@ -1,14 +1,17 @@
 #!/bin/sh
 #
-# This script tests the hash table interface defined in src.
-#
+#- hash1.sh --
+#-	This test application tests the hash table interface defined in src/hash.c.
+#-	It monitors a process that stores words from a stream into a hash
+#-	table and then tries to retrieve some of them.
+#-
 # Copyright (c) 2008 Gordon D. Carrie
 #
 # Licensed under the Open Software License version 3.0
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision$ $Date$
+# $Revision: 1.9 $ $Date: 2008/12/19 18:07:36 $
 #
 ########################################################################
 

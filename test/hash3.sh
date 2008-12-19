@@ -1,14 +1,17 @@
 #!/bin/sh
 #
-# This script tests the hash table interface in src.
-#
+#- hash3.sh --
+#-	This test application tests the hash table interface defined in src/hash.c.
+#-	It examines a process that creates a small hash table and then clears it
+#-	one entry at a time while printing a memory trace.
+#-
 # Copyright (c) 2008 Gordon D. Carrie
 #
 # Licensed under the Open Software License version 3.0
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision$ $Date$
+# $Revision: 1.10 $ $Date: 2008/12/19 18:07:36 $
 #
 ########################################################################
 
@@ -16,9 +19,6 @@
 
 #RM=:
 RM='rm -f'
-
-# The test application creates a small hash table and then clears it one entry
-# at a time while printing a memory trace.
 
 # Here is the source code for the test application.
 
@@ -132,7 +132,7 @@ echo ''
 echo 'Checking memory trace'
 echo 'There should be one "leak" because this test does not delete the table, '
 echo 'just the entries.'
-src/findleaks < memtrace
+src/chkalloc < memtrace
 echo 'Memory check done'
 
 $RM correct memtrace hash3.c

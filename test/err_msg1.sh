@@ -1,29 +1,25 @@
 #!/bin/sh
 #
 #- err_msg1.sh --
-#-	This script tests the error message facility defined in src/err_msg.c.
-#-	Its test program creates and prints an error message while the
-#-	script verifies output, confirms proper error handling, and checks
-#-	for leaks.
+#-	This test application tests the error message facility defined in
+#-	src/err_msg.c.  It examines a process that prints error messages.
 #-
 # Copyright (c) 2008 Gordon D. Carrie
 # Licensed under the Open Software License version 3.0
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.3 $ $Date: 2008/12/17 22:55:56 $
+# $Revision: 1.4 $ $Date: 2008/12/18 23:02:24 $
 #
 ########################################################################
 
 echo "
 err_msg1.sh --
 
-This script tests the error message functions defined in src/err_msg.c.
+This test application tests the error message functions defined in src/err_msg.c.
 See err_msg (1) for information about these functions.
 
-It creates a test application that prints some error messages.  It runs
-the application while checking for memory leaks.  It also checks for
-proper responses to errors and failures.
+It creates and examines a process that prints some error messages.
 
 Usage suggestions:
 ./err_msg1.sh 2>&1 | less

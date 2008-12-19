@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #- chkalloc.sh --
-#-	This script tests the src/chkalloc script.  It checks
+#-	This test application tests src/chkalloc.  It checks
 #-	chkalloc's ability to correctly process text files with
 #-	various diagnostic outputs.
 #-
@@ -10,17 +10,18 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.11 $ $Date: 2008/12/17 22:48:02 $
+# $Revision: 1.12 $ $Date: 2008/12/18 20:38:36 $
 #
 ########################################################################
 
 echo "
 chkalloc.sh --
 
-This script tests the src/chkalloc application.  See chkalloc (1) for
+This test application tests src/chkalloc.  See chkalloc (1) for
 information on chkalloc.
 
-To save temporary files, set RM to : in environment before running this script.
+To save temporary files, set RM to : in environment before running this
+application.
 
 Copyright (c) 2008 Gordon D. Carrie
 Licensed under the Open Software License version 3.0

@@ -1,8 +1,8 @@
 #!/bin/sh
 #
 #- alloc2f_1.sh --
-#-	This script tests the allocators defined in src/alloc2f.c
-#-	Its test program allocates, accesses, and then frees a two
+#-	This test application tests the allocators defined in src/alloc2f.c
+#-	It examines a process that allocates, accesses, and then frees a two
 #-	dimensional array.
 #-
 # Copyright (c) 2008 Gordon D. Carrie
@@ -10,14 +10,14 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.36 $ $Date: 2008/12/18 21:19:16 $
+# $Revision: 1.37 $ $Date: 2008/12/18 21:56:45 $
 #
 ########################################################################
 
 echo "
 alloc2f_1.sh --
 
-This script tests the functions defined in src/alloc2f.c.
+This test application tests the functions defined in src/alloc2f.c.
 See alloc2f (3) for information on these functions.
 
 It creates a test application named alloc2f_1 that allocates, accesses, and frees

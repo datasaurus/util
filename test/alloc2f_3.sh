@@ -1,23 +1,23 @@
 #!/bin/sh
 #
 #- alloc2f_3.sh --
-#-	This script tests the allocators defined in src/alloc2f.c
-#-	Its test program is similar to the one in alloc2f_1.sh, except
-#-	that it tests a small, one by one array.
+#-	This test application tests the allocators defined in src/alloc2f.c
+#-	It is similar to alloc2f_1.sh, except that the process creates a
+#-	small, one by one array.
 #-
 # Copyright (c) 2008 Gordon D. Carrie
 # Licensed under the Open Software License version 3.0
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.19 $ $Date: 2008/12/18 21:37:05 $
+# $Revision: 1.20 $ $Date: 2008/12/18 21:56:45 $
 #
 ########################################################################
 
 echo "
 alloc2f_3.sh --
 
-This script tests the functions defined in src/alloc2f.c.
+This test application tests the functions defined in src/alloc2f.c.
 See alloc2f (3) for information on these functions.
 
 It is similar to alloc2f_1.sh, but tests with a small array.  It creates a test

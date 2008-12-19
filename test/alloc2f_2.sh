@@ -1,22 +1,23 @@
 #!/bin/sh
 #
 #- alloc2f_2.sh --
-#-	This script tests the allocators defined in src/alloc2f.c
-#-	Its test program attempts to allocate some impossibly large arrays.
+#-	This test application tests the allocators defined in src/alloc2f.c
+#-	It examines a process that attempts to allocate some impossibly large
+#-	arrays.
 #-
 # Copyright (c) 2008 Gordon D. Carrie
 # Licensed under the Open Software License version 3.0
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.15 $ $Date: 2008/12/18 21:37:05 $
+# $Revision: 1.16 $ $Date: 2008/12/18 21:56:45 $
 #
 ########################################################################
 
 echo "
 alloc2f_2.sh --
 
-This script tests the functions defined in src/alloc2f.c.
+This test application tests the functions defined in src/alloc2f.c.
 See alloc2f (3) for information on these functions.
 
 It creates a test application named alloc2f_2 that attempts to make some

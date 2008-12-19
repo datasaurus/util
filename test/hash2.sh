@@ -1,14 +1,16 @@
 #!/bin/sh
 #
-# This script tests the hash table interface in src.
-#
+#- hash2.sh --
+#-	This test application tests the hash table interface defined in src/hash.c.
+#-	It monitors a process that creates a small hash table and modifies it.
+#-
 # Copyright (c) 2008 Gordon D. Carrie
 #
 # Licensed under the Open Software License version 3.0
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision$ $Date$
+# $Revision: 1.9 $ $Date: 2008/12/19 18:07:36 $
 #
 ########################################################################
 
@@ -16,9 +18,6 @@
 
 RM='rm -f'
 #RM=:
-
-# The test application creates a small hash table and modifies it.  It also
-# prints a memory trace.
 
 # Here is the source code for the test application.
 
@@ -112,7 +111,7 @@ unset MEM_DEBUG
 echo ''
 
 echo 'Checking memory trace (will not say anything if no leaks)'
-src/findleaks < memtrace
+src/chkalloc < memtrace
 echo 'Memory check done'
 
 $RM correct memtrace hash2.c

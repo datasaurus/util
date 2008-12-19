@@ -1,6 +1,9 @@
 #!/bin/sh
 #
-# This script tests the hash table interface in src.
+#- hash4.sh --
+#-	This test application tests the hash table interface defined in src/hash.c.
+#-	It examines a process that creates a small hash table and then resizes
+#-	it while printing a memory trace.
 #
 # Copyright (c) 2008 Gordon D. Carrie
 #
@@ -8,7 +11,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision$ $Date$
+# $Revision: 1.8 $ $Date: 2008/12/19 18:07:36 $
 #
 ########################################################################
 
@@ -16,9 +19,6 @@
 
 RM='rm -f'
 #RM=:
-
-# This test creates an application that creates a small
-# hash table and then resizes it while printing a memory trace.
 
 # Identify a file of whitespace separated words, WORD_FL.
 
@@ -153,7 +153,7 @@ fi
 unset MEM_DEBUG
 
 echo 'Checking memory trace (will not say anything if no leaks)'
-src/findleaks < memtrace
+src/chkalloc < memtrace
 echo 'Memory check done'
 
 $RM correct memtrace hash4.c
