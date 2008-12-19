@@ -1,8 +1,12 @@
 #!/bin/sh
-
-# This script tests the hash table interface in visky3.
 #
-# $Revision$ $Date$
+#- hash.sh --
+#-	This script tests the hash table interface in visky3.
+#-
+# Copyright (c) 2008 Gordon D. Carrie
+# Licensed under the Open Software License version 3.0
+#
+# $Revision: 1.3 $ $Date: 2008/12/19 18:05:53 $
 
 echo ''
 echo '------------------------------- hash1 ----------------------------------'

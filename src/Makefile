@@ -1,4 +1,14 @@
-# $Revision$ $Date$
+#- Makefile --
+#-	This is the make file for everything in the src directory.
+#-	It does not intend to create or install complete applications
+#-	or libraries, but may help development of such.
+#-	
+# Copyright (c) 2008 Gordon D. Carrie
+# Licensed under the Open Software License version 3.0
+#
+# Please send feedback to dev0@trekix.net
+#
+# $Revision: 1.13 $ $Date: 2008/12/17 22:55:56 $
 
 CFLAGS = -g -Wall -Wmissing-prototypes
 #LFLAGS = -L/usr/local/lib -lefence
