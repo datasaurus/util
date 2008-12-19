@@ -8,11 +8,15 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.13 $ $Date: 2008/12/17 22:55:56 $
+# $Revision: 1.14 $ $Date: 2008/12/19 18:24:27 $
 
 CFLAGS = -g -Wall -Wmissing-prototypes
 #LFLAGS = -L/usr/local/lib -lefence
 EXECS = geog allocfvi 
+OBJ = alloc.o alloc2f.o alloc3f.o alloc4f.o allocfvi.o err_msg.o geog_app.o \
+geog_lib.o hash.o
+
+obj : ${OBJ}
 
 geog : geog_app.c  geog_lib.c
 	cc ${CFLAGS} -o geog geog_app.c  geog_lib.c -lm
