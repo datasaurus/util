@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.19 $ $Date: 2008/12/18 21:56:45 $
+# $Revision: 1.20 $ $Date: 2008/12/19 19:24:19 $
 #
 ########################################################################
 
@@ -21,7 +21,7 @@ This test application tests the functions defined in src/alloc3f.c.
 See alloc3f (3) for information on these functions.
 
 It is similar to alloc3f_1.sh, but tests with a small array.  It creates a test
-application named alloc3f_3 that allocates, accesses, and frees a very small two
+application named alloc3f_3 that allocates, accesses, and frees a very small three
 dimensional array.  The array is 1x1x1.  It runs the application while
 checking for memory leaks and evaluating responses to various simulated failures.
 
