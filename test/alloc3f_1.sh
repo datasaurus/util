@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.31 $ $Date: 2008/12/18 21:56:45 $
+# $Revision: 1.32 $ $Date: 2008/12/19 19:24:19 $
 #
 ########################################################################
 
@@ -21,7 +21,7 @@ This test application tests the functions defined in src/alloc3f.c.
 See alloc3f (3) for information on these functions.
 
 It creates a test application named alloc3f_1 that allocates, accesses, and frees
-a two dimensional array.  It runs the application while checking for memory leaks
+a three dimensional array.  It runs the application while checking for memory leaks
 and evaluating responses to various simulated failures.
 
 Usage suggestions:

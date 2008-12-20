@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.18 $ $Date: 2008/12/18 21:56:45 $
+# $Revision: 1.19 $ $Date: 2008/12/19 19:24:19 $
 #
 ########################################################################
 
@@ -21,7 +21,7 @@ This test application tests the functions defined in src/alloc4f.c.
 See alloc4f (3) for information on these functions.
 
 It creates a test application named alloc4f_1 that allocates, accesses, and frees
-a two dimensional array.  It runs the application while checking for memory leaks
+a four dimensional array.  It runs the application while checking for memory leaks
 and evaluating responses to various simulated failures.
 
 Usage suggestions:
