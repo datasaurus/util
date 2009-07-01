@@ -1,13 +1,13 @@
 /*
  - hash.c --
- - 	This file defines hash table functions.
+ - 	This file defines hash table functions.  See hash (3).
  -
    Copyright (c) 2008 Gordon D. Carrie
    Licensed under the Open Software License version 3.0
 
    Please send feedback to dev0@trekix.net
 
-   $Revision$ $Date$
+   $Revision: 1.20 $ $Date: 2008/12/17 22:55:56 $
 */
 
 /*
@@ -28,19 +28,11 @@
 static unsigned hash(const char *, unsigned);
 
 /*
- *----------------------------------------------------------------------
- *
- * hash -
- * 
- * 	Retrieve an index in a hash table given the key.
- *
- * Arguments:
- * 	char *k		- string key
- * 	unsigned n	- number of buckets in hash table
- *
- *----------------------------------------------------------------------
+ * hash - compute an index in a hash table given the key.
+ * k = string key (in)
+ * n = number of buckets in hash table (in)
+ * Return value is a pseudo-random integer in range [0,n)
  */
-
 static unsigned hash(const char *k, unsigned n)
 {
     unsigned h;
@@ -51,31 +43,8 @@ static unsigned hash(const char *k, unsigned n)
     return h % n;
 }
 
-/*
- *----------------------------------------------------------------------
- *
- * hash_init --
- *
- * 	This constructor initializes a new hash table.
- *
- * Arguments:
- * 	tblP		- pointer to space for a hash table.
- *			  Contents should be garbage.
- *	n_buckets	- number of entries that will be stored.  Table will
- *			  not grow, but may become crowded, if this number
- *			  of entries is eventually exceeded.
- *
- * Side effects:
- *	If n_buckets > 0, memory is allocated in the table, and the table
- *	is ready for use.
- *	If n_buckets == 0, no memory is allocated, and the table is
- *	initialized with bogus values.  The table is not safe for use,
- *	but is safe to give to hash_clear.
- *
- *----------------------------------------------------------------------
- */
-
-void hash_init(struct hash_tbl *tblP, unsigned n_buckets)
+/* See hash (3) */
+int hash_init(struct hash_tbl *tblP, unsigned n_buckets)
 {
     size_t sz;
     struct hash_entry **bp;		/* Pointer into bucket array */
@@ -84,7 +53,7 @@ void hash_init(struct hash_tbl *tblP, unsigned n_buckets)
     tblP->buckets = NULL;
     tblP->n_buckets = 0;
     if (n_buckets == 0) {
-	return;
+	return 1;
     }
     tblP->n_buckets = n_buckets;
     if (tblP->n_buckets % HASH_X == 0) {
@@ -92,28 +61,17 @@ void hash_init(struct hash_tbl *tblP, unsigned n_buckets)
     }
     sz = tblP->n_buckets * sizeof(struct hash_entry *);
     tblP->buckets = (struct hash_entry **)MALLOC(sz);
+    if ( !tblP->buckets ) {
+	err_append("Could not allocate memory for hash table.\n");
+	return 0;
+    }
     for (bp = tblP->buckets; bp < tblP->buckets + tblP->n_buckets; bp++) {
 	*bp = NULL;
     }
+    return 1;
 }
 
-/*
- *----------------------------------------------------------------------
- *
- * hash_clear --
- *
- * 	This destructor empties a hash table.
- *
- * Arguments:
- * 	struct hash_tbl *tblP	- pointer to a hash table.
- *
- * Side effects:
- * 	Memory associated with the table is freed and the table is
- * 	reinitialized.
- *
- *----------------------------------------------------------------------
- */
-
+/* See hash (3) */
 void hash_clear(struct hash_tbl *tblP)
 {
     struct hash_entry **bp, **bp1, *ep;
@@ -131,10 +89,7 @@ void hash_clear(struct hash_tbl *tblP)
     hash_init(tblP, 0);
 }
 
-/*
-   Add a value to a hash table.
- */
-
+/* See hash (3) */
 int hash_add(struct hash_tbl *tblP, const char *key, unsigned val)
 {
     size_t len;
@@ -154,8 +109,17 @@ int hash_add(struct hash_tbl *tblP, const char *key, unsigned val)
 	}
     }
     ep = (struct hash_entry *)MALLOC(sizeof(struct hash_entry));
+    if ( !ep ) {
+	err_append("Could not allocate memory for new entry in hash table.\n");
+	return 0;
+    }
     len = strlen(key);
     ep->key = (char *)MALLOC(len + 1);
+    if ( !ep->key ) {
+	err_append("Could not allocate memory for new entry in hash table.\n");
+	FREE(ep);
+	return 0;
+    }
     for (s = (char *)key, d = ep->key; *s; s++, d++) {
 	*d = *s;
     }
@@ -166,11 +130,8 @@ int hash_add(struct hash_tbl *tblP, const char *key, unsigned val)
     return 1;
 }
 
-/*
-   Set a value in a hash table.
- */
-
-void hash_set(struct hash_tbl *tblP, const char *key, unsigned val)
+/* See hash (3) */
+int hash_set(struct hash_tbl *tblP, const char *key, unsigned val)
 {
     size_t len;
     struct hash_entry *ep, *p;
@@ -178,18 +139,28 @@ void hash_set(struct hash_tbl *tblP, const char *key, unsigned val)
     char *s, *d;
 
     if ( !tblP->buckets || !key ) {
-	return;
+	err_append("Attempted to set nonexistent hash table.\n");
+	return 0;
     }
     b = hash(key, tblP->n_buckets);
     for (p = tblP->buckets[b]; p; p = p->next) {
 	if (strcmp(p->key, key) == 0) {
 	    p->val = val;
-	    return;
+	    return 1;
 	}
     }
     ep = (struct hash_entry *)MALLOC(sizeof(struct hash_entry));
+    if ( !ep ) {
+	err_append("Could not allocate memory for new entry in hash table.\n");
+	return 0;
+    }
     len = strlen(key);
     ep->key = (char *)MALLOC(len + 1);
+    if ( !ep->key ) {
+	err_append("Could not allocate memory for new entry in hash table.\n");
+	FREE(ep);
+	return 0;
+    }
     for (s = (char *)key, d = ep->key; *s; s++, d++) {
 	*d = *s;
     }
@@ -197,26 +168,10 @@ void hash_set(struct hash_tbl *tblP, const char *key, unsigned val)
     ep->next = tblP->buckets[b];
     tblP->buckets[b] = ep;
     tblP->n_entries++;
+    return 1;
 }
 
-/*
- *----------------------------------------------------------------------
- *
- * hash_get --
- *
- * 	This function retrieves a value from a hash table.
- *
- *
- * Arguments:
- *	struct hash_tbl *tblP	- pointer to space for a hash table.
- *	char *key		- string key.
- *
- * Results:
- *	Return value is value for key, or -1 if none.
- *
- *----------------------------------------------------------------------
- */
-
+/* See hash (3) */
 int hash_get(struct hash_tbl *tblP, const char *key, unsigned *lp)
 {
     unsigned b;			/* Index into buckets array */
@@ -235,11 +190,8 @@ int hash_get(struct hash_tbl *tblP, const char *key, unsigned *lp)
     return 0;
 }
 
-/*
-   Adjust the number of buckets in a hash table.
- */
-
-void hash_adj(struct hash_tbl *tblP, unsigned n_buckets2)
+/* See hash (3) */
+int hash_adj(struct hash_tbl *tblP, unsigned n_buckets2)
 {
     struct hash_entry **buckets2, **bp, **bp1, *ep, *next;
     unsigned b;
@@ -250,6 +202,10 @@ void hash_adj(struct hash_tbl *tblP, unsigned n_buckets2)
     }
     sz = n_buckets2 * sizeof(struct hash_entry *);
     buckets2 = (struct hash_entry **)MALLOC(sz);
+    if ( !buckets2 ) {
+	err_append("Could not allocate memory when adjusting hash table size.\n");
+	return 0;
+    }
     for (bp = buckets2, bp1 = bp + n_buckets2; bp < bp1; bp++) {
 	*bp = NULL;
     }
@@ -264,12 +220,10 @@ void hash_adj(struct hash_tbl *tblP, unsigned n_buckets2)
     FREE(tblP->buckets);
     tblP->buckets = buckets2;
     tblP->n_buckets = n_buckets2;
+    return 1;
 }
 
-/*
-   Remove an entry from a hash table.
- */
-
+/* See hash (3) */
 void hash_rm(struct hash_tbl *tblP, const char *key)
 {
     struct hash_entry *p, *prev;
@@ -294,10 +248,8 @@ void hash_rm(struct hash_tbl *tblP, const char *key)
 	}
     }
 }
-/*
-   Provide information about the size of a hash table.
- */
-
+
+/* See hash (3) */
 void hash_sz(struct hash_tbl *tblP, unsigned *n_bucketsP, unsigned *n_entriesP)
 {
     if ( !tblP ) {
