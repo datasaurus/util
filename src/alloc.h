@@ -1,5 +1,5 @@
 /*
- - alloc.c --
+ - alloc.h --
  - 	This header declares memory allocators.  See alloc (3).
  - 
    Copyright (c) 2007, 2008 Gordon D. Carrie
@@ -7,17 +7,13 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Revision$ $Date$
+   $Revision: 1.18 $ $Date: 2008/12/19 18:05:03 $
  */
 
 #ifndef ALLOC_H_
 #define ALLOC_H_
 
 #include <stdlib.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #define MALLOC(s) malloc_tkx((s), __FILE__, __LINE__)
 #define CALLOC(n,s) calloc_tkx((n), (s), __FILE__, __LINE__)
@@ -28,9 +24,5 @@ void *malloc_tkx(size_t, char *, int);
 void *calloc_tkx(size_t, size_t, char *, int);
 void *realloc_tkx(void *, size_t, char *, int);
 void free_tkx(void *, char *, int);
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif

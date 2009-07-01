@@ -1,13 +1,13 @@
 /*
  - alloc.c --
- -	This file defines memory allocators.  See the alloc (3).
+ -	This file defines memory allocators.  See alloc (3).
  -
    Copyright (c) 2007, 2008 Gordon D. Carrie
    Licensed under the Open Software License version 3.0
   
    Please send feedback to dev0@trekix.net
   
-   $Revision$ $Date$
+   $Revision: 1.23 $ $Date: 2008/12/19 18:04:24 $
  */
 
 #include <stdlib.h>
@@ -20,31 +20,19 @@ static int init;
 static void alloc_init(void);
 static void clean(void);
 
-/*
- * This counter records the number of times an allocator
- * has been called.  It helps to sort output for debugging.
- */
-
+/* This counter records the number of times an allocator
+ * has been called.  It helps to sort output for debugging. */
 static unsigned c;
 
-/*
- * Where to send diagnostic output
- */
-
+/* Where to send diagnostic output */
 static FILE *diag_out;
 
-/*
- * File and line at which to induce pretend memory failure
- */
-
+/* File and line at which to induce pretend memory failure */
 static char *fail_fnm;
 static int fail_line;
 
-/*
- * Initialize this interface.
- */
-
-void alloc_init(void)
+/* Initialize this interface, when process starts */
+static void alloc_init(void)
 {
     char *s;
     int od;
@@ -75,9 +63,7 @@ void alloc_init(void)
     init = 1;
 }
 
-/*
- * Clean up when process exits.
- */
+/* Clean up when process exits */
 void clean()
 {
     if (diag_out) {
@@ -88,6 +74,7 @@ void clean()
     }
 }
 
+/* See alloc (3) */
 void *malloc_tkx(size_t sz, char *fnm, int ln)
 {
     void *m;
@@ -105,6 +92,7 @@ void *malloc_tkx(size_t sz, char *fnm, int ln)
     return m;
 }
 
+/* See alloc (3) */
 void *calloc_tkx(size_t n, size_t sz, char *fnm, int ln)
 {
     void *m;
@@ -122,6 +110,7 @@ void *calloc_tkx(size_t n, size_t sz, char *fnm, int ln)
     return m;
 }
 
+/* See alloc (3) */
 void *realloc_tkx(void *m, size_t sz, char *fnm, int ln)
 {
     void *m2;
@@ -148,6 +137,7 @@ void *realloc_tkx(void *m, size_t sz, char *fnm, int ln)
     return m2;
 }
 
+/* See alloc (3) */
 void free_tkx(void *m, char *fnm, int ln)
 {
     if ( !init ) {

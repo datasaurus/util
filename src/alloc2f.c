@@ -8,13 +8,14 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Revision$ $Date$
+   $Revision: 1.8 $ $Date: 2008/12/17 22:55:56 $
  */
 
 #include "alloc.h"
 #include "err_msg.h"
 #include "alloc2f.h"
 
+/* See alloc2f (3) */
 float ** calloc2f(long j, long i)
 {
     float **dat = NULL;
@@ -54,6 +55,7 @@ float ** calloc2f(long j, long i)
     return dat;
 }
 
+/* See alloc2f (3) */
 void free2f(float **dat)
 {
     if (dat && dat[0]) {

@@ -2,14 +2,14 @@
  - allocfvi.c --
  -	This file defines an application that prints out memory maps of
  -	multi-dimensional arrays.  The application is for testing,
- -	diagnosis, and edification.
+ -	diagnosis, and edification.  See allocfvi (1).
  -
    Copyright (c) 2008 Gordon D. Carrie
    Licensed under the Open Software License version 3.0
   
    Please send feedback to dev0@trekix.net
   
-   $Revision$ $Date$
+   $Revision: 1.12 $ $Date: 2008/12/17 22:55:56 $
  */
 
 #include <stdlib.h>

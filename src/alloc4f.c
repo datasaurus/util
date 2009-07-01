@@ -8,13 +8,14 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Revision$ $Date$
+   $Revision: 1.6 $ $Date: 2008/12/17 22:55:56 $
  */
 
 #include "alloc.h"
 #include "err_msg.h"
 #include "alloc4f.h"
 
+/* See alloc4f (3) */
 float **** calloc4f(long lmax, long kmax, long jmax, long imax)
 {
     float ****dat;
@@ -74,6 +75,7 @@ float **** calloc4f(long lmax, long kmax, long jmax, long imax)
     return dat;
 }
 
+/* See alloc4f (3) */
 void free4f(float ****dat)
 {
     if (dat) {

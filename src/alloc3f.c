@@ -8,13 +8,14 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Revision$ $Date$
+   $Revision: 1.8 $ $Date: 2008/12/17 22:55:56 $
  */
 
 #include "alloc.h"
 #include "err_msg.h"
 #include "alloc3f.h"
 
+/* See alloc3f (3) */
 float *** calloc3f(long kmax, long jmax, long imax)
 {
     float ***dat = NULL;
@@ -61,6 +62,7 @@ float *** calloc3f(long kmax, long jmax, long imax)
     return dat;
 }
 
+/* See alloc3f (3) */
 void free3f(float ***dat)
 {
     if (dat) {
