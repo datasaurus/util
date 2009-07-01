@@ -8,7 +8,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Revision: 1.13 $ $Date: 2008/12/17 22:55:56 $
+   $Revision: 1.14 $ $Date: 2008/12/18 20:00:50 $
  */
 
 #include <stdio.h>
@@ -21,6 +21,7 @@
 static char msg[LEN];		/* Current error message */
 static size_t msg_len;		/* strlen(msg) */
 
+/* See err_msg (3) */
 void err_append(const char *s)
 {
     size_t s_len, new_len;
@@ -49,6 +50,7 @@ void err_append(const char *s)
     msg_len = new_len;
 }
 
+/* See err_msg (3) */
 char *err_get(void)
 {
     if (msg) {
