@@ -1,6 +1,5 @@
-The applications in this directory test the allocators defined in 
-src/alloc.[ch], src/alloc2f.[ch], src/alloc3f.[ch], and src/alloc4f.[ch].
-They also test diagnostic application src/chkalloc.
+The applications in this directory test scripts and source code defined in 
+the adjacent source directory.
 
 To find out what each application does, search for pattern '^.-', e.g.
 grep '^.-' *.sh
