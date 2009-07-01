@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.6 $ $Date: 2008/12/17 22:55:56 $
+.\" $Revision: 1.7 $ $Date: 2008/12/18 20:00:50 $
 .\"
 .TH err_msg 3 "Error messages"
 .SH NAME
@@ -18,16 +18,14 @@ err_append, err_get \- error message generation and retrieval
 .fi
 .SH DESCRIPTION
 These functions create, modify, and retrieve a global error string.
-\fBerr_append\fP appends \fImsg\fP to the global error string.
 
-\fBerr_append\fP does not terminate messages with newlines.  The caller should
-normally do this.
-
-\fBerr_append\fP will cause the process to abort if it cannot allocate memory for
+\fBerr_append\fP appends \fImsg\fP to the global error string.  It does not
+terminate messages with newlines.  The caller should normally do this.
+It will cause the process to abort if it cannot allocate memory for
 the global error message.
 
 \fBerr_get\fP returns the global error string and then resets it, so that
-subsequent calls to \fBerr_append\fP over write the previous contents.  The
+subsequent calls to \fBerr_append\fP overwrite the previous contents.  The
 value returned by \fBerr_get\fP belongs to the error message facility and
 should not be modified by users.
 
