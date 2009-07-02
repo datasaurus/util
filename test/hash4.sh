@@ -11,7 +11,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.8 $ $Date: 2008/12/19 18:07:36 $
+# $Revision: 1.9 $ $Date: 2008/12/19 19:24:19 $
 #
 ########################################################################
 
@@ -52,6 +52,7 @@ NBUCKET=$NWORD
 cat > hash4.c << END
 #include <stdlib.h>
 #include <stdio.h>
+#include <err_msg.h>
 #include <hash.h>
 
 char keys[$NWORD][$LMAX];
@@ -72,17 +73,29 @@ int main(void)
 	exit(1);
     }
     for (n = 0; fscanf(in, " %s", keys[n]) == 1; n++) {
-	hash_set(&tbl, keys[n], n);
+	if ( !hash_set(&tbl, keys[n], n) ) {
+	    fprintf(stderr, "Could not set value in hash table.\n");
+	    fprintf(stderr, "%s\n", err_get());
+	    exit(1);
+	}
     }
     fclose(in);
 
     n = $NBUCKET / 4;
     fprintf(stderr, "Adjusting table to %d buckets for %d words.\n", n, $NWORD);
-    hash_adj(&tbl, n);
+    if ( !hash_adj(&tbl, n) ) {
+	fprintf(stderr, "Could not adjust hash table size.\n");
+	fprintf(stderr, "%s\n", err_get());
+	exit(1);
+    }
 
     n = $NBUCKET * 2;
     fprintf(stderr, "Adjusting table to %d buckets for %d words.\n", n, $NWORD);
-    hash_adj(&tbl, n);
+    if ( !hash_adj(&tbl, n) ) {
+	fprintf(stderr, "Could not adjust hash table size.\n");
+	fprintf(stderr, "%s\n", err_get());
+	exit(1);
+    }
 
     /*
        Retrieve some entries from the resized table.

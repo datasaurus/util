@@ -11,7 +11,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.10 $ $Date: 2008/12/19 18:07:36 $
+# $Revision: 1.11 $ $Date: 2008/12/19 19:24:19 $
 #
 ########################################################################
 
@@ -49,17 +49,26 @@ int main(void)
 	"foo", "bar", "hello", "world"
     };
 
-    hash_init(&tbl, 4);
-    hash_add(&tbl, "foo", 0);
-    hash_add(&tbl, "bar", 1);
-    hash_add(&tbl, "hello", 10);
-    hash_add(&tbl, "world", 11);
+    if ( !hash_init(&tbl, 4) ) {
+	fprintf(stderr, "Could not initialize hash table.\n");
+	fprintf(stderr, "%s\n", err_get());
+    }
+    if ( !hash_set(&tbl, "foo", 0)
+	    || !hash_set(&tbl, "bar", 1)
+	    || !hash_set(&tbl, "hello", 10)
+	    || !hash_set(&tbl, "world", 11) ) {
+	fprintf(stderr, "Failed to set values in hash table.\n");
+	fprintf(stderr, "%s\n", err_get());
+    }
     for (n = 0; n < 4; n++) {
 	hash_print(&tbl, keys[n]);
     }
 
     printf("Modifying table.\n");
-    hash_set(&tbl, "bar", 2);
+    if ( !hash_set(&tbl, "bar", 2) ) {
+	fprintf(stderr, "Failed to set value in hash table.\n");
+	fprintf(stderr, "%s\n", err_get());
+    }
     for (n = 0; n < 4; n++) {
 	hash_print(&tbl, keys[n]);
     }

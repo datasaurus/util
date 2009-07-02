@@ -11,7 +11,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.9 $ $Date: 2008/12/19 18:07:36 $
+# $Revision: 1.10 $ $Date: 2008/12/19 19:24:19 $
 #
 ########################################################################
 
@@ -55,6 +55,7 @@ LMAX=`awk '
 cat > hash1.c << END
 #include <stdlib.h>
 #include <stdio.h>
+#include <err_msg.h>
 #include <hash.h>
 
 char keys[$NWORD][$LMAX];
@@ -69,13 +70,21 @@ int main(void)
 
     fprintf(stderr, "Running hash driver with %d buckets for %d words.\n",
 	    NBUCKET, $NWORD);
-    hash_init(&tbl, NBUCKET);
+    if ( !hash_init(&tbl, NBUCKET) ) {
+	fprintf(stderr, "Could not initialize hash table.\n");
+	fprintf(stderr, "%s.\n", err_get());
+	exit(1);
+    }
     if ( !(in = fopen(word_fl, "r")) ) {
 	fprintf(stderr, "Could not open %s\n", word_fl);
 	exit(1);
     }
     for (n = 0; fscanf(in, " %s", keys[n]) == 1; n++) {
-	hash_set(&tbl, keys[n], n);
+	if ( !hash_set(&tbl, keys[n], n) ) {
+	    fprintf(stderr, "Could not set value in hash table.\n");
+	    fprintf(stderr, "%s\n", err_get());
+	    exit(1);
+	}
     }
     fclose(in);
 
