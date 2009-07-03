@@ -7,7 +7,7 @@
 
    Please send feedback to dev0@trekix.net
 
-   $Revision: 1.20 $ $Date: 2008/12/17 22:55:56 $
+   $Revision: 1.21 $ $Date: 2009/07/01 22:06:08 $
 */
 
 /*
@@ -90,7 +90,7 @@ void hash_clear(struct hash_tbl *tblP)
 }
 
 /* See hash (3) */
-int hash_add(struct hash_tbl *tblP, const char *key, unsigned val)
+int hash_add(struct hash_tbl *tblP, const char *key, int val)
 {
     size_t len;
     struct hash_entry *ep, *p;
@@ -131,7 +131,7 @@ int hash_add(struct hash_tbl *tblP, const char *key, unsigned val)
 }
 
 /* See hash (3) */
-int hash_set(struct hash_tbl *tblP, const char *key, unsigned val)
+int hash_set(struct hash_tbl *tblP, const char *key, int val)
 {
     size_t len;
     struct hash_entry *ep, *p;
@@ -172,7 +172,7 @@ int hash_set(struct hash_tbl *tblP, const char *key, unsigned val)
 }
 
 /* See hash (3) */
-int hash_get(struct hash_tbl *tblP, const char *key, unsigned *lp)
+int hash_get(struct hash_tbl *tblP, const char *key, int *ip)
 {
     unsigned b;			/* Index into buckets array */
     struct hash_entry *ep;	/* Hash entry */
@@ -183,7 +183,7 @@ int hash_get(struct hash_tbl *tblP, const char *key, unsigned *lp)
     b = hash(key, tblP->n_buckets);
     for (ep = tblP->buckets[b]; ep; ep = ep->next) {
 	if (strcmp(ep->key, key) == 0) {
-	    *lp = ep->val;
+	    *ip = ep->val;
 	    return 1;
 	}
     }

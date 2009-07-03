@@ -5,7 +5,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.19 $ $Date: 2008/12/19 19:24:18 $
+.\" $Revision: 1.1 $ $Date: 2009/07/02 22:16:00 $
 .\"
 .TH hash 3 "Hash tables"
 .SH NAME
@@ -14,9 +14,9 @@ hash_init, hash_clear, hash_add, hash_set, hash_get, hash_adj, hash_rm, hash_sz 
 .nf
 \fBint\fP \fBhash_init(\fP\fBstruct hash_tbl *\fP\fItblP\fP, \fBunsigned\fP \fI\fIn_buckets\fP\fP);
 \fBvoid\fP \fBhash_clear(\fP\fBstruct hash_tbl *\fP\fItblP\fP);
-\fBint\fP \fBhash_add(\fP\fBstruct hash_tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBunsigned\fP val);
-\fBint\fP \fBhash_set(\fP\fBstruct hash_tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBunsigned\fP val);
-\fBint\fP \fBhash_get(\fP\fBstruct hash_tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBunsigned\fP *lp);
+\fBint\fP \fBhash_add(\fP\fBstruct hash_tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBint\fP val);
+\fBint\fP \fBhash_set(\fP\fBstruct hash_tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBint\fP val);
+\fBint\fP \fBhash_get(\fP\fBstruct hash_tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBint\fP *ip);
 \fBint\fP \fBhash_adj(\fP\fBstruct hash_tbl *\fP\fItblP\fP, \fBunsigned\fP \fIn_buckets_2\fP);
 \fBvoid\fP \fBhash_rm(\fP\fBstruct hash_tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP);
 \fBvoid\fP \fBhash_sz(\fP\fBstruct hash_tbl *\fP\fItblP\fP, \fBunsigned\fP *\fIn_bucketsP\fP, \fBunsigned *\fP\fIn_entriesP\fP);
