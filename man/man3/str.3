@@ -1,0 +1,49 @@
+.\" 
+.\" Copyright (c) 2008 Gordon D. Carrie.  All rights reserved.
+.\" 
+.\" Licensed under the Open Software License version 3.0
+.\" 
+.\" Please address questions and feedback to dev0@trekix.net
+.\" 
+.\" $Revision: $ $Date: $
+.\"
+.TH mstring 3 "String manipulation functions"
+.SH NAME
+stresc \- replace escape sequences in a string with associated characters
+.SH SYNOPSIS
+.nf
+\fBchar *stresc(char *\fP\fIs\fP\fB);\fP
+.fi
+.SH DESCRIPTION
+\fBstresc\fP replaces escape sequences in \fIs\fP with their corresponding ASCII
+characters.
+
+The following escape sequences are recognized.
+.ta 8m
+.br
+\fB\\a\fP	Write a <bell> character.
+.br
+\fB\\b\fP	Write a <backspace> character.
+.br
+\fB\\f\fP	Write a <form-feed> character.
+.br
+\fB\\n\fP	Write a <new-line> character.
+.br
+\fB\\r\fP	Write a <carriage return> character.
+.br
+\fB\\t\fP	Write a <tab> character.
+.br
+\fB\\v\fP	Write a <vertical tab> character.
+.br
+\fB\\'\fP	Write a <single quote> character.
+.br
+\fB\\\\ \fP	Write a backslash character.
+.br
+.in +8m
+.ti -8m
+\fB\\0\fP\fInum\fP	Write the character whose ASCII value is \fInum\fP, where \fInum\fP is an integer given as 1, 2, or 3 octal digits.
+.in -8m
+
+The (possibly modified) string is returned.
+.SH AUTHOR
+Gordon Carrie (dev0@trekix.net)
