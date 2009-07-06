@@ -7,31 +7,21 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Revision: $ $Date: $
+   $Revision: 1.1 $ $Date: 2009/07/05 22:38:05 $
  */
 
-#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 #include "mstring.h"
 
-static int isodigit(int);
-
-static int isodigit(int c)
-{
-    return isdigit(c) && (c - '0' < 8);
-}
-
-/* Copy a string. See mstrcpy (3) */
 char *stresc(char *str)
 {
-    char *p, *q;
-    char n[4], *n1;
+    char *p, *q, t;
+    int n;
 
     for (p = q = str; *q; p++, q++) {
 	if (*q == '\\') {
-	    q++;
-	    switch (*q) {
+	    switch (*++q) {
 		/* Replace escape sequence with associated character */
 		case 'a':
 		    *p = '\a';
@@ -61,15 +51,12 @@ char *stresc(char *str)
 		    *p = '\\';
 		    break;
 		case '0':
-		    /* Escape sequence is a sequence of octal digits.  Copy the
-		     * digits into n and convert */
-		    memset(n, '\0', 4);
-		    q++;
-		    for (n1 = n; *q && isodigit(*q) && n1 < n + 4; q++, n1++) {
-			*n1 = *q;
-		    }
-		    *p = (char)strtoul(n, NULL, 8);
-		    q--;
+		    /* Escape sequence is a sequence of octal digits. */
+		    n = (int)strspn(++q, "01234567");
+		    t = *(q + n);
+		    *(q + n) = '\0';
+		    *p = (char)strtoul(q, &q, 8);
+		    *q-- = t;
 		    break;
 		default:
 		    *p = *q;
