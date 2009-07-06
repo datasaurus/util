@@ -25,12 +25,12 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.16 $ $Date: 2008/12/19 21:27:58 $
+# $Revision: 1.17 $ $Date: 2009/07/01 19:29:27 $
 
 CFLAGS = -g -Wall -Wmissing-prototypes
 #LFLAGS = -L/usr/local/lib -lefence
 EXECS = allocfvi 
-OBJ = alloc.o alloc2f.o alloc3f.o alloc4f.o allocfvi.o err_msg.o hash.o
+OBJ = alloc.o alloc2f.o alloc3f.o alloc4f.o allocfvi.o err_msg.o hash.o mstring.o
 
 obj : ${OBJ}
 
@@ -55,6 +55,9 @@ alloc4f.o : alloc4f.c alloc4f.h
 
 err_msg.o : err_msg.c err_msg.h
 	cc ${CFLAGS} -c err_msg.c
+
+mstring.o : mstring.c mstring.h
+	cc ${CFLAGS} -c mstring.c
 
 clean :
 	rm -f ${EXECS} *core*  *.o *.ps *.out
