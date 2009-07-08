@@ -25,14 +25,18 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.17 $ $Date: 2009/07/01 19:29:27 $
+# $Revision: 1.18 $ $Date: 2009/07/06 19:43:05 $
 
 CFLAGS = -g -Wall -Wmissing-prototypes
 #LFLAGS = -L/usr/local/lib -lefence
 EXECS = allocfvi 
-OBJ = alloc.o alloc2f.o alloc3f.o alloc4f.o allocfvi.o err_msg.o hash.o mstring.o
+OBJ = alloc.o alloc2f.o alloc3f.o alloc4f.o allocfvi.o err_msg.o hash.o mstring.o \
+    tm_calc_lib.o
 
 obj : ${OBJ}
+
+tm_calc : tm_calc_app.o tm_calc_lib.o err_msg.o
+	cc ${CFLAGS} -o tm_calc tm_calc_app.o tm_calc_lib.o err_msg.o ${LFLAGS} -lm
 
 SRC = allocfvi.c alloc4f.c alloc3f.c alloc2f.c alloc.c err_msg.c
 allocfvi : ${SRC}
@@ -58,6 +62,9 @@ err_msg.o : err_msg.c err_msg.h
 
 mstring.o : mstring.c mstring.h
 	cc ${CFLAGS} -c mstring.c
+
+tm_calc_lib.o : tm_calc_lib.c tm_calc_lib.h
+	cc ${CFLAGS} -c tm_calc_lib.c
 
 clean :
 	rm -f ${EXECS} *core*  *.o *.ps *.out
