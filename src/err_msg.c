@@ -8,7 +8,7 @@
   
    Please send feedback to dev0@trekix.net
   
-   $Revision: 1.14 $ $Date: 2008/12/18 20:00:50 $
+   $Revision: 1.15 $ $Date: 2009/07/01 21:05:35 $
  */
 
 #include <stdio.h>
@@ -53,10 +53,6 @@ void err_append(const char *s)
 /* See err_msg (3) */
 char *err_get(void)
 {
-    if (msg) {
-	msg_len = 0;
-	return msg;
-    } else {
-	return "";
-    }
+    msg_len = 0;
+    return msg;
 }
