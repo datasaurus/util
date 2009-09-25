@@ -3,11 +3,11 @@
  - 	This file defines string manipulation functions.  See mstring (3).
  - 
    Copyright (c) 2009 Gordon D. Carrie
-   Licensed under the Open Software License version 3.0
+   All rights reserved.
   
    Please send feedback to dev0@trekix.net
   
-   $Revision: 1.1 $ $Date: 2009/07/05 22:38:05 $
+   $Revision: 1.2 $ $Date: 2009/07/06 19:42:19 $
  */
 
 #include <stdlib.h>

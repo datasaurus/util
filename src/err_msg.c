@@ -3,12 +3,12 @@
  - 	This file defines general purpose functions and macros to
  - 	generate globally visible error messages.  See err_msg (3).
  - 
-   Copyright (c) 2007,2008 Gordon D. Carrie
-   Licensed under the Open Software License version 3.0
+   Copyright (c) 2007 Gordon D. Carrie
+   All rights reserved.
   
    Please send feedback to dev0@trekix.net
   
-   $Revision: 1.15 $ $Date: 2009/07/01 21:05:35 $
+   $Revision: 1.16 $ $Date: 2009/08/26 22:45:30 $
  */
 
 #include <stdio.h>

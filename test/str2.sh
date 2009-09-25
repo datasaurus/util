@@ -7,11 +7,11 @@
 #-	it finds.
 #-
 # Copyright (c) 2009 Gordon D. Carrie
-# Licensed under the Open Software License version 3.0
+# All rights reserved
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: $ $Date: $
+# $Revision: 1.1 $ $Date: 2009/07/06 20:27:31 $
 #
 ########################################################################
 
@@ -28,7 +28,7 @@ To save temporary files:
 env RM=: $0 2>&1 | less
 
 Copyright (c) 2009 Gordon D. Carrie
-Licensed under the Open Software License version 3.0
+All rights reserved
 
 ################################################################################
 "

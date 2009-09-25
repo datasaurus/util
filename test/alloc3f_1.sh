@@ -6,11 +6,11 @@
 #-	dimensional array.
 #-
 # Copyright (c) 2008 Gordon D. Carrie
-# Licensed under the Open Software License version 3.0
+# All rights reserved
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.32 $ $Date: 2008/12/19 19:24:19 $
+# $Revision: 1.33 $ $Date: 2008/12/20 05:28:50 $
 #
 ########################################################################
 
@@ -32,7 +32,7 @@ To override default dimensions of the test array:
 env JMAX=100 IMAX=100 ./alloc3f_1.sh 2>&1 | less
 
 Copyright (c) 2008 Gordon D. Carrie
-Licensed under the Open Software License version 3.0
+All rights reserved
 
 ################################################################################
 "

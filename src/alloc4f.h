@@ -4,11 +4,11 @@
  -	arrays of floating point values.  See alloc4f (3).
  - 
    Copyright (c) 2008 Gordon D. Carrie
-   Licensed under the Open Software License version 3.0
+   All rights reserved
   
    Please send feedback to dev0@trekix.net
   
-   $Revision$ $Date$
+   $Revision: 1.4 $ $Date: 2008/12/17 22:55:56 $
  */
 
 #ifndef ALLOC_4F_H_

@@ -3,11 +3,11 @@
  - 	This file declares hash table functions and data structures.
  -
    Copyright (c) 2008 Gordon D. Carrie
-   Licensed under the Open Software License version 3.0
+   All rights reserved
 
    Please send feedback to dev0@trekix.net
 
-   $Revision: 1.14 $ $Date: 2009/07/01 22:06:05 $
+   $Revision: 1.15 $ $Date: 2009/07/03 19:40:52 $
  */
 
 #ifndef HASH_H_

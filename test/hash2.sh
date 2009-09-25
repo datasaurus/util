@@ -5,12 +5,11 @@
 #-	It monitors a process that creates a small hash table and modifies it.
 #-
 # Copyright (c) 2008 Gordon D. Carrie
-#
-# Licensed under the Open Software License version 3.0
+# All rights reserved
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.10 $ $Date: 2008/12/19 19:24:19 $
+# $Revision: 1.11 $ $Date: 2009/07/02 21:27:05 $
 #
 ########################################################################
 

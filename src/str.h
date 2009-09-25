@@ -3,11 +3,11 @@
  - 	This header declares string manipulation functions
  - 
    Copyright (c) 2009 Gordon D. Carrie
-   Licensed under the Open Software License version 3.0
+   All rights reserved
   
    Please send feedback to dev0@trekix.net
   
-   $Revision: $ $Date: $
+   $Revision: 1.1 $ $Date: 2009/07/05 22:38:26 $
  */
 
 #ifndef MSTRING_H_

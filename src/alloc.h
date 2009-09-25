@@ -2,12 +2,12 @@
  - alloc.h --
  - 	This header declares memory allocators.  See alloc (3).
  - 
-   Copyright (c) 2007, 2008 Gordon D. Carrie
-   Licensed under the Open Software License version 3.0
+   Copyright (c) 2007 Gordon D. Carrie
+   All rights reserved.
   
    Please send feedback to dev0@trekix.net
   
-   $Revision: 1.18 $ $Date: 2008/12/19 18:05:03 $
+   $Revision: 1.19 $ $Date: 2009/07/01 20:46:18 $
  */
 
 #ifndef ALLOC_H_

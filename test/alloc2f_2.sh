@@ -6,11 +6,11 @@
 #-	arrays.
 #-
 # Copyright (c) 2008 Gordon D. Carrie
-# Licensed under the Open Software License version 3.0
+# All rights reserved
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.16 $ $Date: 2008/12/18 21:56:45 $
+# $Revision: 1.17 $ $Date: 2008/12/19 19:24:19 $
 #
 ########################################################################
 
@@ -29,7 +29,7 @@ To save temporary files:
 env RM=: ./alloc2f_2.sh 2>&1 | less
 
 Copyright (c) 2008 Gordon D. Carrie
-Licensed under the Open Software License version 3.0
+All rights reserved
 
 ################################################################################
 "

@@ -6,11 +6,11 @@
 #-	various diagnostic outputs.
 #-
 # Copyright (c) 2008 Gordon D. Carrie
-# Licensed under the Open Software License version 3.0
+# All rights reserved
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.12 $ $Date: 2008/12/18 20:38:36 $
+# $Revision: 1.13 $ $Date: 2008/12/19 19:24:19 $
 #
 ########################################################################
 
@@ -24,7 +24,7 @@ To save temporary files, set RM to : in environment before running this
 application.
 
 Copyright (c) 2008 Gordon D. Carrie
-Licensed under the Open Software License version 3.0
+All rights reserved
 
 ################################################################################
 "

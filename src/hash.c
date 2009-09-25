@@ -3,11 +3,11 @@
  - 	This file defines hash table functions.  See hash (3).
  -
    Copyright (c) 2008 Gordon D. Carrie
-   Licensed under the Open Software License version 3.0
+   All rights reserved
 
    Please send feedback to dev0@trekix.net
 
-   $Revision: 1.21 $ $Date: 2009/07/01 22:06:08 $
+   $Revision: 1.22 $ $Date: 2009/07/03 19:40:52 $
 */
 
 /*

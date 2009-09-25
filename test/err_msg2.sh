@@ -6,11 +6,11 @@
 #-	large error message
 #-
 # Copyright (c) 2008 Gordon D. Carrie
-# Licensed under the Open Software License version 3.0
+# All rights reserved
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.1 $ $Date: 2008/12/18 23:03:10 $
+# $Revision: 1.2 $ $Date: 2008/12/19 19:24:19 $
 #
 ########################################################################
 
@@ -29,7 +29,7 @@ To save temporary files:
 env RM=: ./err_msg2.sh 2>&1 | less
 
 Copyright (c) 2008 Gordon D. Carrie
-Licensed under the Open Software License version 3.0
+All rights reserved
 
 ################################################################################
 "
