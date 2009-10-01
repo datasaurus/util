@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.10 $ $Date: 2009/07/02 21:27:05 $
+# $Revision: 1.11 $ $Date: 2009/09/25 21:33:13 $
 #
 ########################################################################
 
@@ -116,7 +116,7 @@ END
 
 # Pick out some random words for the test.  Put them into file "correct"
 
-echo "Creating a list of keys and indeces from $WORD_FL"
+echo "Creating a list of keys and indices from $WORD_FL"
 imax=`expr $NWORD - 1`
 echo "Putting test values into file \"correct\""
 awk -v nword=$NWORD \
