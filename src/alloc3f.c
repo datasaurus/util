@@ -1,14 +1,15 @@
 /*
- - alloc3f.c --
- -	This file defines functions that allocate 3-dimensional
- -	arrays of floating point values.  See alloc3f (3).
- - 
-   Copyright (c) 2008 Gordon D. Carrie
-   All rights reserved
-  
-   Please send feedback to dev0@trekix.net
-  
-   $Revision: 1.9 $ $Date: 2009/07/01 20:59:26 $
+   -	alloc3f.c --
+   -		This file defines functions that
+   -		allocate 3-dimensional arrays of
+   -		floating point values.  See alloc3f (3).
+   -	
+   .	Copyright (c) 2008 Gordon D. Carrie
+   .	All rights reserved
+   .
+   .	Please send feedback to dev0@trekix.net
+   .
+   .	$Revision: 1.10 $ $Date: 2009/09/25 21:33:13 $
  */
 
 #include "alloc.h"

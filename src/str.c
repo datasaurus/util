@@ -1,13 +1,14 @@
 /*
- - mstring.c --
- - 	This file defines string manipulation functions.  See mstring (3).
- - 
-   Copyright (c) 2009 Gordon D. Carrie
-   All rights reserved.
-  
-   Please send feedback to dev0@trekix.net
-  
-   $Revision: 1.2 $ $Date: 2009/07/06 19:42:19 $
+   -	mstring.c --
+   -		This file defines string manipulation
+   -		functions.  See mstring (3).
+   -	
+   .	Copyright (c) 2009 Gordon D. Carrie
+   .	All rights reserved.
+   .
+   .	Please send feedback to dev0@trekix.net
+   .
+   .	$Revision: 1.3 $ $Date: 2009/09/25 21:33:13 $
  */
 
 #include <stdlib.h>

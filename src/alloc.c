@@ -1,13 +1,13 @@
 /*
- - alloc.c --
- -	This file defines memory allocators.  See alloc (3).
- -
-   Copyright (c) 2007 Gordon D. Carrie
-   All rights reserved
-  
-   Please send feedback to dev0@trekix.net
-  
-   $Revision: 1.24 $ $Date: 2009/07/01 20:46:21 $
+   -	alloc.c --
+   -		This file defines memory allocators.  See alloc (3).
+   -	
+   .	Copyright (c) 2007 Gordon D. Carrie
+   .	All rights reserved
+   .
+   .	Please send feedback to dev0@trekix.net
+   .
+   .	$Revision: 1.25 $ $Date: 2009/09/25 21:33:13 $
  */
 
 #include <stdlib.h>

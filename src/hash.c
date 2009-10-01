@@ -1,19 +1,19 @@
 /*
- - hash.c --
- - 	This file defines hash table functions.  See hash (3).
- -
-   Copyright (c) 2008 Gordon D. Carrie
-   All rights reserved
-
-   Please send feedback to dev0@trekix.net
-
-   $Revision: 1.22 $ $Date: 2009/07/03 19:40:52 $
-*/
-
-/*
-   Reference:
-	Kernighan, Brian W. and Rob Pike. The Practice of Programming.
-	Reading, Massachusetts. 1999
+   -	hash.c --
+   -		This file defines hash table functions.
+   -		See hash (3).
+   -	
+   .	Copyright (c) 2008 Gordon D. Carrie
+   .	All rights reserved
+   .
+   .	Please send feedback to dev0@trekix.net
+   .
+   .	$Revision: 1.23 $ $Date: 2009/09/25 21:33:13 $
+   .
+   .	Reference:
+   .		Kernighan, Brian W. and Rob Pike.
+   .		The Practice of Programming.
+   .		Reading, Massachusetts. 1999
  */
 
 #include <stdlib.h>

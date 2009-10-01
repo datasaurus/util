@@ -1,13 +1,15 @@
 /*
- - hash.h --
- - 	This file declares hash table functions and data structures.
- -
-   Copyright (c) 2008 Gordon D. Carrie
-   All rights reserved
-
-   Please send feedback to dev0@trekix.net
-
-   $Revision: 1.15 $ $Date: 2009/07/03 19:40:52 $
+   -	hash.h --
+   -		This file declares hash table functions
+   -		and data structures.
+   -		See hash (3).
+   -	
+   .	Copyright (c) 2008 Gordon D. Carrie
+   .	All rights reserved
+   .
+   .	Please send feedback to dev0@trekix.net
+   .
+   .	$Revision: 1.16 $ $Date: 2009/09/25 21:33:13 $
  */
 
 #ifndef HASH_H_

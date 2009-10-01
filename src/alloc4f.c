@@ -1,14 +1,15 @@
 /*
- - alloc4f.c --
- -	This file defines functions that allocate 4-dimensional
- -	arrays of floating point values.  See alloc4f (3).
- - 
-   Copyright (c) 2008 Gordon D. Carrie
-   All rights reserved
-  
-   Please send feedback to dev0@trekix.net
-  
-   $Revision: 1.7 $ $Date: 2009/07/01 20:59:30 $
+   -	alloc4f.c --
+   -		This file defines functions that
+   -		allocate 4-dimensional arrays of
+   -		floating point values.  See alloc4f (3).
+   -	
+   .	Copyright (c) 2008 Gordon D. Carrie
+   .	All rights reserved
+   .
+   .	Please send feedback to dev0@trekix.net
+   .
+   .	$Revision: 1.8 $ $Date: 2009/09/25 21:33:13 $
  */
 
 #include "alloc.h"

@@ -1,14 +1,15 @@
 /*
- - err_msg.c --
- - 	This file defines general purpose functions and macros to
- - 	generate globally visible error messages.  See err_msg (3).
- - 
-   Copyright (c) 2007 Gordon D. Carrie
-   All rights reserved.
-  
-   Please send feedback to dev0@trekix.net
-  
-   $Revision: 1.16 $ $Date: 2009/08/26 22:45:30 $
+   -	err_msg.c --
+   -		This file defines general purpose functions
+   -		and macros to generate globally visible error
+   -		messages.  See err_msg (3).
+   -	
+   .	Copyright (c) 2007 Gordon D. Carrie
+   .	All rights reserved.
+   .
+   .	Please send feedback to dev0@trekix.net
+   .
+   .	$Revision: 1.17 $ $Date: 2009/09/25 21:33:13 $
  */
 
 #include <stdio.h>
