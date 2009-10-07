@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.2 $ $Date: 2008/12/19 19:24:19 $
+# $Revision: 1.3 $ $Date: 2009/09/25 21:33:13 $
 #
 ########################################################################
 
@@ -64,7 +64,7 @@ int main(void)
 {
     printf("Calling a.\n");
     a();
-    printf("Error message after a is:\n%s\n", err_get());
+    printf("Error message after a is:\n%s\n", Err_Get());
     printf("Calling b.\n");
     b();
     return 0;
@@ -72,7 +72,7 @@ int main(void)
 
 void a(void)
 {
-    err_append("This is a plausible error message.\n");
+    Err_Append("This is a plausible error message.\n");
     return;
 }
 
@@ -83,7 +83,7 @@ void b(void)
 	*c = 'a';
     }
     huge[89999] = '\0';
-    err_append(huge);
+    Err_Append(huge);
     return;
 }
 END

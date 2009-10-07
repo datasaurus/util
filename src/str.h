@@ -8,12 +8,12 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.2 $ $Date: 2009/09/25 21:33:13 $
+   .	$Revision: 1.3 $ $Date: 2009/10/01 22:15:22 $
  */
 
 #ifndef MSTRING_H_
 #define MSTRING_H_
 
-char *stresc(char *s);
+char *Str_Esc(char *s);
 
 #endif

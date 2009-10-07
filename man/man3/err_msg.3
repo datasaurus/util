@@ -4,28 +4,28 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.8 $ $Date: 2009/07/01 21:07:17 $
+.\" $Revision: 1.9 $ $Date: 2009/09/25 21:33:14 $
 .\"
 .TH err_msg 3 "Error messages"
 .SH NAME
-err_append, err_get \- error message generation and retrieval
+Err_Append, Err_Get \- error message generation and retrieval
 .SH SYNOPSIS
 .nf
 \fB#include "err_msg.h"\fP
-\fBvoid err_append(const char *\fP\fImsg\fP\fB);\fP
-\fBchar *err_get(void);\fP
+\fBvoid Err_Append(const char *\fP\fImsg\fP\fB);\fP
+\fBchar *Err_Get(void);\fP
 .fi
 .SH DESCRIPTION
 These functions create, modify, and retrieve a global error string.
 
-\fBerr_append\fP appends \fImsg\fP to the global error string.  It does not
+\fBErr_Append\fP appends \fImsg\fP to the global error string.  It does not
 terminate messages with newlines.  The caller should normally do this.
 It will cause the process to abort if it cannot allocate memory for
 the global error message.
 
-\fBerr_get\fP returns the global error string and then resets it, so that
-subsequent calls to \fBerr_append\fP overwrite the previous contents.  The
-value returned by \fBerr_get\fP belongs to the error message facility and
+\fBErr_Get\fP returns the global error string and then resets it, so that
+subsequent calls to \fBErr_Append\fP overwrite the previous contents.  The
+value returned by \fBErr_Get\fP belongs to the error message facility and
 should not be modified by users.
 
 The error message is limited to 64 kilobytes. If it becomes longer than this,

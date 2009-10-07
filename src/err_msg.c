@@ -9,7 +9,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.17 $ $Date: 2009/09/25 21:33:13 $
+   .	$Revision: 1.18 $ $Date: 2009/10/01 22:15:22 $
  */
 
 #include <stdio.h>
@@ -23,7 +23,7 @@ static char msg[LEN];		/* Current error message */
 static size_t msg_len;		/* strlen(msg) */
 
 /* See err_msg (3) */
-void err_append(const char *s)
+void Err_Append(const char *s)
 {
     size_t s_len, new_len;
     char *e, *e1;
@@ -52,7 +52,7 @@ void err_append(const char *s)
 }
 
 /* See err_msg (3) */
-char *err_get(void)
+char *Err_Get(void)
 {
     msg_len = 0;
     return msg;

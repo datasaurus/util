@@ -9,13 +9,13 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.9 $ $Date: 2009/09/25 21:33:13 $
+   .	$Revision: 1.10 $ $Date: 2009/10/01 22:15:22 $
  */
 
 #ifndef ERR_MSG_H_
 #define ERR_MSG_H_
 
-void err_append(const char *msg);
-char *err_get(void);
+void Err_Append(const char *msg);
+char *Err_Get(void);
 
 #endif

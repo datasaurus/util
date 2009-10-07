@@ -4,60 +4,60 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.2 $ $Date: 2009/07/03 19:41:06 $
+.\" $Revision: 1.3 $ $Date: 2009/09/25 21:33:14 $
 .\"
 .TH hash 3 "Hash tables"
 .SH NAME
-hash_init, hash_clear, hash_add, hash_set, hash_get, hash_adj, hash_rm, hash_sz \- general hash table functions
+Hash_Init, Hash_Clear, Hash_Add, Hash_Set, Hash_Get, Hash_Adj, Hash_Rm, Hash_Sz \- general hash table functions
 .SH SYNOPSIS
 .nf
-\fBint\fP \fBhash_init(\fP\fBstruct hash_tbl *\fP\fItblP\fP, \fBunsigned\fP \fI\fIn_buckets\fP\fP);
-\fBvoid\fP \fBhash_clear(\fP\fBstruct hash_tbl *\fP\fItblP\fP);
-\fBint\fP \fBhash_add(\fP\fBstruct hash_tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBint\fP val);
-\fBint\fP \fBhash_set(\fP\fBstruct hash_tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBint\fP val);
-\fBint\fP \fBhash_get(\fP\fBstruct hash_tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBint\fP *ip);
-\fBint\fP \fBhash_adj(\fP\fBstruct hash_tbl *\fP\fItblP\fP, \fBunsigned\fP \fIn_buckets_2\fP);
-\fBvoid\fP \fBhash_rm(\fP\fBstruct hash_tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP);
-\fBvoid\fP \fBhash_sz(\fP\fBstruct hash_tbl *\fP\fItblP\fP, \fBunsigned\fP *\fIn_bucketsP\fP, \fBunsigned *\fP\fIn_entriesP\fP);
+\fBint\fP \fBHash_Init(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBunsigned\fP \fI\fIn_buckets\fP\fP);
+\fBvoid\fP \fBHash_Clear(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP);
+\fBint\fP \fBHash_Add(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBint\fP val);
+\fBint\fP \fBHash_Set(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBint\fP val);
+\fBint\fP \fBHash_Get(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBint\fP *ip);
+\fBint\fP \fBHash_Adj(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBunsigned\fP \fIn_buckets_2\fP);
+\fBvoid\fP \fBHash_Rm(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP);
+\fBvoid\fP \fBHash_Sz(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBunsigned\fP *\fIn_bucketsP\fP, \fBunsigned *\fP\fIn_entriesP\fP);
 .fi
 .SH DESCRIPTION
-\fBhash_init\fP initializes a new hash table at \fItblP\fP. The value at \fItblP\fP
+\fBHash_Init\fP initializes a new hash table at \fItblP\fP. The value at \fItblP\fP
 should be garbage.  \fIn_buckets\fP gives the number of buckets.  Table will not
 grow, and may become slow to access, if the number of entries exceeds
 the number of buckets.  If \fIn_buckets\fP > 0, memory is allocated in the table,
 and the table is ready for use.  If \fIn_buckets\fP == 0, no memory is allocated,
 and the table is initialized with bogus values.  The table is not safe for use, but
-is safe to give to \fBhash_clear\fP.
+is safe to give to \fBHash_Clear\fP.
 
-\fBhash_clear\fP empties the hash table at \fItblP\fP, which should have been
-initialized with a call to \fBhash_init\fP.  Memory associated with the table is
+\fBHash_Clear\fP empties the hash table at \fItblP\fP, which should have been
+initialized with a call to \fBHash_Init\fP.  Memory associated with the table is
 freed and the table is reinitialized with no buckets.
 
-\fBhash_add\fP attempts to create an entry in the hash table at \fItblP\fP with key
+\fBHash_Add\fP attempts to create an entry in the hash table at \fItblP\fP with key
 \fIkey\fP and corresponding value \fIval\fP.  It returns true if it succeeds.  If
 the table already has an entry for \fIkey\fP, or if something goes wrong,
-\fBhash_add\fP returns false and creates an error message retrievable with
-\fBerr_get\fP.
+\fBHash_Add\fP returns false and creates an error message retrievable with
+\fBErr_Get\fP.
 
-\fBhash_set\fP creates or sets an entry in the hash table at \fItblP\fP with key
+\fBHash_Set\fP creates or sets an entry in the hash table at \fItblP\fP with key
 \fIkey\fP and corresponding value \fIval\fP.  It returns true if it succeeds.
-If something goes wrong, \fBhash_set\fP returns false and creates an error message
-retrievable with \fBerr_get\fP.
+If something goes wrong, \fBHash_Set\fP returns false and creates an error message
+retrievable with \fBErr_Get\fP.
 
-\fBhash_get\fP retrieves the value from the hash table at \fItblP\fP corresponding
+\fBHash_Get\fP retrieves the value from the hash table at \fItblP\fP corresponding
 to \fIkey\fP.  If \fItblP\fP has an entry for \fIkey\fP, the corresponding value is
-copied to address \fIlp\fP and \fBhash_get\fP returns true.  Otherwise,
-\fBhash_get\fP returns false.
+copied to address \fIlp\fP and \fBHash_Get\fP returns true.  Otherwise,
+\fBHash_Get\fP returns false.
 
-\fBhash_adj\fP sets the number of buckets in the hash table at \fItblP\fP to
+\fBHash_Adj\fP sets the number of buckets in the hash table at \fItblP\fP to
 \fIn_buckets2\fP.  It returns true if it succeeds.  If something goes wrong,
-\fBhash_adj\fP returns false and creates an error message retrievable with
-\fBerr_get\fP.
+\fBHash_Adj\fP returns false and creates an error message retrievable with
+\fBErr_Get\fP.
 
-\fBhash_rm\fP removes the entry with key \fIkey\fP from the hash table at
+\fBHash_Rm\fP removes the entry with key \fIkey\fP from the hash table at
 \fItblP\fP.
 
-\fBhash_sz\fP retrieves information about the size of the hash table at \fItblP\fP.
+\fBHash_Sz\fP retrieves information about the size of the hash table at \fItblP\fP.
 It copies the number of buckets to address \fIn_bucketsP\fP and the number of
 entries to address \fIn_entriesP\fP.  It quietly does nothing if \fItblP\fP is
 \fBNULL\fP.

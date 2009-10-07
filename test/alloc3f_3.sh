@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.21 $ $Date: 2008/12/20 05:37:00 $
+# $Revision: 1.22 $ $Date: 2009/09/25 21:33:13 $
 #
 ########################################################################
 
@@ -72,9 +72,9 @@ int main(int argc, char *argv[])
     fprintf(stderr, "Creating a %ld by %ld by %ld array.\n", kmax, jmax, imax);
 
     /* Create array and access with conventional indexing */
-    dat = calloc3f(kmax, jmax, imax);
+    dat = Calloc3F(kmax, jmax, imax);
     if ( !dat ) {
-	fprintf(stderr, "Could not allocate dat\n%s\n", err_get());
+	fprintf(stderr, "Could not allocate dat\n%s\n", Err_Get());
 	return 1;
     }
     for (k = 0; k < kmax; k++) {
@@ -85,12 +85,12 @@ int main(int argc, char *argv[])
 	}
     }
     printf("dat[kmax-1][jmax-1][imax-1] = %8.1f\n", dat[kmax-1][jmax-1][imax-1]);
-    free3f(dat);
+    Free3F(dat);
     
     /* Create array and access with pointers */
-    dat = calloc3f(kmax, jmax, imax);
+    dat = Calloc3F(kmax, jmax, imax);
     if ( !dat ) {
-        fprintf(stderr, "%s: Could not allocate dat.\n%s", argv[0], err_get());
+        fprintf(stderr, "%s: Could not allocate dat.\n%s", argv[0], Err_Get());
         return 1;
     }
     for (p3 = dat; p3[1]; p3++) {
@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
 	}
     }
     printf("dat[kmax-1][jmax-1][imax-1] = %8.1f\n", dat[kmax-1][jmax-1][imax-1]);
-    free3f(dat);
+    Free3F(dat);
 
     return 0;
 }

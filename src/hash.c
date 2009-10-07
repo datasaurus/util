@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.23 $ $Date: 2009/09/25 21:33:13 $
+   .	$Revision: 1.24 $ $Date: 2009/10/01 22:15:22 $
    .
    .	Reference:
    .		Kernighan, Brian W. and Rob Pike.
@@ -44,10 +44,10 @@ static unsigned hash(const char *k, unsigned n)
 }
 
 /* See hash (3) */
-int hash_init(struct hash_tbl *tblP, unsigned n_buckets)
+int Hash_Init(struct Hash_Tbl *tblP, unsigned n_buckets)
 {
     size_t sz;
-    struct hash_entry **bp;		/* Pointer into bucket array */
+    struct Hash_Entry **bp;		/* Pointer into bucket array */
 
     tblP->n_buckets = tblP->n_entries = 0;
     tblP->buckets = NULL;
@@ -59,10 +59,10 @@ int hash_init(struct hash_tbl *tblP, unsigned n_buckets)
     if (tblP->n_buckets % HASH_X == 0) {
 	tblP->n_buckets++;
     }
-    sz = tblP->n_buckets * sizeof(struct hash_entry *);
-    tblP->buckets = (struct hash_entry **)MALLOC(sz);
+    sz = tblP->n_buckets * sizeof(struct Hash_Entry *);
+    tblP->buckets = (struct Hash_Entry **)MALLOC(sz);
     if ( !tblP->buckets ) {
-	err_append("Could not allocate memory for hash table.\n");
+	Err_Append("Could not allocate memory for hash table.\n");
 	return 0;
     }
     for (bp = tblP->buckets; bp < tblP->buckets + tblP->n_buckets; bp++) {
@@ -72,9 +72,9 @@ int hash_init(struct hash_tbl *tblP, unsigned n_buckets)
 }
 
 /* See hash (3) */
-void hash_clear(struct hash_tbl *tblP)
+void Hash_Clear(struct Hash_Tbl *tblP)
 {
-    struct hash_entry **bp, **bp1, *ep;
+    struct Hash_Entry **bp, **bp1, *ep;
 
     if ( !tblP ) {
 	return;
@@ -86,14 +86,14 @@ void hash_clear(struct hash_tbl *tblP)
 	}
     }
     FREE(tblP->buckets);
-    hash_init(tblP, 0);
+    Hash_Init(tblP, 0);
 }
 
 /* See hash (3) */
-int hash_add(struct hash_tbl *tblP, const char *key, int val)
+int Hash_Add(struct Hash_Tbl *tblP, const char *key, int val)
 {
     size_t len;
-    struct hash_entry *ep, *p;
+    struct Hash_Entry *ep, *p;
     unsigned b;
     char *s, *d;
 
@@ -103,20 +103,20 @@ int hash_add(struct hash_tbl *tblP, const char *key, int val)
     b = hash(key, tblP->n_buckets);
     for (p = tblP->buckets[b]; p; p = p->next) {
 	if (strcmp(p->key, key) == 0) {
-	    err_append(key);
-	    err_append(" in use.\n");
+	    Err_Append(key);
+	    Err_Append(" in use.\n");
 	    return 0;
 	}
     }
-    ep = (struct hash_entry *)MALLOC(sizeof(struct hash_entry));
+    ep = (struct Hash_Entry *)MALLOC(sizeof(struct Hash_Entry));
     if ( !ep ) {
-	err_append("Could not allocate memory for new entry in hash table.\n");
+	Err_Append("Could not allocate memory for new entry in hash table.\n");
 	return 0;
     }
     len = strlen(key);
     ep->key = (char *)MALLOC(len + 1);
     if ( !ep->key ) {
-	err_append("Could not allocate memory for new entry in hash table.\n");
+	Err_Append("Could not allocate memory for new entry in hash table.\n");
 	FREE(ep);
 	return 0;
     }
@@ -131,15 +131,15 @@ int hash_add(struct hash_tbl *tblP, const char *key, int val)
 }
 
 /* See hash (3) */
-int hash_set(struct hash_tbl *tblP, const char *key, int val)
+int Hash_Set(struct Hash_Tbl *tblP, const char *key, int val)
 {
     size_t len;
-    struct hash_entry *ep, *p;
+    struct Hash_Entry *ep, *p;
     unsigned b;
     char *s, *d;
 
     if ( !tblP->buckets || !key ) {
-	err_append("Attempted to set nonexistent hash table.\n");
+	Err_Append("Attempted to set nonexistent hash table.\n");
 	return 0;
     }
     b = hash(key, tblP->n_buckets);
@@ -149,15 +149,15 @@ int hash_set(struct hash_tbl *tblP, const char *key, int val)
 	    return 1;
 	}
     }
-    ep = (struct hash_entry *)MALLOC(sizeof(struct hash_entry));
+    ep = (struct Hash_Entry *)MALLOC(sizeof(struct Hash_Entry));
     if ( !ep ) {
-	err_append("Could not allocate memory for new entry in hash table.\n");
+	Err_Append("Could not allocate memory for new entry in hash table.\n");
 	return 0;
     }
     len = strlen(key);
     ep->key = (char *)MALLOC(len + 1);
     if ( !ep->key ) {
-	err_append("Could not allocate memory for new entry in hash table.\n");
+	Err_Append("Could not allocate memory for new entry in hash table.\n");
 	FREE(ep);
 	return 0;
     }
@@ -172,10 +172,10 @@ int hash_set(struct hash_tbl *tblP, const char *key, int val)
 }
 
 /* See hash (3) */
-int hash_get(struct hash_tbl *tblP, const char *key, int *ip)
+int Hash_Get(struct Hash_Tbl *tblP, const char *key, int *ip)
 {
     unsigned b;			/* Index into buckets array */
-    struct hash_entry *ep;	/* Hash entry */
+    struct Hash_Entry *ep;	/* Hash entry */
 
     if ( !tblP || !tblP->n_buckets || !key ) {
 	return 0;
@@ -191,19 +191,19 @@ int hash_get(struct hash_tbl *tblP, const char *key, int *ip)
 }
 
 /* See hash (3) */
-int hash_adj(struct hash_tbl *tblP, unsigned n_buckets2)
+int Hash_Adj(struct Hash_Tbl *tblP, unsigned n_buckets2)
 {
-    struct hash_entry **buckets2, **bp, **bp1, *ep, *next;
+    struct Hash_Entry **buckets2, **bp, **bp1, *ep, *next;
     unsigned b;
     size_t sz;
 
     if (n_buckets2 % HASH_X == 0) {
 	n_buckets2++;
     }
-    sz = n_buckets2 * sizeof(struct hash_entry *);
-    buckets2 = (struct hash_entry **)MALLOC(sz);
+    sz = n_buckets2 * sizeof(struct Hash_Entry *);
+    buckets2 = (struct Hash_Entry **)MALLOC(sz);
     if ( !buckets2 ) {
-	err_append("Could not allocate memory when adjusting hash table size.\n");
+	Err_Append("Could not allocate memory when adjusting hash table size.\n");
 	return 0;
     }
     for (bp = buckets2, bp1 = bp + n_buckets2; bp < bp1; bp++) {
@@ -224,9 +224,9 @@ int hash_adj(struct hash_tbl *tblP, unsigned n_buckets2)
 }
 
 /* See hash (3) */
-void hash_rm(struct hash_tbl *tblP, const char *key)
+void Hash_Rm(struct Hash_Tbl *tblP, const char *key)
 {
-    struct hash_entry *p, *prev;
+    struct Hash_Entry *p, *prev;
     unsigned b;
 
     if ( !tblP->buckets || !key ) {
@@ -250,7 +250,7 @@ void hash_rm(struct hash_tbl *tblP, const char *key)
 }
 
 /* See hash (3) */
-void hash_sz(struct hash_tbl *tblP, unsigned *n_bucketsP, unsigned *n_entriesP)
+void Hash_Sz(struct Hash_Tbl *tblP, unsigned *n_bucketsP, unsigned *n_entriesP)
 {
     if ( !tblP ) {
 	return;

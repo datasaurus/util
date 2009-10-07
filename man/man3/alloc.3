@@ -4,35 +4,35 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.19 $ $Date: 2008/12/19 19:24:18 $
+.\" $Revision: 1.20 $ $Date: 2009/09/25 21:33:14 $
 .\"
 .TH alloc 3 "Allocators with optional diagnostics"
 .SH NAME
-malloc_tkx, calloc_tkx, realloc_tkx, free_tkx, MALLOC, CALLOC, REALLOC, FREE \- allocators with optional diagnostics
+Malloc_Tkx, Calloc_Tkx, ReAlloc_Tkx, Free_Tkx, MALLOC, CALLOC, REALLOC, FREE \- allocators with optional diagnostics
 .SH SYNOPSIS
 .nf
 \fB#include "alloc.h"\fP
-\fBvoid * malloc_tkx(size_t\fP \fIs\fP, \fBchar *\fP\fIf\fP, \fBint\fP \fIl\fP);
-\fBvoid * calloc_tkx(size_t\fP \fIn\fP, \fBsize_t\fP \fIs\fP, \fBchar *\fP\fIf\fP, \fBint\fP \fIl\fP);
-\fBvoid * realloc_tkx(void *\fP\fIp\fP, \fBsize_t\fP \fIs\fP, \fBchar *\fP\fIf\fP, \fBint\fP \fIl\fP);
-\fBvoid free_tkx(void *\fP\fIp\fP, \fBchar *\fP\fIf\fP, \fBint\fP \fIl\fP);
+\fBvoid * Malloc_Tkx(size_t\fP \fIs\fP, \fBchar *\fP\fIf\fP, \fBint\fP \fIl\fP);
+\fBvoid * Calloc_Tkx(size_t\fP \fIn\fP, \fBsize_t\fP \fIs\fP, \fBchar *\fP\fIf\fP, \fBint\fP \fIl\fP);
+\fBvoid * ReAlloc_Tkx(void *\fP\fIp\fP, \fBsize_t\fP \fIs\fP, \fBchar *\fP\fIf\fP, \fBint\fP \fIl\fP);
+\fBvoid Free_Tkx(void *\fP\fIp\fP, \fBchar *\fP\fIf\fP, \fBint\fP \fIl\fP);
 \fBvoid * MALLOC(size_t\fP \fIs\fP\fB);\fP
 \fBvoid * CALLOC(size_t\fP \fIn\fP\fB, size_t\fP \fIs\fP\fB);\fP
 \fBvoid * REALLOC(void *\fP \fIp\fP\fB, size_t\fP \fIs\fP\fB);\fP
 \fBvoid FREE(void *\fP \fIp\fP\fB);\fP
 .fi
 .SH DESCRIPTION
-\fBmalloc_tkx\fP, \fBcalloc_tkx\fP, \fBrealloc_tkx\fP, and \fBfree_tkx\fP
+\fBMalloc_Tkx\fP, \fBCalloc_Tkx\fP, \fBReAlloc_Tkx\fP, and \fBFree_Tkx\fP
 allocate and free memory using the standard library memory management functions,
 and perform optional diagnostic tasks described below.  They are normally called
 with macros \fBMALLOC\fP, \fBCALLOC\fP, \fBREALLOC\fP, and \fBFREE\fP.
 
-\fBmalloc_tkx\fP calls \fBmalloc\fP with argument \fIs\fP and returns the result.
-\fBcalloc_tkx\fP calls \fBcalloc\fP with arguments \fIn\fP and \fIs\fP and
-returns the result.  \fBrealloc_tkx\fP calls \fBrealloc\fP with arguments
-\fIp\fP and \fIs\fP and returns the result.  \fBfree_tkx\fP calls \fBfree\fP
-with argument \fIp\fP.  Allocations made with \fBmalloc_tkx\fP, \fBcalloc_tkx\fP,
-and \fBrealloc_tkx\fP should be freed with \fBfree_tkx\fP.
+\fBMalloc_Tkx\fP calls \fBmalloc\fP with argument \fIs\fP and returns the result.
+\fBCalloc_Tkx\fP calls \fBcalloc\fP with arguments \fIn\fP and \fIs\fP and
+returns the result.  \fBReAlloc_Tkx\fP calls \fBrealloc\fP with arguments
+\fIp\fP and \fIs\fP and returns the result.  \fBFree_Tkx\fP calls \fBfree\fP
+with argument \fIp\fP.  Allocations made with \fBMalloc_Tkx\fP, \fBCalloc_Tkx\fP,
+and \fBReAlloc_Tkx\fP should be freed with \fBFree_Tkx\fP.
 
 Arguments \fIf\fP and \fIl\fP are assumed to be set to compiler macros
 \fB__FILE__\fP and \fB__LINE__\fP.  The functions use these values in diagnostic
@@ -43,7 +43,7 @@ output or failure simulations.  The macro for each function normally provides
 
 .nf
 .in +5
-\fBmalloc_tkx(\fP\fIs\fP, \fB__FILE__\fP, \fB__LINE__)\fP
+\fBMalloc_Tkx(\fP\fIs\fP, \fB__FILE__\fP, \fB__LINE__)\fP
 .in -5
 .fi
 
@@ -59,7 +59,7 @@ output or failure simulations.  The macro for each function normally provides
 
 .nf
 .in +5
-\fBrealloc_tkx(\fP\fIx\fP, \fIs\fP, \fB__FILE__\fP, \fB__LINE__)\fP
+\fBReAlloc_Tkx(\fP\fIx\fP, \fIs\fP, \fB__FILE__\fP, \fB__LINE__)\fP
 .in -5
 .fi
 
@@ -67,7 +67,7 @@ output or failure simulations.  The macro for each function normally provides
 
 .nf
 .in +5
-\fBfree_tkx(\fP\fIx\fP, \fB__FILE__\fP, \fB__LINE__)\fP
+\fBFree_Tkx(\fP\fIx\fP, \fB__FILE__\fP, \fB__LINE__)\fP
 .in -5
 .fi
 

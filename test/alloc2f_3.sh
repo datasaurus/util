@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.21 $ $Date: 2008/12/19 19:24:19 $
+# $Revision: 1.22 $ $Date: 2009/09/25 21:33:13 $
 #
 ########################################################################
 
@@ -72,9 +72,9 @@ int main(int argc, char *argv[])
 	    jmax, imax, ((double)jmax * (double)imax * sizeof(float)) / 1048576.0);
 
     /* Create array and access with conventional indexing */
-    dat = calloc2f(jmax, imax);
+    dat = Calloc2F(jmax, imax);
     if ( !dat ) {
-	fprintf(stderr, "%s: Could not allocate dat.\n%s", argv[0], err_get());
+	fprintf(stderr, "%s: Could not allocate dat.\n%s", argv[0], Err_Get());
 	return 1;
     }
     for (j = 0; j < jmax; j++) {
@@ -83,12 +83,12 @@ int main(int argc, char *argv[])
 	}
     }
     printf("dat[jmax-1][imax-1] = %8.1f\n", dat[jmax-1][imax-1]);
-    free2f(dat);
+    Free2F(dat);
 
     /* Create array and access with pointers */
-    dat = calloc2f(jmax, imax);
+    dat = Calloc2F(jmax, imax);
     if ( !dat ) {
-	fprintf(stderr, "%s: Could not allocate dat.\n%s", argv[0], err_get());
+	fprintf(stderr, "%s: Could not allocate dat.\n%s", argv[0], Err_Get());
 	return 1;
     }
     for (p2 = dat; p2[1]; p2++) {
@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
 	}
     }
     printf("dat[jmax-1][imax-1] = %8.1f\n", dat[jmax-1][imax-1]);
-    free2f(dat);
+    Free2F(dat);
 
     return 0;
 }

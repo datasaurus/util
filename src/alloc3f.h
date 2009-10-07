@@ -9,13 +9,13 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.5 $ $Date: 2009/09/25 21:33:13 $
+   .	$Revision: 1.6 $ $Date: 2009/10/01 22:15:22 $
  */
 
 #ifndef ALLOC_3F_H_
 #define ALLOC_3F_H_
 
-float ***calloc3f(long, long, long);
-void free3f(float ***);
+float ***Calloc3F(long, long, long);
+void Free3F(float ***);
 
 #endif

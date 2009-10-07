@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.12 $ $Date: 2009/09/25 21:33:13 $
+# $Revision: 1.13 $ $Date: 2009/10/01 21:43:46 $
 #
 ########################################################################
 
@@ -61,7 +61,7 @@ char keys[$NWORD][$LMAX];
 
 int main(void)
 {
-    struct hash_tbl tbl;
+    struct Hash_Tbl tbl;
     char *word_fl = "$WORD_FL";
     FILE *in;
     unsigned n;
@@ -69,9 +69,9 @@ int main(void)
 
     fprintf(stderr, "Running hash driver with %d buckets for %d words.\n",
 	    NBUCKET, $NWORD);
-    if ( !hash_init(&tbl, NBUCKET) ) {
+    if ( !Hash_Init(&tbl, NBUCKET) ) {
 	fprintf(stderr, "Could not initialize hash table.\n");
-	fprintf(stderr, "%s.\n", err_get());
+	fprintf(stderr, "%s.\n", Err_Get());
 	exit(1);
     }
     if ( !(in = fopen(word_fl, "r")) ) {
@@ -79,16 +79,16 @@ int main(void)
 	exit(1);
     }
     for (n = 0; fscanf(in, " %s", keys[n]) == 1; n++) {
-	if ( !hash_set(&tbl, keys[n], n) ) {
+	if ( !Hash_Set(&tbl, keys[n], n) ) {
 	    fprintf(stderr, "Could not set value in hash table.\n");
-	    fprintf(stderr, "%s\n", err_get());
+	    fprintf(stderr, "%s\n", Err_Get());
 	    exit(1);
 	}
     }
     fclose(in);
 
     while (scanf(" %s", key) == 1) {
-	if (hash_get(&tbl, key, &n)) {
+	if (Hash_Get(&tbl, key, &n)) {
 	    printf("%u %s\n", n, key);
 	} else {
 	    fprintf(stderr, "No entry for %s\n", key);
@@ -96,7 +96,7 @@ int main(void)
 	}
     }
 
-    hash_clear(&tbl);
+    Hash_Clear(&tbl);
     return 0;
 }
 END

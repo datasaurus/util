@@ -11,7 +11,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.1 $ $Date: 2009/07/06 20:27:31 $
+# $Revision: 1.2 $ $Date: 2009/09/25 21:33:14 $
 #
 ########################################################################
 
@@ -54,7 +54,7 @@ int main()
     char s[0xffff];
 
     while ( fgets(s, 0xfffe, stdin) ) {
-	stresc(s);
+	Str_Esc(s);
 	printf("%s", s);
     }
     return 0;

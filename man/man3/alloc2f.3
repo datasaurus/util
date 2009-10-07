@@ -4,21 +4,21 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.7 $ $Date: 2008/12/17 22:55:56 $
+.\" $Revision: 1.8 $ $Date: 2009/09/25 21:33:14 $
 .\"
 .TH alloc2f 3 "Dynamic two dimensional allocator"
 .SH NAME
-calloc2f, free2f, \- dynamic allocators for two dimensional arrays of floats
+Calloc2F, Free2F, \- dynamic allocators for two dimensional arrays of floats
 .SH SYNOPSIS
 .nf
 \fB#include "allocf.h"\fP
-\fBfloat **calloc2f(size_t\fP \fIjmax\fP, \fBsize_t\fP \fIimax\fP);
-\fBvoid free2f(float **\fP\fId\fP);
+\fBfloat **Calloc2F(size_t\fP \fIjmax\fP, \fBsize_t\fP \fIimax\fP);
+\fBvoid Free2F(float **\fP\fId\fP);
 .fi
 .SH DESCRIPTION
 These allocators create two dimensional arrays of float values.
 
-\fBcalloc2f\fP allocates a two dimensional array of float values dimensioned
+\fBCalloc2F\fP allocates a two dimensional array of float values dimensioned
 \fIjmax\fP by \fIimax\fP.  If the return value is assigned to \fId\fP, then
 the highest index of the array is \fId\fP[\fIjmax\fP-1][\fIimax\fP-1].
 \fId\fP[\fB0\fP] is a contiguous block of \fIjmax\fP \fB*\fP \fIimax\fP
@@ -43,10 +43,10 @@ are equivalent.
 The second loop might be faster for some compilers and options.
 
 If something goes wrong, the function generates an error message that can
-be retrieved with a call to \fBerr_get\fP, and returns \fBNULL\fP.
+be retrieved with a call to \fBErr_Get\fP, and returns \fBNULL\fP.
 
-\fBfree2f\fP frees all memory associated with \fId\fP,
-which should be a return value of \fBcalloc2f\fP.
+\fBFree2F\fP frees all memory associated with \fId\fP,
+which should be a return value of \fBCalloc2F\fP.
 .SH SEE ALSO
 \fBalloc3f\fP (3), \fBalloc4f\fP (3), \fBerr_msg\fP (3), \fBallocfvi\fP (1).
 .SH AUTHOR

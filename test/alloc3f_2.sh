@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.12 $ $Date: 2008/12/19 19:24:19 $
+# $Revision: 1.13 $ $Date: 2009/09/25 21:33:13 $
 #
 ########################################################################
 
@@ -60,56 +60,56 @@ int main(void)
     kmax = ULONG_MAX - 1;
     jmax = 1000;
     imax = 1000;
-    x = calloc3f(kmax, jmax, imax);
+    x = Calloc3F(kmax, jmax, imax);
     if ( !x ) {
-	fprintf(stderr, "Could not allocate x:\n%s\n", err_get());
+	fprintf(stderr, "Could not allocate x:\n%s\n", Err_Get());
     }
-    free3f(x);
+    Free3F(x);
 
     kmax = (LONG_MAX / 3) * 2;
     jmax = 1000;
     imax = 1000;
-    x = calloc3f(kmax, jmax, imax);
+    x = Calloc3F(kmax, jmax, imax);
     if ( !x ) {
-	fprintf(stderr, "Could not allocate x:\n%s\n", err_get());
+	fprintf(stderr, "Could not allocate x:\n%s\n", Err_Get());
     }
-    free3f(x);
+    Free3F(x);
 
     kmax = 1000;
     jmax = ULONG_MAX - 1;
     imax = 1000;
-    x = calloc3f(kmax, jmax, imax);
+    x = Calloc3F(kmax, jmax, imax);
     if ( !x ) {
-	fprintf(stderr, "Could not allocate x:\n%s\n", err_get());
+	fprintf(stderr, "Could not allocate x:\n%s\n", Err_Get());
     }
-    free3f(x);
+    Free3F(x);
 
     kmax = 1000;
     jmax = (LONG_MAX / 3) * 2;
     imax = 1000;
-    x = calloc3f(kmax, jmax, imax);
+    x = Calloc3F(kmax, jmax, imax);
     if ( !x ) {
-	fprintf(stderr, "Could not allocate x:\n%s\n", err_get());
+	fprintf(stderr, "Could not allocate x:\n%s\n", Err_Get());
     }
-    free3f(x);
+    Free3F(x);
 
     kmax = 1000;
     jmax = 1000;
     imax = ULONG_MAX - 1;
-    x = calloc3f(kmax, jmax, imax);
+    x = Calloc3F(kmax, jmax, imax);
     if ( !x ) {
-	fprintf(stderr, "Could not allocate x:\n%s\n", err_get());
+	fprintf(stderr, "Could not allocate x:\n%s\n", Err_Get());
     }
-    free3f(x);
+    Free3F(x);
 
     kmax = 1000;
     jmax = 1000;
     imax = (LONG_MAX / 3) * 2;
-    x = calloc3f(kmax, jmax, imax);
+    x = Calloc3F(kmax, jmax, imax);
     if ( !x ) {
-	fprintf(stderr, "Could not allocate x:\n%s\n", err_get());
+	fprintf(stderr, "Could not allocate x:\n%s\n", Err_Get());
     }
-    free3f(x);
+    Free3F(x);
 
     return 0;
 }

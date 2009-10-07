@@ -4,17 +4,17 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.1 $ $Date: 2009/07/06 21:28:17 $
+.\" $Revision: 1.2 $ $Date: 2009/09/25 21:33:14 $
 .\"
 .TH mstring 3 "String manipulation functions"
 .SH NAME
-stresc \- replace escape sequences in a string with associated characters
+Str_Esc \- replace escape sequences in a string with associated characters
 .SH SYNOPSIS
 .nf
-\fBchar *stresc(char *\fP\fIs\fP\fB);\fP
+\fBchar *Str_Esc(char *\fP\fIs\fP\fB);\fP
 .fi
 .SH DESCRIPTION
-\fBstresc\fP replaces escape sequences in \fIs\fP with their corresponding ASCII
+\fBStr_Esc\fP replaces escape sequences in \fIs\fP with their corresponding ASCII
 characters.
 
 The following escape sequences are recognized.

@@ -4,21 +4,21 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.7 $ $Date: 2008/12/17 22:55:56 $
+.\" $Revision: 1.8 $ $Date: 2009/09/25 21:33:14 $
 .\"
 .TH allocf 3 "Dynamic four dimensional allocators"
 .SH NAME
-calloc4f, free4f \- dynamic allocators for four dimensional arrays of floats
+Calloc4F, Free4F \- dynamic allocators for four dimensional arrays of floats
 .SH SYNOPSIS
 .nf
 \fB#include "allocf.h"\fP
-\fBfloat ****calloc4f(size_t\fP \fIl\fP, \fBsize_t\fP \fIk\fP, \fBsize_t\fP \fIj\fP, \fBsize_t\fP \fIi\fP);
-\fBvoid free4f(float ****\fP\fId\fP);
+\fBfloat ****Calloc4F(size_t\fP \fIl\fP, \fBsize_t\fP \fIk\fP, \fBsize_t\fP \fIj\fP, \fBsize_t\fP \fIi\fP);
+\fBvoid Free4F(float ****\fP\fId\fP);
 .fi
 .SH DESCRIPTION
 These allocators create four dimensional arrays of float values.
 
-\fBcalloc4f\fP allocates a four dimensional array of float values.  If the
+\fBCalloc4F\fP allocates a four dimensional array of float values.  If the
 return value is assigned to \fId\fP, then the highest index of the array
 is \fId\fP[\fIl\fP-1][\fIk\fP-1][\fIj\fP-1][\fIi\fP-1].
 terminated.
@@ -55,7 +55,7 @@ The second loop might be faster for some compilers and options.
 If something goes wrong, the function generates an error message that can be
 retrieved with a call to \fBerr_get\fR, and returns \fBNULL\fR.
 
-\fBfree4f\fP frees all memory associated with \fId\fP,
+\fBFree4F\fP frees all memory associated with \fId\fP,
 which should be a return value of \fBmalloc4f\fP.
 .SH SEE ALSO
 \fBalloc2f\fP (3), \fBalloc3f\fP (3), \fBerr_msg\fP (3), \fBallocfvi\fP (1).

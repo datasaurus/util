@@ -10,7 +10,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.14 $ $Date: 2009/09/25 21:33:13 $
+   .	$Revision: 1.15 $ $Date: 2009/10/01 22:15:22 $
  */
 
 #include <stdlib.h>
@@ -29,9 +29,9 @@ int main(void)
     /* Create an array with 2 dimensions */
     jmax = 2;
     imax = 3;
-    dat2 = calloc2f(jmax, imax);
+    dat2 = Calloc2F(jmax, imax);
     if ( !dat2 ) {
-	fprintf(stderr, "%s.\nCould not allocate memory.\n", err_get());
+	fprintf(stderr, "%s.\nCould not allocate memory.\n", Err_Get());
 	exit(1);
     }
 
@@ -55,15 +55,15 @@ int main(void)
 	    printf("%p dat2[%ld][%ld] %12.1f\n", &dat2[j][i], j, i, dat2[j][i]);
 	}
     }
-    free2f(dat2);
+    Free2F(dat2);
 
     /* Create an array with 3 dimensions */
     kmax = 2;
     jmax = 3;
     imax = 4;
-    dat3 = calloc3f(kmax, jmax, imax);
+    dat3 = Calloc3F(kmax, jmax, imax);
     if ( !dat3 ) {
-	fprintf(stderr, "%s.\nCould not allocate memory.\n", err_get());
+	fprintf(stderr, "%s.\nCould not allocate memory.\n", Err_Get());
 	exit(1);
     }
 
@@ -101,16 +101,16 @@ int main(void)
 	    }
 	}
     }
-    free3f(dat3);
+    Free3F(dat3);
 
     /* Create an array with 4 dimensions */
     lmax = 2;
     kmax = 3;
     jmax = 4;
     imax = 5;
-    dat4 = calloc4f(lmax, kmax, jmax, imax);
+    dat4 = Calloc4F(lmax, kmax, jmax, imax);
     if ( !dat4 ) {
-	fprintf(stderr, "%s.\nCould not allocate memory.\n", err_get());
+	fprintf(stderr, "%s.\nCould not allocate memory.\n", Err_Get());
 	exit(1);
     }
 
@@ -171,6 +171,6 @@ int main(void)
 	    }
 	}
     }
-    free4f(dat4);
+    Free4F(dat4);
     return 0;
 }

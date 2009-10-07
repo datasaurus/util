@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.17 $ $Date: 2008/12/19 19:24:19 $
+# $Revision: 1.18 $ $Date: 2009/09/25 21:33:13 $
 #
 ########################################################################
 
@@ -58,35 +58,35 @@ int main(void)
 
     j_max = ULONG_MAX - 1;
     i_max = 1000;
-    x = calloc2f(j_max, i_max);
+    x = Calloc2F(j_max, i_max);
     if ( !x ) {
-	fprintf(stderr, "Could not allocate x:\n%s\n", err_get());
+	fprintf(stderr, "Could not allocate x:\n%s\n", Err_Get());
     }
-    free2f(x);
+    Free2F(x);
 
     j_max = (LONG_MAX / 3) * 2;
     i_max = 1000;
-    x = calloc2f(j_max, i_max);
+    x = Calloc2F(j_max, i_max);
     if ( !x ) {
-	fprintf(stderr, "Could not allocate x:\n%s\n", err_get());
+	fprintf(stderr, "Could not allocate x:\n%s\n", Err_Get());
     }
-    free2f(x);
+    Free2F(x);
 
     j_max = 1000;
     i_max = ULONG_MAX - 1;
-    x = calloc2f(j_max, i_max);
+    x = Calloc2F(j_max, i_max);
     if ( !x ) {
-	fprintf(stderr, "Could not allocate x:\n%s\n", err_get());
+	fprintf(stderr, "Could not allocate x:\n%s\n", Err_Get());
     }
-    free2f(x);
+    Free2F(x);
 
     j_max = 1000;
     i_max = (LONG_MAX / 3) * 2;
-    x = calloc2f(j_max, i_max);
+    x = Calloc2F(j_max, i_max);
     if ( !x ) {
-	fprintf(stderr, "Could not allocate x:\n%s\n", err_get());
+	fprintf(stderr, "Could not allocate x:\n%s\n", Err_Get());
     }
-    free2f(x);
+    Free2F(x);
 
     return 0;
 }

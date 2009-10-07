@@ -9,13 +9,13 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.5 $ $Date: 2009/09/25 21:33:13 $
+   .	$Revision: 1.6 $ $Date: 2009/10/01 22:15:22 $
  */
 
 #ifndef ALLOC_2F_H_
 #define ALLOC_2F_H_
 
-float **calloc2f(long, long);
-void free2f(float **);
+float **Calloc2F(long, long);
+void Free2F(float **);
 
 #endif

@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.5 $ $Date: 2008/12/19 19:24:19 $
+# $Revision: 1.6 $ $Date: 2009/09/25 21:33:13 $
 #
 ########################################################################
 
@@ -62,10 +62,10 @@ int main(void)
 {
     printf("Calling a.\n");
     a();
-    printf("Error message is:\n%s\n", err_get());
+    printf("Error message is:\n%s\n", Err_Get());
     printf("Calling b.\n");
     b();
-    printf("Error message is\n%s", err_get());
+    printf("Error message is\n%s", Err_Get());
 
     return 0;
 }
@@ -73,13 +73,13 @@ int main(void)
 void a(void)
 {
     b();
-    err_append("This is what a has to say about it.\n");
+    Err_Append("This is what a has to say about it.\n");
     return;
 }
 
 void b(void)
 {
-    err_append("b has an error.\n");
+    Err_Append("b has an error.\n");
     return;
 }
 END

@@ -9,7 +9,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.8 $ $Date: 2009/09/25 21:33:13 $
+   .	$Revision: 1.9 $ $Date: 2009/10/01 22:15:22 $
  */
 
 #include "alloc.h"
@@ -17,7 +17,7 @@
 #include "alloc4f.h"
 
 /* See alloc4f (3) */
-float **** calloc4f(long lmax, long kmax, long jmax, long imax)
+float **** Calloc4F(long lmax, long kmax, long jmax, long imax)
 {
     float ****dat;
     long k, j, l;
@@ -25,7 +25,7 @@ float **** calloc4f(long lmax, long kmax, long jmax, long imax)
 
     /* Make sure casting to size_t does not overflow anything.  */
     if (lmax <= 0 || kmax <= 0 || jmax <= 0 || imax <= 0) {
-	err_append("Array dimensions must be positive.\n");
+	Err_Append("Array dimensions must be positive.\n");
 	return NULL;
     }
     ll = (size_t)lmax;
@@ -34,26 +34,26 @@ float **** calloc4f(long lmax, long kmax, long jmax, long imax)
     ii = (size_t)imax;
     if ((ll * kk) / ll != kk || (ll * kk * jj) / (ll * kk) != jj
 	    || (ll * kk * jj * ii) / (ll * kk * jj) != ii) {
-	err_append("Dimensions too big for pointer arithmetic.\n");
+	Err_Append("Dimensions too big for pointer arithmetic.\n");
 	return NULL;
     }
 
     dat = (float ****)CALLOC(ll + 2, sizeof(float ***));
     if ( !dat ) {
-	err_append("Could not allocate 3rd dimension.\n");
+	Err_Append("Could not allocate 3rd dimension.\n");
 	return NULL;
     }
     dat[0] = (float ***)CALLOC(ll * kk + 1, sizeof(float **));
     if ( !dat[0] ) {
 	FREE(dat);
-	err_append("Could not allocate 2nd dimension.\n");
+	Err_Append("Could not allocate 2nd dimension.\n");
 	return NULL;
     }
     dat[0][0] = (float **)CALLOC(ll * kk * jj + 1, sizeof(float *));
     if ( !dat[0][0] ) {
 	FREE(dat[0]);
 	FREE(dat);
-	err_append("Could not allocate 1st dimension.\n");
+	Err_Append("Could not allocate 1st dimension.\n");
 	return NULL;
     }
     dat[0][0][0] = (float *)CALLOC(ll * kk * jj * ii, sizeof(float));
@@ -61,7 +61,7 @@ float **** calloc4f(long lmax, long kmax, long jmax, long imax)
 	FREE(dat[0][0]);
 	FREE(dat[0]);
 	FREE(dat);
-	err_append("Could not allocate array of values.\n");
+	Err_Append("Could not allocate array of values.\n");
 	return NULL;
     }
     for (l = 1; l <= lmax; l++) {
@@ -77,7 +77,7 @@ float **** calloc4f(long lmax, long kmax, long jmax, long imax)
 }
 
 /* See alloc4f (3) */
-void free4f(float ****dat)
+void Free4F(float ****dat)
 {
     if (dat) {
 	if (dat[0]) {
