@@ -7,7 +7,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.26 $ $Date: 2009/10/01 22:15:22 $
+   .	$Revision: 1.27 $ $Date: 2009/10/07 17:06:47 $
  */
 
 #include <stdlib.h>
@@ -75,7 +75,7 @@ void clean()
 }
 
 /* See alloc (3) */
-void *Malloc_Tkx(size_t sz, char *fnm, int ln)
+void *Tkx_Malloc(size_t sz, char *fnm, int ln)
 {
     void *m;
 
@@ -93,7 +93,7 @@ void *Malloc_Tkx(size_t sz, char *fnm, int ln)
 }
 
 /* See alloc (3) */
-void *Calloc_Tkx(size_t n, size_t sz, char *fnm, int ln)
+void *Tkx_Calloc(size_t n, size_t sz, char *fnm, int ln)
 {
     void *m;
 
@@ -111,7 +111,7 @@ void *Calloc_Tkx(size_t n, size_t sz, char *fnm, int ln)
 }
 
 /* See alloc (3) */
-void *ReAlloc_Tkx(void *m, size_t sz, char *fnm, int ln)
+void *Tkx_ReAlloc(void *m, size_t sz, char *fnm, int ln)
 {
     void *m2;
 
@@ -138,7 +138,7 @@ void *ReAlloc_Tkx(void *m, size_t sz, char *fnm, int ln)
 }
 
 /* See alloc (3) */
-void Free_Tkx(void *m, char *fnm, int ln)
+void Tkx_Free(void *m, char *fnm, int ln)
 {
     if ( !init ) {
 	alloc_init();
