@@ -4,7 +4,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.6 $ $Date: 2009/12/21 20:25:50 $
+.\" $Revision: 1.7 $ $Date: 2009/12/21 20:33:50 $
 .\"
 .TH hash 3 "Hash tables"
 .SH NAME
@@ -13,6 +13,7 @@ Hash_Init, Hash_Clear, Hash_Add, Hash_Set, Hash_Get, Hash_Print, Hash_Adj, Hash_
 .nf
 \fBint\fP \fBHash_Init(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBunsigned\fP \fIn_buckets\fP);
 \fBvoid\fP \fBHash_Clear(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP);
+\fBunsigned\fP \fBHash\fP(\fBconst char *\fP\fIkey\fP, \fBunsigned\fP \fIn_buckets\fP);
 \fBint\fP \fBHash_Add(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBint\fP \fIval\fP);
 \fBint\fP \fBHash_Set(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBint\fP \fIval\fP);
 \fBint\fP \fBHash_Get(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBint\fP *\fIip\fP);
@@ -34,6 +35,10 @@ is safe to give to \fBHash_Clear\fP.
 \fBHash_Clear\fP empties the hash table at \fItblP\fP, which should have been
 initialized with a call to \fBHash_Init\fP.  Memory associated with the table is
 freed and the table is reinitialized with no buckets.
+
+\fBHash\fP computes a hash table index given key \fIkey\fP and number of buckets
+\fIn_buckets\fP. Return value is a pseudo-random integer in range
+\fB[0,\ \fP\fIn_buckets\fP\fB)\fP.
 
 \fBHash_Add\fP attempts to create an entry in the hash table at \fItblP\fP with key
 \fIkey\fP and corresponding value \fIval\fP.  It returns true if it succeeds.  If

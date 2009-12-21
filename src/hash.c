@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.26 $ $Date: 2009/12/21 18:02:12 $
+   .	$Revision: 1.27 $ $Date: 2009/12/21 20:25:50 $
    .
    .	Reference:
    .		Kernighan, Brian W. and Rob Pike.
@@ -23,9 +23,6 @@
 #include "err_msg.h"
 #include "hash.h"
 
-#define HASH_X 31
-
-static unsigned hash(const char *, unsigned);
 
 /*
  * hash - compute an index in a hash table given the key.
@@ -33,7 +30,7 @@ static unsigned hash(const char *, unsigned);
  * n = number of buckets in hash table (in)
  * Return value is a pseudo-random integer in range [0,n)
  */
-static unsigned hash(const char *k, unsigned n)
+unsigned Hash(const char *k, unsigned n)
 {
     unsigned h;
 
@@ -100,7 +97,7 @@ int Hash_Add(struct Hash_Tbl *tblP, const char *key, int val)
     if ( !tblP || !tblP->buckets || !key ) {
 	return 0;
     }
-    b = hash(key, tblP->n_buckets);
+    b = Hash(key, tblP->n_buckets);
     for (p = tblP->buckets[b]; p; p = p->next) {
 	if (strcmp(p->key, key) == 0) {
 	    Err_Append(key);
@@ -142,7 +139,7 @@ int Hash_Set(struct Hash_Tbl *tblP, const char *key, int val)
 	Err_Append("Attempted to set nonexistent hash table.\n");
 	return 0;
     }
-    b = hash(key, tblP->n_buckets);
+    b = Hash(key, tblP->n_buckets);
     for (p = tblP->buckets[b]; p; p = p->next) {
 	if (strcmp(p->key, key) == 0) {
 	    p->val = val;
@@ -180,7 +177,7 @@ int Hash_Get(struct Hash_Tbl *tblP, const char *key, int *ip)
     if ( !tblP || !tblP->n_buckets || !key ) {
 	return 0;
     }
-    b = hash(key, tblP->n_buckets);
+    b = Hash(key, tblP->n_buckets);
     for (ep = tblP->buckets[b]; ep; ep = ep->next) {
 	if (strcmp(ep->key, key) == 0) {
 	    *ip = ep->val;
@@ -229,7 +226,7 @@ int Hash_Adj(struct Hash_Tbl *tblP, unsigned n_buckets2)
     for (bp = tblP->buckets, bp1 = bp + tblP->n_buckets; bp < bp1; bp++) {
 	for (ep = *bp; ep; ep = next) {
 	    next = ep->next;
-	    b = hash(ep->key, n_buckets2);
+	    b = Hash(ep->key, n_buckets2);
 	    ep->next = buckets2[b];
 	    buckets2[b] = ep;
 	}
@@ -249,7 +246,7 @@ void Hash_Rm(struct Hash_Tbl *tblP, const char *key)
     if ( !tblP->buckets || !key ) {
 	return;
     }
-    b = hash(key, tblP->n_buckets);
+    b = Hash(key, tblP->n_buckets);
     p = tblP->buckets[b];
     for (prev = NULL, p = tblP->buckets[b]; p; prev = p, p = p->next) {
 	if (strcmp(p->key, key) == 0) {

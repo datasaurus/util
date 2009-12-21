@@ -9,13 +9,15 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.19 $ $Date: 2009/12/21 18:02:12 $
+   .	$Revision: 1.20 $ $Date: 2009/12/21 20:25:50 $
  */
 
 #ifndef HASH_H_
 #define HASH_H_
 
 #include <stdlib.h>
+
+#define HASH_X 31
 
 /* Hash table entry */
 struct Hash_Entry {
@@ -36,6 +38,7 @@ struct Hash_Tbl {
 /* Global functions */
 int Hash_Init(struct Hash_Tbl *, unsigned);
 void Hash_Clear(struct Hash_Tbl *);
+unsigned Hash(const char *, unsigned);
 int Hash_Add(struct Hash_Tbl *, const char *, int);
 int Hash_Set(struct Hash_Tbl *, const char *, int);
 int Hash_Get(struct Hash_Tbl *, const char *, int *);
