@@ -4,18 +4,19 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.3 $ $Date: 2009/09/25 21:33:14 $
+.\" $Revision: 1.4 $ $Date: 2009/10/07 17:06:48 $
 .\"
 .TH hash 3 "Hash tables"
 .SH NAME
 Hash_Init, Hash_Clear, Hash_Add, Hash_Set, Hash_Get, Hash_Adj, Hash_Rm, Hash_Sz \- general hash table functions
 .SH SYNOPSIS
 .nf
-\fBint\fP \fBHash_Init(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBunsigned\fP \fI\fIn_buckets\fP\fP);
+\fBint\fP \fBHash_Init(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBunsigned\fP \fIn_buckets\fP);
 \fBvoid\fP \fBHash_Clear(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP);
-\fBint\fP \fBHash_Add(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBint\fP val);
-\fBint\fP \fBHash_Set(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBint\fP val);
-\fBint\fP \fBHash_Get(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBint\fP *ip);
+\fBint\fP \fBHash_Add(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBint\fP \fIval\fP);
+\fBint\fP \fBHash_Set(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBint\fP \fIval\fP);
+\fBint\fP \fBHash_Get(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBint\fP *\fIip\fP);
+\fBvoid\fP \fBHash_Print\fP(\fBstruct Hash_Tbl *\fP\fItblP\fP);
 \fBint\fP \fBHash_Adj(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBunsigned\fP \fIn_buckets_2\fP);
 \fBvoid\fP \fBHash_Rm(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP);
 \fBvoid\fP \fBHash_Sz(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBunsigned\fP *\fIn_bucketsP\fP, \fBunsigned *\fP\fIn_entriesP\fP);
@@ -48,6 +49,15 @@ retrievable with \fBErr_Get\fP.
 to \fIkey\fP.  If \fItblP\fP has an entry for \fIkey\fP, the corresponding value is
 copied to address \fIlp\fP and \fBHash_Get\fP returns true.  Otherwise,
 \fBHash_Get\fP returns false.
+
+\fBHash_Print\fP \fItblP\fP prints the hash table at \fItblP\fP to standard
+output.  For each bucket, there will be an output line of form:
+.nf
+
+    \fB[(\fP\fIkey1 value1\fP\fB)(\fP\fIkey2 value2\fP\fB)\fP...\fB]\fP
+
+.fi
+A line of form \fB[]\fP indicates an empty bucket.
 
 \fBHash_Adj\fP sets the number of buckets in the hash table at \fItblP\fP to
 \fIn_buckets2\fP.  It returns true if it succeeds.  If something goes wrong,

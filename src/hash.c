@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.24 $ $Date: 2009/10/01 22:15:22 $
+   .	$Revision: 1.25 $ $Date: 2009/10/07 17:06:47 $
    .
    .	Reference:
    .		Kernighan, Brian W. and Rob Pike.
@@ -188,6 +188,23 @@ int Hash_Get(struct Hash_Tbl *tblP, const char *key, int *ip)
 	}
     }
     return 0;
+}
+
+/* See hash (3) */
+void Hash_Print(struct Hash_Tbl *tblP)
+{
+    struct Hash_Entry **bp, **bp1, *ep;
+
+    if ( !tblP ) {
+	return;
+    }
+    for (bp = tblP->buckets, bp1 = bp + tblP->n_buckets; bp < bp1; bp++) {
+	printf("[");
+	for (ep = *bp; ep; ep = ep->next) {
+	    printf("(%s %d)", ep->key, ep->val);
+	}
+	printf("]\n");
+    }
 }
 
 /* See hash (3) */
