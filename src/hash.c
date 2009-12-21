@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.25 $ $Date: 2009/10/07 17:06:47 $
+   .	$Revision: 1.26 $ $Date: 2009/12/21 18:02:12 $
    .
    .	Reference:
    .		Kernighan, Brian W. and Rob Pike.
@@ -267,11 +267,24 @@ void Hash_Rm(struct Hash_Tbl *tblP, const char *key)
 }
 
 /* See hash (3) */
-void Hash_Sz(struct Hash_Tbl *tblP, unsigned *n_bucketsP, unsigned *n_entriesP)
+void Hash_Sz(struct Hash_Tbl *tblP, unsigned *n_bucketsP, unsigned *n_entriesP,
+	unsigned *biggestP)
 {
+    struct Hash_Entry **bp, **bp1, *ep;
+
     if ( !tblP ) {
 	return;
     }
     *n_bucketsP = tblP->n_buckets;
     *n_entriesP = tblP->n_entries;
+    for (*biggestP = 0, bp = tblP->buckets, bp1 = bp + tblP->n_buckets;
+	    bp < bp1;
+	    bp++) {
+	unsigned c;
+
+	for (c = 0, ep = *bp; ep; ep = ep->next) {
+	    c++;
+	}
+	*biggestP = (c > *biggestP) ? c : *biggestP;
+    }
 }

@@ -9,7 +9,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.18 $ $Date: 2009/10/07 17:06:47 $
+   .	$Revision: 1.19 $ $Date: 2009/12/21 18:02:12 $
  */
 
 #ifndef HASH_H_
@@ -42,6 +42,6 @@ int Hash_Get(struct Hash_Tbl *, const char *, int *);
 void Hash_Print(struct Hash_Tbl *tblP);
 int Hash_Adj(struct Hash_Tbl *, unsigned);
 void Hash_Rm(struct Hash_Tbl *, const char *);
-void Hash_Sz(struct Hash_Tbl *, unsigned *, unsigned *);
+void Hash_Sz(struct Hash_Tbl *, unsigned *, unsigned *, unsigned *);
 
 #endif

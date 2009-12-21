@@ -4,7 +4,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.4 $ $Date: 2009/10/07 17:06:48 $
+.\" $Revision: 1.5 $ $Date: 2009/12/21 18:02:12 $
 .\"
 .TH hash 3 "Hash tables"
 .SH NAME
@@ -19,7 +19,8 @@ Hash_Init, Hash_Clear, Hash_Add, Hash_Set, Hash_Get, Hash_Adj, Hash_Rm, Hash_Sz 
 \fBvoid\fP \fBHash_Print\fP(\fBstruct Hash_Tbl *\fP\fItblP\fP);
 \fBint\fP \fBHash_Adj(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBunsigned\fP \fIn_buckets_2\fP);
 \fBvoid\fP \fBHash_Rm(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP);
-\fBvoid\fP \fBHash_Sz(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBunsigned\fP *\fIn_bucketsP\fP, \fBunsigned *\fP\fIn_entriesP\fP);
+\fBvoid\fP \fBHash_Sz(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBunsigned\fP *\fIn_bucketsP\fP, \fBunsigned *\fP\fIn_entriesP\fP,
+	\fBunsigned\fP *\fIbiggestP\fP);
 .fi
 .SH DESCRIPTION
 \fBHash_Init\fP initializes a new hash table at \fItblP\fP. The value at \fItblP\fP
@@ -68,6 +69,7 @@ A line of form \fB[]\fP indicates an empty bucket.
 \fItblP\fP.
 
 \fBHash_Sz\fP retrieves information about the size of the hash table at \fItblP\fP.
-It copies the number of buckets to address \fIn_bucketsP\fP and the number of
-entries to address \fIn_entriesP\fP.  It quietly does nothing if \fItblP\fP is
+It copies the number of buckets to address \fIn_bucketsP\fP, the number of entries
+to address \fIn_entriesP\fP, and the number of entries in the biggest bucket to
+address \fIbiggestP\fP.  It quietly does nothing if \fItblP\fP is
 \fBNULL\fP.
