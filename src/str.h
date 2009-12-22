@@ -8,15 +8,16 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.5 $ $Date: 2009/12/22 21:42:10 $
+   .	$Revision: 1.6 $ $Date: 2009/12/22 21:44:48 $
  */
 
-#ifndef MSTRING_H_
-#define MSTRING_H_
+#ifndef STR_H_
+#define STR_H_
 
 #include <stdlib.h>
 
 char *Str_Esc(char *s);
-char ** Str_Words(char *, char **, size_t *);
+char ** Str_Words(char *, char **, int *);
+char* Str_GetLn(FILE *, char, char *, int *);
     
 #endif
