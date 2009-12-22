@@ -8,11 +8,16 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.5 $ $Date: 2009/10/07 17:06:47 $
+   .	$Revision: 1.6 $ $Date: 2009/12/22 21:42:10 $
  */
 
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+#include <limits.h>
+#include "alloc.h"
+#include "err_msg.h"
+#include "cmd.h"
 #include "str.h"
 
 char *Str_Esc(char *str)
@@ -69,4 +74,85 @@ char *Str_Esc(char *str)
     *p = '\0';
 
     return str;
+}
+
+char ** Str_Words(char *ln, char **argv, size_t *argc)
+{
+    char **argv1 = NULL;	/* Arguments from a line of input. */
+    size_t max_argc;		/* Allocation at argv1 */
+    size_t argc1;		/* Number of arguments on input line */
+    char *c1, *c2;		/* Characters from input */
+    size_t m;
+
+    if (argv) {
+	argv1 = argv;
+	max_argc = *argc;
+	if (max_argc < 2) {
+	    if ( !(argv1 = (char **)REALLOC(argv1, 2 * sizeof(char *))) ) {
+		Err_Append("Could not allocate word array.  ");
+		return NULL;
+	    }
+	    max_argc = 2;
+	}
+    } else {
+	max_argc = 2;
+	if ( !(argv1 = (char **)MALLOC(max_argc * sizeof(char *))) ) {
+	    Err_Append("Could not allocate word array.  ");
+	    return NULL;
+	}
+    }
+    argc1 = 0;
+    if (*ln != '\0') {
+	if ( !isspace(*ln) ) {
+	    argv1[argc1++] = ln;
+	}
+	for (c1 = ln, c2 = ln + 1; *c2 != '\0'; c1++, c2++) {
+	    if (isspace(*c1)) {
+		*c1 = '\0';
+		if ( !isspace(*c2) ) {
+		    /* c2 is the start of a new word.  Append it to argv1. */
+		    if (argc1 + 1 > max_argc) {
+			m = 2 * max_argc;
+			if (m > INT_MAX / sizeof(char *) 
+				|| !(argv1 = (char **)REALLOC(argv1,
+					m * sizeof(char *))) ) {
+			    Err_Append("Could not allocate word array.  ");
+			    return NULL;
+			}
+			max_argc = m;
+		    }
+		    argv1[argc1++] = c2;
+		} else if (*c1 == '"') {
+		    /* Next word is bounded by double quotes.  */
+		    char *endq;
+
+		    if ( !(endq = strchr(c2, '"')) ) {
+			Err_Append("Unbalanced \".\n");
+			return NULL;
+		    }
+		    if (argc1 + 1 > max_argc) {
+			m = 2 * max_argc;
+			if (m > INT_MAX / sizeof(char *) 
+				|| !(argv1 = (char **)REALLOC(argv1,
+					m * sizeof(char *))) ) {
+			    Err_Append("Could not allocate word array.  ");
+			    return NULL;
+			}
+			max_argc = m;
+		    }
+		    argv1[argc1++] = c2;
+		    c1 = endq;
+		    c2 = c1 + 1;
+		}
+	    }
+	}
+    }
+    *argc = argc1;
+    if ((argc1 + 1) > INT_MAX / sizeof(char *) 
+	    || !(argv1 = (char **)REALLOC(argv1, (argc1 + 1) * sizeof(char *))) ) {
+	Err_Append("Could not allocate word array.  ");
+	return NULL;
+    }
+    argv1[argc1] = NULL;
+    return argv1;
 }
