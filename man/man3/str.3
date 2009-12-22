@@ -4,7 +4,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.4 $ $Date: 2009/12/22 21:54:29 $
+.\" $Revision: 1.5 $ $Date: 2009/12/22 21:57:54 $
 .\"
 .TH str 3 "String manipulation functions"
 .SH NAME
@@ -14,6 +14,7 @@ Str_Esc, Str_Words \- manipulate strings
 \fB#include "str.h"\fP
 \fBchar *Str_Esc(char *\fP\fIs\fP\fB);\fP
 \fBchar\fP ** \fBStr_Words\fP(\fBchar\fP *\fIln\fP, \fBchar\fP **\fIargv\fP, \fBsize_t\fP *\fIargc\fP);
+\fBchar\fP * \fBStr_GetLn\fP(\fBFILE\fP *\fIin\fP, \fBchar\fP \fIeol\fP, \fBchar\fP *\fIln\fP, \fBint\fP *\fIl_max\fP);
 .fi
 .SH DESCRIPTION
 \fBStr_Esc\fP replaces escape sequences in \fIs\fP with their corresponding ASCII
@@ -70,6 +71,24 @@ words in \fIln\fP.
 If something goes wrong, return value is \fBNULL\fP, and calling \fBErr_Get\fP
 will retrieve an error message.  If \fIargv\fP initially pointed to an allocation,
 it will still be allocated, but contents might be changed.
+
+\fBStr_GetLn\fP reads characters from input stream \fIin\fP until it encounters
+end of line character \fIeol\fP.  The resulting string is returned, with a
+\fBnul\fP terminator instead of the end of line character, and the allocation size,
+including the terminating \fBnul\fP, is stored at \fIl_max\fP.
+
+If, upon entry, \fIln\fP is \fBNULL\fP, \fBStr_GetLn\fP makes a new allocation
+at which to store the string.  The address of the new string will be returned.
+The memory should eventually be freed with a call to \fBFREE\fP. If \fIln\fP is
+not \fBNULL\fP, it is assumed to point to storage for *\fIl_max\fP characters,
+allocated with \fBMALLOC\fP, \fBCALLOC\fP, or \fBREALLOC\fP.  \fBStr_GetLn\fP
+will store characters at the given memory, clobbering any previous contents.
+If it encounters more than *\fIl_max\fP characters, it will increase the allocation
+with \fBREALLOC\fP and update *\fIl_max\fP.
+
+If something goes wrong, \fBStr_GetLn\fP returns \fBNULL\fP, and leaves an
+error message that \fBErr_Get\fP can retrieve.  If a non-\fBNULL\fP \fIln\fP
+was given, it may have been modified.
 .SH SEE ALSO
 alloc (3), err_msg (3)
 .SH AUTHOR
