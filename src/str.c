@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.6 $ $Date: 2009/12/22 21:42:10 $
+   .	$Revision: 1.7 $ $Date: 2009/12/22 21:44:48 $
  */
 
 #include <stdlib.h>
@@ -17,7 +17,6 @@
 #include <limits.h>
 #include "alloc.h"
 #include "err_msg.h"
-#include "cmd.h"
 #include "str.h"
 
 char *Str_Esc(char *str)
