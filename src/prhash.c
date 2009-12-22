@@ -3,12 +3,17 @@
    -		This application grows a hash table to perfection and then
    -		prints it.
    -	
+   .	Usage:
+   .		prhash word1 word2 ...
+   .
+   .	Output will be from Hash_Print.  All entries will have value 1 (arbitrary).
+   .
    .	Copyright (c) 2009 Gordon D. Carrie
    .	All rights reserved
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: $ $Date: $
+   .	$Revision: 1.1 $ $Date: 2009/12/21 20:21:25 $
  */
 
 #include <stdio.h>
