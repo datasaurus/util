@@ -4,7 +4,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.3 $ $Date: 2009/10/07 17:06:48 $
+.\" $Revision: 1.4 $ $Date: 2009/12/22 21:54:29 $
 .\"
 .TH str 3 "String manipulation functions"
 .SH NAME
@@ -22,27 +22,27 @@ characters.
 The following escape sequences are recognized.
 .ta 8m
 .br
-\fB\\a\fP	Write a <bell> character.
+\fB\\a\fP	becomes a single <bell> character.
 .br
-\fB\\b\fP	Write a <backspace> character.
+\fB\\b\fP	becomes a single <backspace> character.
 .br
-\fB\\f\fP	Write a <form-feed> character.
+\fB\\f\fP	becomes a single <form-feed> character.
 .br
-\fB\\n\fP	Write a <new-line> character.
+\fB\\n\fP	becomes a single <new-line> character.
 .br
-\fB\\r\fP	Write a <carriage return> character.
+\fB\\r\fP	becomes a single <carriage return> character.
 .br
-\fB\\t\fP	Write a <tab> character.
+\fB\\t\fP	becomes a single <tab> character.
 .br
-\fB\\v\fP	Write a <vertical tab> character.
+\fB\\v\fP	becomes a single <vertical tab> character.
 .br
-\fB\\'\fP	Write a <single quote> character.
+\fB\\'\fP	becomes a single <single quote> character.
 .br
-\fB\\\\ \fP	Write a backslash character.
+\fB\\\\ \fP	becomes a single backslash character.
 .br
 .in +8m
 .ti -8m
-\fB\\0\fP\fInum\fP	Write the character whose ASCII value is \fInum\fP, where \fInum\fP is an integer given as 1, 2, or 3 octal digits.
+\fB\\0\fP\fInum\fP	becomes the character whose ASCII value is \fInum\fP, where \fInum\fP is an integer given as 1, 2, or 3 octal digits.
 .in -8m
 
 The (possibly modified) string is returned.
