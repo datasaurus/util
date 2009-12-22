@@ -4,14 +4,16 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.2 $ $Date: 2009/09/25 21:33:14 $
+.\" $Revision: 1.3 $ $Date: 2009/10/07 17:06:48 $
 .\"
-.TH mstring 3 "String manipulation functions"
+.TH str 3 "String manipulation functions"
 .SH NAME
-Str_Esc \- replace escape sequences in a string with associated characters
+Str_Esc, Str_Words \- manipulate strings
 .SH SYNOPSIS
 .nf
+\fB#include "str.h"\fP
 \fBchar *Str_Esc(char *\fP\fIs\fP\fB);\fP
+\fBchar\fP ** \fBStr_Words\fP(\fBchar\fP *\fIln\fP, \fBchar\fP **\fIargv\fP, \fBsize_t\fP *\fIargc\fP);
 .fi
 .SH DESCRIPTION
 \fBStr_Esc\fP replaces escape sequences in \fIs\fP with their corresponding ASCII
@@ -44,5 +46,31 @@ The following escape sequences are recognized.
 .in -8m
 
 The (possibly modified) string is returned.
+
+\fBStr_Words\fP splits \fBnul\fP terminated string \fIln\fP into words and
+places their addresses into array \fIargv\fP. The number of words found is
+placed at \fIargc\fP.  Word boundaries in \fIln\fP are replaced with \fBnul\fP
+characters.  A word is a contiguous sequence of non-whitespace characters,
+or a contiguous sequence of any characters bounded by matching pairs of quotes
+(\fB"\fP).
+
+If \fIargv\fP is \fBNULL\fP upon entry, a new allocation is made and its address
+is returned.  Memory for the returned array should eventually be freed with a call
+to \fBFREE\fP.
+
+If \fIargv\fP is not \fBNULL\fP, it should point to an allocation made with
+\fBMALLOC\fP, \fBCALLOC\fP, or \fBREALLOC\fP with storage for
+*\fIargc\fP\ \fB\ +\ 1\fP strings. \fBStr_Words\fP may reallocate \fIargv\fP
+with \fBREALLOC\fP and update *\fIargc\fP if it finds more than *\fIargc\fP words.
+The (possibly new) allocation is returned.
+
+Return value is a \fBNULL\fP terminated array of strings pointing to *\fIargc\fP
+words in \fIln\fP.
+
+If something goes wrong, return value is \fBNULL\fP, and calling \fBErr_Get\fP
+will retrieve an error message.  If \fIargv\fP initially pointed to an allocation,
+it will still be allocated, but contents might be changed.
+.SH SEE ALSO
+alloc (3), err_msg (3)
 .SH AUTHOR
 Gordon Carrie (dev0@trekix.net)
