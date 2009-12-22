@@ -8,13 +8,13 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.23 $ $Date: 2009/12/17 17:35:42 $
+# $Revision: 1.24 $ $Date: 2009/12/21 20:26:27 $
 
 CC = cc
 CFLAGS = -g -Wall -Wmissing-prototypes
 #LFLAGS = -L/usr/local/lib -lefence
 EXECS = allocfvi bhead prhash
-OBJ = alloc.o alloc2f.o alloc3f.o alloc4f.o allocfvi.o err_msg.o hash.o mstring.o
+OBJ = alloc.o alloc2f.o alloc3f.o alloc4f.o allocfvi.o err_msg.o hash.o str.o
 
 obj : ${OBJ}
 
@@ -47,8 +47,8 @@ alloc4f.o : alloc4f.c alloc4f.h
 err_msg.o : err_msg.c err_msg.h
 	${CC} ${CFLAGS} -c err_msg.c
 
-mstring.o : mstring.c mstring.h
-	${CC} ${CFLAGS} -c mstring.c
+str.o : str.c str.h
+	${CC} ${CFLAGS} -c str.c
 
 clean :
 	rm -f ${EXECS} *core*  *.o *.ps *.out
