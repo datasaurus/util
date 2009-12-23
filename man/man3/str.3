@@ -4,7 +4,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.7 $ $Date: 2009/12/23 02:23:02 $
+.\" $Revision: 1.8 $ $Date: 2009/12/23 16:41:57 $
 .\"
 .TH str 3 "String manipulation functions"
 .SH NAME
@@ -59,9 +59,9 @@ allocation made with \fBMALLOC\fP, \fBCALLOC\fP, or \fBREALLOC\fP with storage f
 *\fIargc\fP\ \fB\ +\ 1\fP strings. \fBStr_Words\fP may reallocate \fIargv\fP
 with \fBREALLOC\fP and update *\fIargc\fP if it finds more than *\fIargc\fP words.
 The (possibly new) allocation is returned.
-If something goes wrong, return value is \fBNULL\fP, and calling \fBErr_Get\fP
-will retrieve an error message.  If \fIargv\fP initially pointed to an allocation,
-it will still be allocated, but contents might be changed.
+If something goes wrong, \fBStr_Words\fP returns \fBNULL\fP, sets
+*\fIargc\fP\ =\ \fB-1\fP, and frees \fIargv\fP.
+Calling \fBErr_Get\fP will retrieve an error message.
 
 \fBStr_GetLn\fP reads characters from input stream \fIin\fP until it encounters
 end of line character \fIeol\fP.  The resulting string is returned, with a
