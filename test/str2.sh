@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-#- mstring1.sh --
+#- str2.sh --
 #-	This test application tests string manipulation functions defined
-#-	in msrtring.c.  The driver application reads strings from stdin
+#-	in str.c.  The driver application reads strings from stdin
 #-	and substitutes characters associated with escape sequences that
 #-	it finds.
 #-
@@ -11,16 +11,12 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.2 $ $Date: 2009/09/25 21:33:14 $
+# $Revision: 1.3 $ $Date: 2009/10/07 17:06:47 $
 #
 ########################################################################
 
 echo "
-mstring.sh --
-This test application tests string manipulation functions defined
-in msrtring.c.  The driver application reads strings from stdin
-and substitutes characters associated with escape sequences that
-it finds.
+str2.sh - test Str_Esc function.
 
 Usage suggestions:
 $0 2>&1 | less
@@ -39,15 +35,15 @@ RM=${RM:-'rm -f'}
 #
 CC="cc"
 CFLAGS="-g -Wall -Wmissing-prototypes"
-MSRC="mstring1.c"
-SRC="$MSRC src/mstring.c"
-EXEC="mstring1"
+MSRC="str2.c"
+SRC="$MSRC src/str.c src/err_msg.c src/alloc.c"
+EXEC="str2"
 
 # Here is the source code for the driver application
 cat > $MSRC << END
 #include <string.h>
 #include <stdio.h>
-#include <mstring.h>
+#include "src/str.h"
 
 int main()
 {
