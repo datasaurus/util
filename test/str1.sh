@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.1 $ $Date: 2009/12/23 01:34:17 $
+# $Revision: 1.2 $ $Date: 2009/12/23 02:31:00 $
 #
 ########################################################################
 
@@ -76,9 +76,8 @@ int main(void)
 END
 
 CFLAGS="-g -Wall -Wmissing-prototypes"
-if cc ${CFLAGS} -o str1 str1.c src/str.c src/err_msg.c src/alloc.c
+if ! cc ${CFLAGS} -o str1 str1.c src/str.c src/err_msg.c src/alloc.c
 then
-else
     echo 'Could not build str1 from str1.c'
     $RM str1.c str
     exit 1
