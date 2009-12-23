@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: $ $Date: $
+# $Revision: 1.1 $ $Date: 2009/12/23 01:34:17 $
 #
 ########################################################################
 
@@ -90,5 +90,5 @@ else
     echo 'Test application FAILED.'
 fi
 
-$RM str1.c str
+$RM str1.c str1
 echo 'Done with str1 test'
