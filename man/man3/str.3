@@ -4,7 +4,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.6 $ $Date: 2009/12/22 22:52:43 $
+.\" $Revision: 1.7 $ $Date: 2009/12/23 02:23:02 $
 .\"
 .TH str 3 "String manipulation functions"
 .SH NAME
@@ -13,7 +13,7 @@ Str_Esc, Str_Words \- manipulate strings
 .nf
 \fB#include "str.h"\fP
 \fBchar *Str_Esc(char *\fP\fIs\fP\fB);\fP
-\fBchar\fP ** \fBStr_Words\fP(\fBchar\fP *\fIln\fP, \fBchar\fP **\fIargv\fP, \fBsize_t\fP *\fIargc\fP);
+\fBchar\fP ** \fBStr_Words\fP(\fBchar\fP *\fIln\fP, \fBchar\fP **\fIargv\fP, \fBint\fP *\fIargc\fP);
 \fBchar\fP * \fBStr_GetLn\fP(\fBFILE\fP *\fIin\fP, \fBchar\fP \fIeol\fP, \fBchar\fP *\fIln\fP, \fBint\fP *\fIl_max\fP);
 .fi
 .SH DESCRIPTION
