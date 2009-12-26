@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.10 $ $Date: 2009/12/22 22:35:13 $
+   .	$Revision: 1.11 $ $Date: 2009/12/26 03:19:50 $
  */
 
 #include <stdlib.h>
@@ -81,7 +81,13 @@ char *Str_Esc(char *str)
     return str;
 }
 
-/* Grow v in function above */
+/*
+   Grow v in function below
+   v = array to grow
+   c = number of elements in use
+   cx = number of elements can be stored at v
+   If c + 1 > *cx, v is reallocated with more space.
+ */
 static char ** growv(char **v, int c, int *cx)
 {
     int cx2;			/* New value for cx when reallocating */
