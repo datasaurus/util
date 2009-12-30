@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.3 $ $Date: 2009/12/23 16:30:44 $
+# $Revision: 1.1 $ $Date: 2009/12/26 03:19:00 $
 #
 ########################################################################
 
@@ -30,24 +30,29 @@ int main(void)
     int n, n_words;
     char *s1[] = {
 	"Now is the time ...",
+	"Now is the time ... ",
 	" Now is the time ...",
+	" Now is the time ... ",
 	"I have a \"lovely bunch\" of coconuts.",
-	"I have a \"lovely bunch\"ling of coconuts.",
-	"I have a \"lovely bunch\"ling of coconuts.",
+	"I have a \"lovely bu\"nch of coconuts.",
+	"I have a lov\"ely bunch\" of coconuts.",
 	"I have \"\" coconuts.",
-	"", NULL
+	" ",
+	"\t",
+	"",
+	NULL
     };
     char **p;
 
     for (p = s1; *p; p++) {
 	strcpy(s, *p);
-	if ( !(words = Str_Words(s, NULL, &n_words)) ) {
+	if ( !(words = Str_Words(s, &n_words)) ) {
 	    printf("test %ld failed.\n%s\n", p - s1 + 1, Err_Get());
 	} else {
-	    printf("test %ld:\n\"%s\"\nFound %d words:\n",
+	    printf("test %ld: \"%s\" found %d words:\n",
 		    p - s1 + 1, s1[p - s1], n_words);
 	    for (n = 0; n < n_words; n++) {
-		printf("%s\n", words[n]);
+		printf("|%s|\n", words[n]);
 	    }
 	}
 	printf("\n");
