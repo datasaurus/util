@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.12 $ $Date: 2009/12/26 05:51:40 $
+   .	$Revision: 1.13 $ $Date: 2009/12/30 23:22:04 $
  */
 
 #include <stdlib.h>
@@ -174,14 +174,6 @@ error:
     return NULL;
 }
 
-/*
-   Copy n characters from src to dest + *l and append a nul.  At entry, dest
-   should point to storage for *lx characters.  If space is insufficient,
-   adjust allocation with REALLOC and update lx.  Return dest or new allocation
-   and update l with number of characters at dest, excluding the terminating nul.
-   If something goes wrong, return NULL and create error message that can be
-   retrieved with Err_Get.
- */
 char * Str_Append(char *dest, size_t *l, size_t *lx, char *src, size_t n)
 {
     char *t;
