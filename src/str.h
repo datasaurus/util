@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.6 $ $Date: 2009/12/22 21:44:48 $
+   .	$Revision: 1.7 $ $Date: 2009/12/22 22:35:34 $
  */
 
 #ifndef STR_H_
@@ -17,7 +17,8 @@
 #include <stdlib.h>
 
 char *Str_Esc(char *s);
-char ** Str_Words(char *, char **, int *);
+char ** Str_Words(char *, int *);
+char * Str_Append(char *, size_t *, size_t *, char *, size_t);
 char* Str_GetLn(FILE *, char, char *, int *);
     
 #endif
