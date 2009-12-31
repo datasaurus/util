@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.14 $ $Date: 2009/12/31 00:48:23 $
+   .	$Revision: 1.15 $ $Date: 2009/12/31 02:35:25 $
  */
 
 #include <stdlib.h>
@@ -198,56 +198,45 @@ char * Str_Append(char *dest, size_t *l, size_t *lx, char *src, size_t n)
     return dest;
 }
 
-char * Str_GetLn(FILE *in, char eol, char *ln, int *l_max)
+int Str_GetLn(FILE *in, char eol, char **ln, int *l_max)
 {
-    int new_ln;			/* If true, this function creates a new
-				 * allocation at ln.  Otherwise, is works
-				 * with a passed in allocation */
-    int m;
-    int c;
-    int nc;			/* Number of characters in ln */
-    char *l;			/* Pointer into line */
+    int new_ln;			/* If true, will create new allocation */
+    int i;			/* Input character */
+    char c;			/* Input character */
+    char *t, *t1;		/* Input line*/
+    size_t n;			/* Number of characters in ln */
+    size_t nx;			/* Temporarily hold value for *l_max */
 
-    if ( !ln ) {
-	*l_max = 4;
-	if ( !(ln = (char *)MALLOC((size_t)*l_max)) ) {
+    if ( !*ln ) {
+	nx = 4;
+	if ( !(t = (char *)MALLOC((size_t)nx)) ) {
 	    Err_Append("Could not allocate memory for line.  ");
-	    return NULL;
+	    return 0;
 	}
 	new_ln = 1;
     } else {
+	t = *ln;
+	nx = *l_max;
 	new_ln = 0;
     }
-    for (l = ln, nc = 0; (c = fgetc(in)) != EOF && c != eol; l++, nc++) {
-	if (nc + 1 > *l_max) {
-	    m = 2 * *l_max;
-	    if (m > INT_MAX || !(ln = (char *)REALLOC(ln, (size_t)m)) ) {
-		Err_Append("Could not reallocate memory for line.  ");
-		return NULL;
-	    }
-	    l = ln + nc;
-	    *l_max = m;
+    n = 0;
+    while ( (i = fgetc(in)) != EOF && (i != eol) ) {
+	c = i;
+	if ( !(t1 = Str_Append(t, &n, &nx, &c, (size_t)1)) ) {
+	    FREE(t);
+	    Err_Append("Could not append input character to string.  ");
+	    return 0;
 	}
-	*l = (char)c;
+	t = t1;
     }
-    if (nc == 0 && feof(in) && new_ln) {
-	FREE(ln);
+    if ( !(*ln = (char *)REALLOC(t, (size_t)(n + 1))) ) {
+	FREE(t);
+	*ln = NULL;
 	*l_max = 0;
-	return NULL;
-    }
-    if (nc + 1 > *l_max) {
-	m = *l_max + 1;
-	if (m > INT_MAX || !(ln = (char *)REALLOC(ln, (size_t)m)) ) {
-	    Err_Append("Could not reallocate memory for line.  ");
-	    return NULL;
-	}
-	l = ln + nc;
-    }
-    *l = '\0';
-    *l_max = nc + 1;
-    if (*l_max > INT_MAX || !(ln = (char *)REALLOC(ln, (size_t)*l_max)) ) {
 	Err_Append("Could not reallocate memory for line.  ");
-	return NULL;
+	return 0;
     }
-    return ln;
+    *(*ln + n) = '\0';
+    *l_max = n + 1;
+    return feof(in) ? EOF : 1;
 }

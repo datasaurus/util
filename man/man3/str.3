@@ -4,7 +4,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.11 $ $Date: 2009/12/31 01:00:32 $
+.\" $Revision: 1.12 $ $Date: 2009/12/31 02:38:21 $
 .\"
 .TH str 3 "String manipulation functions"
 .SH NAME
@@ -15,7 +15,7 @@ Str_Esc, Str_Words \- manipulate strings
 \fBchar *Str_Esc(char *\fP\fIs\fP\fB);\fP
 \fBchar\fP ** \fBStr_Words\fP(\fBchar\fP *\fIln\fP, \fBint\fP *\fIargc\fP);
 \fBchar\fP * \fBStr_Append\fP(\fBchar\fP *\fIdest\fP, \fBsize_t\fP *\fIl\fP, \fBsize_t\fP *\fIlx\fP, \fBchar\fP *\fIsrc\fP, \fBsize_t\fP \fIn\fP);
-\fBchar\fP * \fBStr_GetLn\fP(\fBFILE\fP *\fIin\fP, \fBchar\fP \fIeol\fP, \fBchar\fP *\fIln\fP, \fBint\fP *\fIl_max\fP);
+\fBint\fP \fBStr_GetLn\fP(\fBFILE\fP *\fIin\fP, \fBchar\fP \fIeol\fP, \fBchar\fP **\fIln\fP, \fBint\fP *\fIl_max\fP);
 .fi
 .SH DESCRIPTION
 \fBStr_Esc\fP replaces escape sequences in \fIs\fP with their corresponding ASCII
@@ -72,20 +72,20 @@ something goes wrong, \fBStr_Append\fP returns \fBNULL\fP.  Calling \fBErr_Get\f
 will retrieve an error message.
 
 \fBStr_GetLn\fP reads characters from input stream \fIin\fP until it encounters
-end of line character \fIeol\fP.  The resulting string is returned, with a
-\fBnul\fP terminator instead of the end of line character, and the allocation size,
-including the terminating \fBnul\fP, is stored at \fIl_max\fP.
-If, upon entry, \fIln\fP is \fBNULL\fP, the string will be returned in a new
+end of line character \fIeol\fP or end of file.  The resulting string is placed
+at *\fIln\fP with a \fBnul\fP terminator instead of the end of line character, and
+the allocation size, including the terminating \fBnul\fP, is stored at \fIl_max\fP.
+If, upon entry, *\fIln\fP is \fBNULL\fP, the string will be returned in a new
 allocation.  The memory should eventually be freed with a call to \fBFREE\fP.
-If \fIln\fP is not \fBNULL\fP, it is assumed to point to storage for
+If *\fIln\fP is not \fBNULL\fP, it is assumed to point to storage for
 *\fIl_max\fP\ +\ \fB1\fP characters, allocated with \fBMALLOC\fP, \fBCALLOC\fP,
 or \fBREALLOC\fP.  \fBStr_GetLn\fP will store characters at the given memory,
 clobbering any previous contents.  If it encounters more than
 *\fIl_max\fP\ -\ \fB1\fP characters, it will increase the allocation with
-\fBREALLOC\fP and update *\fIl_max\fP.
-If something goes wrong, \fBStr_GetLn\fP returns \fBNULL\fP, and leaves an
-error message that \fBErr_Get\fP can retrieve.  If a non-\fBNULL\fP \fIln\fP
-was given, it may have been modified.
+\fBREALLOC\fP and update *\fIl_max\fP.  If \fBStr_GetLn\fP encounters \fIeol\fP,
+it returns \fB1\fP.  If it encounters end of file, if returns \fBEOF\fP.
+If something goes wrong, \fBStr_GetLn\fP returns \fB0\fP, and leaves an
+error message that \fBErr_Get\fP can retrieve.
 .SH SEE ALSO
 alloc (3), err_msg (3)
 .SH AUTHOR
