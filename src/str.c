@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.13 $ $Date: 2009/12/30 23:22:04 $
+   .	$Revision: 1.14 $ $Date: 2009/12/31 00:48:23 $
  */
 
 #include <stdlib.h>
@@ -180,13 +180,18 @@ char * Str_Append(char *dest, size_t *l, size_t *lx, char *src, size_t n)
     size_t lx2;
 
     lx2 = *l + n + 1;
-    if ( lx2 > *lx ) {
-	if ( !(t = REALLOC(dest, lx2)) ) {
+    if ( *lx < lx2 ) {
+	size_t tx = *lx;
+
+	while (tx < lx2) {
+	    tx = (tx * 3) / 2 + 4;
+	}
+	if ( !(t = REALLOC(dest, tx)) ) {
 	    Err_Append("Could not grow string for appending.  ");
 	    return NULL;
 	}
 	dest = t;
-	*lx = lx2;
+	*lx = tx;
     }
     strncpy(dest + *l, src, n);
     *l += n;
