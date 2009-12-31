@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.1 $ $Date: 2009/12/31 02:22:04 $
+# $Revision: 1.1 $ $Date: 2009/12/31 04:59:07 $
 #
 ########################################################################
 
@@ -28,12 +28,13 @@ int main(void)
 {
     char *s = NULL;
     int l_max = 0;
+    int status;
 
-    while ( Str_GetLn(stdin, '\n', &s, &l_max) && !feof(stdin) ) {
+    while ( (status = Str_GetLn(stdin, '\n', &s, &l_max)) == 1 ) {
 	printf("%s\n", s);
     }
     FREE(s);
-    if ( !feof(stdin) ) {
+    if ( !status ) {
 	fprintf(stderr, "Str_GetLn failed.\n%s\n", Err_Get());
 	exit(EXIT_FAILURE);
     }
@@ -70,8 +71,6 @@ else
     echo "String driver failed!"
     exit 1
 fi
-echo ""
-
 echo "Checking memory trace (will not say anything if no leaks)"
 src/chkalloc < memtrace
 echo "Memory check done"
@@ -98,12 +97,33 @@ else
     echo "String driver failed!"
     exit 1
 fi
-echo ""
-
 echo "Checking memory trace (will not say anything if no leaks)"
 src/chkalloc < memtrace
 echo "Memory check done"
 echo "$0 done with test 2"
+echo ""
+
+# Test 3
+echo "$0: test 3"
+cat /dev/null > correct
+export MEM_DEBUG=2
+if ! ./str5 < correct > attempt 2> memtrace
+then
+    echo "Test application failed to run."
+    exit 1
+fi
+if diff correct attempt
+then
+    echo "Str_GetLn driver produced correct output."
+else
+    echo "String driver failed!"
+    exit 1
+fi
+echo "Checking memory trace (will not say anything if no leaks)"
+src/chkalloc < memtrace
+echo "Memory check done"
+echo "$0 done with test 3"
+echo ""
 
 $RM str5.c str5 correct attempt memtrace
 echo "Done with str5 test"
