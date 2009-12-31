@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.2 $ $Date: 2009/12/30 23:21:29 $
+# $Revision: 1.3 $ $Date: 2009/12/31 00:46:35 $
 #
 ########################################################################
 
@@ -151,7 +151,6 @@ fi
 if diff correct attempt
 then
     echo "string driver produced correct output"
-    $RM attempt hash
 else
     echo "string driver failed!"
     exit 1

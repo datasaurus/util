@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.3 $ $Date: 2009/12/31 00:46:35 $
+# $Revision: 1.1 $ $Date: 2009/12/31 02:22:04 $
 #
 ########################################################################
 
@@ -72,7 +72,6 @@ fi
 if diff correct attempt
 then
     echo "String append driver produced correct output."
-    $RM attempt hash
 else
     echo "String driver failed!"
     exit 1
