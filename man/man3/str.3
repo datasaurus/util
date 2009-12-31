@@ -4,7 +4,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.10 $ $Date: 2009/12/31 00:48:23 $
+.\" $Revision: 1.11 $ $Date: 2009/12/31 01:00:32 $
 .\"
 .TH str 3 "String manipulation functions"
 .SH NAME
@@ -62,11 +62,14 @@ Calling \fBErr_Get\fP will retrieve an error message.
 
 \fBStr_Append\fP copies \fIn\fP characters from \fIsrc\fP to \fIdest\ +\ *l\fP and
 appends a \fBnul\fP.  At entry, \fIdest\fP should point to storage for *\fIlx\fP
-characters.  If space is insufficient, it adjusts the allocation with \fBREALLOC\fP
-and updates \fIlx\fP.  Return value is \fIdest\fP or a new allocation.  Upon
-return, *\fIl\fP indicates the number of characters at \fIdest\fP, excluding the
-terminating \fBnul\fP.  If something goes wrong, \fBStr_Append\fP returns
-\fBNULL\fP.  Calling \fBErr_Get\fP will retrieve an error message.
+characters allocated by \fBMALLOC\fP, \fBCALLOC\fP, or \fBREALLOC\fP.  If space is
+insufficient, it adjusts the allocation with \fBREALLOC\fP and updates \fIlx\fP.
+To avoid excessive allocation adjustments, it usually allocates extra space at
+\fIdest\fP.
+Return value is \fIdest\fP or a new allocation.  Upon return, *\fIl\fP indicates
+the number of characters at \fIdest\fP, excluding the terminating \fBnul\fP.  If
+something goes wrong, \fBStr_Append\fP returns \fBNULL\fP.  Calling \fBErr_Get\fP
+will retrieve an error message.
 
 \fBStr_GetLn\fP reads characters from input stream \fIin\fP until it encounters
 end of line character \fIeol\fP.  The resulting string is returned, with a
