@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.16 $ $Date: 2009/12/31 05:21:51 $
+   .	$Revision: 1.17 $ $Date: 2010/01/04 21:11:30 $
  */
 
 #include <stdlib.h>
@@ -19,8 +19,6 @@
 #include "alloc.h"
 #include "err_msg.h"
 #include "str.h"
-
-static char ** growv(char **, int, int *);
 
 /* Largest possible number of elements in array of strings */
 static int mx = INT_MAX / (int)sizeof(char *);
@@ -81,31 +79,12 @@ char *Str_Esc(char *str)
     return str;
 }
 
-/* Grow v in function below */
-static char ** growv(char **v, int c, int *cx)
-{
-    int cx2;			/* New value for cx when reallocating */
-    size_t sz;			/* Temporary */
-    char **t;
-
-    if (c + 1 > *cx) {
-	cx2 = 2 * *cx;
-	sz = (size_t)cx2 * sizeof(char *);
-	if (cx2 > mx || !(t = (char **)REALLOC(v, sz)) ) {
-	    FREE(v);
-	    return NULL;
-	}
-	v = t;
-	*cx = cx2;
-    }
-    return v;
-}
-
 char ** Str_Words(char *ln, char **argv, int *argc)
 {
     char **v = NULL;		/* Array of words from ln. */
     char **t;			/* Temporary */
     int cx;			/* Number of words that can be stored at v */
+    int cx2;			/* New value for cx when reallocating */
     int c;			/* Number of words in ln */
     char *p, *q;		/* Pointers into ln */
     int inwd;			/* If true, p points into a word */
@@ -116,7 +95,6 @@ char ** Str_Words(char *ln, char **argv, int *argc)
 	cx = *argc;
 	if (cx < 2) {
 	    if ( !(t = (char **)REALLOC(v, 2 * sizeof(char *))) ) {
-		FREE(v);
 		*argc = -1;
 		Err_Append("Could not allocate word array.  ");
 		return NULL;
@@ -138,37 +116,42 @@ char ** Str_Words(char *ln, char **argv, int *argc)
 		*q++ = '\0';
 	    }
 	    inwd = 0;
-	} else if ( *p == '"' || *p == '\'' ) {
-	    char *e = strchr(p + 1, *p);
-
-	    if ( !e ) {
-		Err_Append("Unbalanced quote.  ");
-		FREE(v);
-		return NULL;
-	    }
-	    if ( !inwd ) {
-		/* Have found start of a new word */
-		if ( !(v = growv(v, c, &cx)) ) {
-		    Err_Append("Could not allocate word array.  ");
-		    return NULL;
-		}
-		v[c++] = q;
-		inwd = 1;
-	    }
-	    strncpy(q, p + 1, e - p - 1);
-	    q += e - p - 1;
-	    p = e;
 	} else {
 	    if ( !inwd ) {
 		/* Have found start of a new word */
-		if ( !(v = growv(v, c, &cx)) ) {
-		    Err_Append("Could not allocate word array.  ");
-		    return NULL;
+		if (c + 1 > cx) {
+		    cx2 = 3 * cx / 2 + 4;
+		    sz = (size_t)cx2 * sizeof(char *);
+		    if (cx2 > mx || !(t = (char **)REALLOC(v, sz)) ) {
+			FREE(v);
+			*argc = -1;
+			Err_Append("Could not allocate word array.  ");
+			return NULL;
+		    }
+		    v = t;
+		    cx = cx2;
 		}
 		v[c++] = q;
 		inwd = 1;
 	    }
-	    *q++ = *p;
+
+	    if ( *p == '"' || *p == '\'' ) {
+		/* Append run of characters bounded by quotes */
+		char *e = strchr(p + 1, *p);
+
+		if ( !e ) {
+		    Err_Append("Unbalanced quote.  ");
+		    FREE(v);
+		    *argc = -1;
+		    return NULL;
+		}
+		strncpy(q, p + 1, e - p - 1);
+		q += e - p - 1;
+		p = e;
+	    } else {
+		/* Append character */
+		*q++ = *p;
+	    }
 	}
     }
     *q = '\0';
@@ -225,7 +208,7 @@ int Str_GetLn(FILE *in, char eol, char **ln, int *l_max)
 	    return 0;
 	}
 	new_ln = 1;
-    } else {
+	} else {
 	t = *ln;
 	nx = *l_max;
 	new_ln = 0;

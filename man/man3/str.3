@@ -4,7 +4,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.13 $ $Date: 2009/12/31 05:21:51 $
+.\" $Revision: 1.14 $ $Date: 2010/01/04 21:06:23 $
 .\"
 .TH str 3 "String manipulation functions"
 .SH NAME
@@ -68,9 +68,9 @@ If \fIargv\fP is not \fBNULL\fP, it should point to an allocation made with
 with \fBREALLOC\fP and update *\fIargc\fP if it finds more than *\fIargc\fP words.
 The (possibly new) allocation is returned.
 
-If something goes wrong, return value is \fBNULL\fP, and calling \fBErr_Get\fP
-will retrieve an error message.  If \fIargv\fP initially pointed to an allocation,
-it will still be allocated, but contents might be changed.
+If something goes wrong, \fBNULL\fP is returned, \fIargv\fP is freed,
+and \fI*argc\fP is set to \fB-1\fP.
+\fBErr_Get\fP will retrieve an error message.
 
 \fBStr_Append\fP copies \fIn\fP characters from \fIsrc\fP to \fIdest\ +\ *l\fP and
 appends a \fBnul\fP.  At entry, \fIdest\fP should point to storage for *\fIlx\fP
