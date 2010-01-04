@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.3 $ $Date: 2009/12/31 00:46:35 $
+# $Revision: 1.4 $ $Date: 2009/12/31 02:46:13 $
 #
 ########################################################################
 
@@ -44,9 +44,10 @@ int main(void)
     };
     char **p;
 
+    words = NULL;
     for (p = s1; *p; p++) {
 	strcpy(s, *p);
-	if ( !(words = Str_Words(s, &n_words)) ) {
+	if ( !(words = Str_Words(s, words, &n_words)) ) {
 	    printf("test %ld failed.\n%s\n", p - s1 + 1, Err_Get());
 	    exit(EXIT_FAILURE);
 	} else {
@@ -57,8 +58,9 @@ int main(void)
 	    }
 	}
 	printf("\n");
-	FREE(words);
+	n_words = 0;
     }
+    FREE(words);
 
     return 0;
 }
