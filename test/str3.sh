@@ -8,13 +8,14 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.6 $ $Date: 2010/01/05 15:18:25 $
+# $Revision: 1.7 $ $Date: 2010/01/05 15:21:09 $
 #
 ########################################################################
 
 # This is the remove command.  Change this to : to retain intermediate results.
 
 RM=${RM:-'rm -f'}
+CHKALLOC=src/chkalloc
 
 # Test application
 cat > str3.c << END
@@ -52,7 +53,7 @@ int main(void)
     for (p = s1; *p; p++) {
 	strcpy(s, *p);
 	if ( !(words = Str_Words(s, words, &n_words)) ) {
-	    printf("test %ld failed.\n%s\n", p - s1 + 1, Err_Get());
+	    printf("Test failed for string %ld.\n%s\n", p - s1 + 1, Err_Get());
 	    exit(EXIT_FAILURE);
 	} else {
 	    printf("test %ld: \"%s\" found %d words:\n",
@@ -156,14 +157,14 @@ normal run
 export MEM_DEBUG=2
 if ! ./str3 > attempt 2> memtrace
 then
-    echo 'Test application failed to run.'
+    echo 'Test application FAILED to run.'
     exit 1
 fi
 if diff correct attempt
 then
     echo "string driver produced correct output"
 else
-    echo "string driver failed!"
+    echo "string driver FAILED!"
     exit 1
 fi
 echo ""
@@ -196,7 +197,7 @@ do
     echo "Simulating memory failure at $l."
     if ./str3 > /dev/null 2>&1
     then
-	echo "str3 ran normally when it should have failed at $MEM_FAIL"
+	echo "FAIL: str3 ran normally when it should have failed at $MEM_FAIL"
 	result3=fail
     else
 	echo "str3 failed as expected for failure at $MEM_FAIL"
@@ -223,16 +224,16 @@ do
 	status=$?
 	if [ $status -eq 1 ]
 	then
-	    echo "str3 leaks when simulating failure at $MEM_FAIL"
-	    result4=fail
+	    echo "FAIL: str3 leaks when simulating failure at $MEM_FAIL"
+	    result4=FAIL
 	elif [ $status -eq 2 ]
 	then
-	    printf "%s%s\n" "chkalloc did not receive input from str3" \
+	    printf "%s%s\n" "FAIL: chkalloc did not receive input from str3" \
 		    " when simulating failure at $MEM_FAIL"
-	    result4=fail
+	    result4=FAIL
 	else
-	    echo "chkalloc returned unknown value $status"
-	    result4=fail
+	    echo "FAIL: chkalloc returned unknown value $status"
+	    result4=FAIL
 	fi
     fi
     unset MEM_FAIL
