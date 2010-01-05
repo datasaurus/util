@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.17 $ $Date: 2010/01/04 21:11:30 $
+   .	$Revision: 1.18 $ $Date: 2010/01/04 22:14:47 $
  */
 
 #include <stdlib.h>
@@ -94,7 +94,7 @@ char ** Str_Words(char *ln, char **argv, int *argc)
 	v = argv;
 	cx = *argc;
 	if (cx < 2) {
-	    if ( !(t = (char **)REALLOC(v, 2 * sizeof(char *))) ) {
+	    if ( !(t = (char **)REALLOC(v, 2 * sizeof(char *))) ) {	/* re */
 		*argc = -1;
 		Err_Append("Could not allocate word array.  ");
 		return NULL;
@@ -104,7 +104,7 @@ char ** Str_Words(char *ln, char **argv, int *argc)
 	}
     } else {
 	cx = 2;
-	if ( !(v = (char **)CALLOC((size_t)cx, sizeof(char *))) ) {
+	if ( !(v = (char **)CALLOC((size_t)cx, sizeof(char *))) ) {	/* new */
 	    *argc = -1;
 	    Err_Append("Could not allocate word array.  ");
 	    return NULL;
