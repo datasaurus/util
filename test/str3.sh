@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.7 $ $Date: 2010/01/05 15:21:09 $
+# $Revision: 1.8 $ $Date: 2010/01/05 15:58:22 $
 #
 ########################################################################
 
@@ -148,12 +148,12 @@ then
     exit 1
 fi
 
+echo "########################################################################"
+
 # Normal run, checking for leaks with chkalloc.  See alloc (3) and chkalloc (3).
 echo "
-################################################################################
 test1
-normal run
-"
+normal run"
 export MEM_DEBUG=2
 if ! ./str3 > attempt 2> memtrace
 then
@@ -162,57 +162,58 @@ then
 fi
 if diff correct attempt
 then
-    echo "string driver produced correct output"
+    echo "String driver produced correct output"
 else
-    echo "string driver FAILED!"
+    echo "String driver FAILED!"
     exit 1
 fi
-echo ""
 
 echo 'Checking memory trace (will not say anything if no leaks)'
 src/chkalloc < memtrace
 echo 'Memory check done'
-echo "
-Done with test1
-################################################################################
+echo "Done with test1
 "
 
 # The next tests simulate memory failures at lines where source code for Str_Words
 # invokes a memory allocator.  These lines are stored in ll, which will
 # be assigned to MEM_FAIL in the tests.
-#
-# This test will not simulate failure in err_msg.c because the driver
-# application does not allocate memory for error messages.
-echo "test2
-Simulating memory failures."
+
 ll=`awk '{printf "%d %s\n", ++i, $0}' ../src/str.c	\
    | grep -v '/\* new \*/'				\
    | awk '/Str_Words/, /^[0-9]+ }/'			\
    | awk '/ALLOC/ {printf "src/str.c:%d\n", $1}'`
 
-result3=success
+echo "########################################################################"
+
+# Check for exit with failure status when an allocator fails.
+echo "
+test2
+Simulating memory failures."
+result2=success
 for l in $ll
 do
     export MEM_FAIL=$l
-    echo "Simulating memory failure at $l."
     if ./str3 > /dev/null 2>&1
     then
-	echo "FAIL: str3 ran normally when it should have failed at $MEM_FAIL"
-	result3=fail
+	echo "FAIL: String driver ran normally instead of failing at $MEM_FAIL"
+	result2=fail
     else
-	echo "str3 failed as expected for failure at $MEM_FAIL"
+	echo "String driver failed as expected for failure at $MEM_FAIL"
     fi
     unset MEM_FAIL
 done
-echo "test2 result = $result3
+echo "test2 result = $result2
 All done with test2
-
-################################################################################
 "
 
-echo "test3: repeat test2 with memory tracing."
+echo "########################################################################"
+
+# Check for memory leaks at when an allocator fails.
+echo "
+test3
+Repeat test2 with memory tracing."
 export MEM_DEBUG=3
-result4=success
+result3=success
 for l in $ll
 do
     export MEM_FAIL=$l
@@ -225,25 +226,27 @@ do
 	if [ $status -eq 1 ]
 	then
 	    echo "FAIL: str3 leaks when simulating failure at $MEM_FAIL"
-	    result4=FAIL
+	    result3=FAIL
 	elif [ $status -eq 2 ]
 	then
 	    printf "%s%s\n" "FAIL: chkalloc did not receive input from str3" \
 		    " when simulating failure at $MEM_FAIL"
-	    result4=FAIL
+	    result3=FAIL
 	else
 	    echo "FAIL: chkalloc returned unknown value $status"
-	    result4=FAIL
+	    result3=FAIL
 	fi
     fi
     unset MEM_FAIL
 done
 unset MEM_DEBUG
-echo "test3 result=$result4
+echo "test3 result=$result3
 All done with test3
-
-################################################################################
 "
 
+echo "########################################################################"
+
 $RM str3.c str3 attempt correct memtrace
-echo 'Done with str3 test'
+echo "
+Done with str3 test
+"
