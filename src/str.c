@@ -8,12 +8,13 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.20 $ $Date: 2010/01/05 15:52:25 $
+   .	$Revision: 1.21 $ $Date: 2010/01/05 19:04:53 $
  */
 
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <errno.h>
 #include <ctype.h>
 #include <limits.h>
 #include "alloc.h"
@@ -230,5 +231,12 @@ int Str_GetLn(FILE *in, char eol, char **ln, int *l_max)
     }
     *(*ln + n) = '\0';
     *l_max = n + 1;
-    return feof(in) ? EOF : 1;
+    if ( ferror(in) ) {
+	Err_Append(strerror(errno));
+	return 0;
+    } else if ( feof(in) ) {
+	return EOF;
+    } else {
+	return 1;
+    }
 }
