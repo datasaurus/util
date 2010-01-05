@@ -1,14 +1,14 @@
 #!/bin/sh
 #
 #- str5.sh --
-#	This script tests the Str_Append function in the str interface.
+#	This script tests the Str_GetLn function in the str interface.
 #-
 # Copyright (c) 2009 Gordon D. Carrie
 # All rights reserved
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.1 $ $Date: 2009/12/31 04:59:07 $
+# $Revision: 1.2 $ $Date: 2009/12/31 05:13:52 $
 #
 ########################################################################
 
@@ -26,16 +26,22 @@ cat > str5.c << END
 
 int main(void)
 {
-    char *s = NULL;
-    int l_max = 0;
+    char *s;
+    int l_max;
     int status;
 
+    s = NULL;
+    l_max = 0;
     while ( (status = Str_GetLn(stdin, '\n', &s, &l_max)) == 1 ) {
 	printf("%s\n", s);
     }
     FREE(s);
-    if ( !status ) {
+    if ( status == 0 ) {
 	fprintf(stderr, "Str_GetLn failed.\n%s\n", Err_Get());
+	exit(EXIT_FAILURE);
+    }
+    if ( status != EOF  ) {
+	fprintf(stderr, "Str_GetLn terminated before end of input.\n");
 	exit(EXIT_FAILURE);
     }
 
@@ -52,21 +58,23 @@ then
     exit 1
 fi
 
+echo "########################################################################"
+
 # Test 1
 echo "$0: test 1"
-cat > correct << END
+cat > correct1 << END
 line 1
 line 2
 END
 export MEM_DEBUG=2
-if ! ./str5 < correct > attempt 2> memtrace
+if ! ./str5 < correct1 > attempt 2> memtrace
 then
     echo "Test application failed to run."
     exit 1
 fi
-if diff correct attempt
+if diff correct1 attempt
 then
-    echo "Str_GetLn driver produced correct output."
+    echo "Str_GetLn driver produced correct1 output."
 else
     echo "String driver failed!"
     exit 1
@@ -76,23 +84,25 @@ src/chkalloc < memtrace
 echo "Memory check done"
 echo "$0 done with test 1"
 echo ""
-$RM correct attempt memtrace
+$RM attempt memtrace
+
+echo "########################################################################"
 
 # Test 2
 echo "$0: test 2"
-cat > correct << END
+cat > correct2 << END
 line 1
 
 END
 export MEM_DEBUG=2
-if ! ./str5 < correct > attempt 2> memtrace
+if ! ./str5 < correct2 > attempt 2> memtrace
 then
     echo "Test application failed to run."
     exit 1
 fi
-if diff correct attempt
+if diff correct2 attempt
 then
-    echo "Str_GetLn driver produced correct output."
+    echo "Str_GetLn driver produced correct2 output."
 else
     echo "String driver failed!"
     exit 1
@@ -102,19 +112,22 @@ src/chkalloc < memtrace
 echo "Memory check done"
 echo "$0 done with test 2"
 echo ""
+$RM attempt memtrace
+
+echo "########################################################################"
 
 # Test 3
 echo "$0: test 3"
-cat /dev/null > correct
+cat /dev/null > correct3
 export MEM_DEBUG=2
-if ! ./str5 < correct > attempt 2> memtrace
+if ! ./str5 < correct3 > attempt 2> memtrace
 then
     echo "Test application failed to run."
     exit 1
 fi
-if diff correct attempt
+if diff correct3 attempt
 then
-    echo "Str_GetLn driver produced correct output."
+    echo "Str_GetLn driver produced correct3 output."
 else
     echo "String driver failed!"
     exit 1
@@ -124,6 +137,81 @@ src/chkalloc < memtrace
 echo "Memory check done"
 echo "$0 done with test 3"
 echo ""
+$RM attempt memtrace
 
-$RM str5.c str5 correct attempt memtrace
+# The next tests simulate memory failures at lines where source code for Str_Words
+# invokes a memory allocator.  These lines are stored in ll, which will
+# be assigned to MEM_FAIL in the tests.
+
+CHKALLOC=src/chkalloc
+ll=`( awk '{printf "%d %s\n", ++i, $0}' ../src/str.c	\
+	| awk '/char *\* *Str_Append/, /^[0-9]+ }/';
+	awk '{printf "%d %s\n", ++i, $0}' ../src/str.c	\
+	| awk '/int *Str_GetLn/, /^[0-9]+ }/' )		\
+   | awk '/ALLOC/ {printf "src/str.c:%d\n", $1}'`
+
+echo "########################################################################"
+
+# Check for exit with failure status when an allocator fails.
+echo "
+test2
+Simulating memory failures."
+result2=success
+for l in $ll
+do
+    export MEM_FAIL=$l
+    if ./str5 < correct1 > /dev/null 2>&1
+    then
+	echo "FAIL: String driver ran normally instead of failing at $MEM_FAIL"
+	result2=fail
+    else
+	echo "String driver failed as expected for failure at $MEM_FAIL"
+    fi
+    unset MEM_FAIL
+done
+echo "test2 result = $result2
+All done with test2
+"
+
+echo "########################################################################"
+
+# Check for memory leaks at when an allocator fails.
+echo "
+test3
+Repeat test2 with memory tracing."
+export MEM_DEBUG=3
+result3=success
+for l in $ll
+do
+    export MEM_FAIL=$l
+    echo "Simulating memory failure at $l."
+    if ./str5 < correct1 3>&1 > /dev/null 2>&1 | $CHKALLOC
+    then
+	echo "str5 exits without leaks when simulating failure at $MEM_FAIL"
+    else
+	status=$?
+	if [ $status -eq 1 ]
+	then
+	    echo "FAIL: str5 leaks when simulating failure at $MEM_FAIL"
+	    result3=FAIL
+	elif [ $status -eq 2 ]
+	then
+	    printf "%s%s\n" "FAIL: chkalloc did not receive input from str5" \
+		    " when simulating failure at $MEM_FAIL"
+	    result3=FAIL
+	else
+	    echo "FAIL: chkalloc returned unknown value $status"
+	    result3=FAIL
+	fi
+    fi
+    unset MEM_FAIL
+done
+unset MEM_DEBUG
+echo "test3 result=$result3
+All done with test3
+"
+
+echo "########################################################################"
+
+$RM str5.c str5 correct* attempt memtrace
 echo "Done with str5 test"
