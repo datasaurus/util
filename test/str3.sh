@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.5 $ $Date: 2010/01/04 21:06:23 $
+# $Revision: 1.6 $ $Date: 2010/01/05 15:18:25 $
 #
 ########################################################################
 
@@ -45,7 +45,7 @@ int main(void)
     char **p;
 
     n_words = 1;
-    if ( !(words = MALLOC((n_words + 1) * sizeof(char *))) ) {
+    if ( !(words = CALLOC((n_words + 1), sizeof(char *))) ) {
 	fprintf(stderr, "Could not initialize words array.\n");
 	exit(1);
     }
