@@ -4,7 +4,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.14 $ $Date: 2010/01/04 21:06:23 $
+.\" $Revision: 1.15 $ $Date: 2010/01/04 22:14:47 $
 .\"
 .TH str 3 "String manipulation functions"
 .SH NAME
@@ -96,8 +96,8 @@ clobbering any previous contents.  If it encounters more than
 *\fIl_max\fP\ -\ \fB1\fP characters, it will increase the allocation with
 \fBREALLOC\fP and update *\fIl_max\fP.  If \fBStr_GetLn\fP encounters \fIeol\fP,
 it returns \fB1\fP.  If it encounters end of file, if returns \fBEOF\fP.
-If something goes wrong, \fBStr_GetLn\fP returns \fB0\fP, and leaves an
-error message that \fBErr_Get\fP can retrieve.
+If something goes wrong, \fBStr_GetLn\fP, frees *\fIln\fP returns \fB0\fP, and
+leaves an error message that \fBErr_Get\fP can retrieve.
 .SH SEE ALSO
 alloc (3), err_msg (3)
 .SH AUTHOR
