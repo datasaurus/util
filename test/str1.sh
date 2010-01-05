@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.2 $ $Date: 2009/12/23 02:31:00 $
+# $Revision: 1.3 $ $Date: 2009/12/23 16:30:44 $
 #
 ########################################################################
 
@@ -31,6 +31,7 @@ int main(void)
     printf("Before escape s has %lu chars.\n", strlen(s));
     Str_Esc(s);
     printf("After escape s has %lu chars.\n", strlen(s));
+    status = EXIT_SUCCESS;
     if (s[0] != '\a') {
 	printf("\a did not escape.\n");
 	status = EXIT_FAILURE;;
