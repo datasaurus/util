@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.2 $ $Date: 2009/12/31 02:46:13 $
+# $Revision: 1.3 $ $Date: 2010/01/05 17:02:04 $
 #
 ########################################################################
 
@@ -108,7 +108,7 @@ result2=success
 for l in $ll
 do
     export MEM_FAIL=$l
-    if ./str3 > /dev/null 2>&1
+    if ./str4 > /dev/null 2>&1
     then
 	echo "FAIL: String driver ran normally instead of failing at $MEM_FAIL"
 	result2=fail
@@ -133,18 +133,18 @@ for l in $ll
 do
     export MEM_FAIL=$l
     echo "Simulating memory failure at $l."
-    if ./str3 3>&1 > /dev/null 2>&1 | $CHKALLOC
+    if ./str4 3>&1 > /dev/null 2>&1 | $CHKALLOC
     then
-	echo "str3 exits without leaks when simulating failure at $MEM_FAIL"
+	echo "str4 exits without leaks when simulating failure at $MEM_FAIL"
     else
 	status=$?
 	if [ $status -eq 1 ]
 	then
-	    echo "FAIL: str3 leaks when simulating failure at $MEM_FAIL"
+	    echo "FAIL: str4 leaks when simulating failure at $MEM_FAIL"
 	    result3=FAIL
 	elif [ $status -eq 2 ]
 	then
-	    printf "%s%s\n" "FAIL: chkalloc did not receive input from str3" \
+	    printf "%s%s\n" "FAIL: chkalloc did not receive input from str4" \
 		    " when simulating failure at $MEM_FAIL"
 	    result3=FAIL
 	else
@@ -162,4 +162,4 @@ All done with test3
 echo "########################################################################"
 
 $RM str4.c str4 attempt correct memtrace
-echo 'Done with str3 test'
+echo 'Done with str4 test'
