@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.19 $ $Date: 2010/01/05 15:15:46 $
+   .	$Revision: 1.20 $ $Date: 2010/01/05 15:52:25 $
  */
 
 #include <stdlib.h>
@@ -195,10 +195,9 @@ char * Str_Append(char *dest, size_t *l, size_t *lx, char *src, size_t n)
 
 int Str_GetLn(FILE *in, char eol, char **ln, int *l_max)
 {
-    int new_ln;			/* If true, will create new allocation */
     int i;			/* Input character */
     char c;			/* Input character */
-    char *t, *t1;		/* Input line*/
+    char *t, *t1;		/* Input line */
     size_t n;			/* Number of characters in ln */
     size_t nx;			/* Temporarily hold value for *l_max */
 
@@ -208,11 +207,9 @@ int Str_GetLn(FILE *in, char eol, char **ln, int *l_max)
 	    Err_Append("Could not allocate memory for line.  ");
 	    return 0;
 	}
-	new_ln = 1;
-	} else {
+    } else {
 	t = *ln;
 	nx = *l_max;
-	new_ln = 0;
     }
     n = 0;
     while ( (i = fgetc(in)) != EOF && (i != eol) ) {
