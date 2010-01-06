@@ -4,7 +4,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.16 $ $Date: 2010/01/05 19:05:50 $
+.\" $Revision: 1.17 $ $Date: 2010/01/06 16:32:03 $
 .\"
 .TH str 3 "String manipulation functions"
 .SH NAME
@@ -80,8 +80,10 @@ To avoid excessive allocation adjustments, it usually allocates extra space at
 \fIdest\fP.
 Return value is \fIdest\fP or a new allocation.  Upon return, *\fIl\fP indicates
 the number of characters at \fIdest\fP, excluding the terminating \fBnul\fP.  If
-something goes wrong, \fBStr_Append\fP returns \fBNULL\fP.  Calling \fBErr_Get\fP
-will retrieve an error message.
+something goes wrong, \fBStr_Append\fP returns \fBNULL\fP.  Callers that provide
+a non-\fBNULL\fP \fIdest\fP should not assign the return value to \fIdest\fP
+until the caller has verified a valid return value.  (This is similar to using
+realloc.) Calling \fBErr_Get\fP will retrieve an error message.
 
 \fBStr_GetLn\fP reads characters from input stream \fIin\fP until it encounters
 end of line character \fIeol\fP or end of file.  The resulting string is placed
