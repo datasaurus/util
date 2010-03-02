@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.12 $ $Date: 2009/09/25 21:33:13 $
+# $Revision: 1.13 $ $Date: 2009/10/07 17:06:47 $
 #
 ########################################################################
 
@@ -29,10 +29,10 @@ void hash_print(struct Hash_Tbl *tblP, char *key);
 
 void hash_print(struct Hash_Tbl *tblP, char *key)
 {
-    unsigned n;
+    unsigned long n;
 
-    if (Hash_Get(tblP, key, &n)) {
-	printf("%s -> %d\n", key, n);
+    if ( (n = (unsigned long)Hash_Get(tblP, key)) ) {
+	printf("%s -> %lu\n", key, n);
     } else {
 	fprintf(stderr, "Entry for %s disappeared from table.\n", "foo");
     }
@@ -50,10 +50,10 @@ int main(void)
 	fprintf(stderr, "Could not initialize hash table.\n");
 	fprintf(stderr, "%s\n", Err_Get());
     }
-    if ( !Hash_Set(&tbl, "foo", 0)
-	    || !Hash_Set(&tbl, "bar", 1)
-	    || !Hash_Set(&tbl, "hello", 10)
-	    || !Hash_Set(&tbl, "world", 11) ) {
+    if ( !Hash_Set(&tbl, "foo", (void *)1)
+	    || !Hash_Set(&tbl, "bar", (void *)2)
+	    || !Hash_Set(&tbl, "hello", (void *)10)
+	    || !Hash_Set(&tbl, "world", (void *)11) ) {
 	fprintf(stderr, "Failed to set values in hash table.\n");
 	fprintf(stderr, "%s\n", Err_Get());
     }
@@ -62,7 +62,7 @@ int main(void)
     }
 
     printf("Modifying table.\n");
-    if ( !Hash_Set(&tbl, "bar", 2) ) {
+    if ( !Hash_Set(&tbl, "bar", (void *)4) ) {
 	fprintf(stderr, "Failed to set value in hash table.\n");
 	fprintf(stderr, "%s\n", Err_Get());
     }
@@ -78,13 +78,13 @@ END
 # Output from the application should match the contents of file correct.
 
 cat << END > correct
-foo -> 0
-bar -> 1
+foo -> 1
+bar -> 2
 hello -> 10
 world -> 11
 Modifying table.
-foo -> 0
-bar -> 2
+foo -> 1
+bar -> 4
 hello -> 10
 world -> 11
 END
