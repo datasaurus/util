@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.12 $ $Date: 2009/10/01 21:43:46 $
+# $Revision: 1.13 $ $Date: 2009/10/07 17:06:47 $
 #
 ########################################################################
 
@@ -55,13 +55,14 @@ cat > hash4.c << END
 #include <hash.h>
 
 char keys[$NWORD][$LMAX];
+int indeces[$NWORD];
 
 int main(void)
 {
     struct Hash_Tbl tbl;
     char *word_fl = "$WORD_FL";
     FILE *in;
-    unsigned n;
+    int n, *np;
     char key[$LMAX];
 
     fprintf(stderr, "Running hash driver with %d buckets for %d words.\n",
@@ -72,7 +73,8 @@ int main(void)
 	exit(1);
     }
     for (n = 0; fscanf(in, " %s", keys[n]) == 1; n++) {
-	if ( !Hash_Set(&tbl, keys[n], n) ) {
+	indeces[n] = n;
+	if ( !Hash_Set(&tbl, keys[n], indeces + n) ) {
 	    fprintf(stderr, "Could not set value in hash table.\n");
 	    fprintf(stderr, "%s\n", Err_Get());
 	    exit(1);
@@ -101,8 +103,8 @@ int main(void)
      */
 
     while (scanf(" %s", key) == 1) {
-	if (Hash_Get(&tbl, key, &n)) {
-	    printf("%u %s\n", n, key);
+	if ( (np = Hash_Get(&tbl, key)) ) {
+	    printf("%d %s\n", *np, key);
 	} else {
 	    printf("No entry for %s\n", key);
 	    exit(1);

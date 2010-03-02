@@ -10,7 +10,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.13 $ $Date: 2009/09/25 21:33:13 $
+# $Revision: 1.14 $ $Date: 2009/10/07 17:06:47 $
 #
 ########################################################################
 
@@ -31,10 +31,10 @@ void hash_print(struct Hash_Tbl *tblP, char *key);
 
 void hash_print(struct Hash_Tbl *tblP, char *key)
 {
-    unsigned n;
+    int *np;
 
-    if (Hash_Get(tblP, key, &n)) {
-	printf("%s -> %d\n", key, n);
+    if ( (np = Hash_Get(tblP, key)) ) {
+	printf("%s -> %d\n", key, *np);
     } else {
 	fprintf(stderr, "Entry for %s disappeared from table.\n", "foo");
     }
@@ -47,15 +47,19 @@ int main(void)
     char *keys[] = {
 	"foo", "bar", "hello", "world"
     };
+    int vals[] = {
+	0, 1, 10, 11
+    };
+    int v2;
 
     if ( !Hash_Init(&tbl, 4) ) {
 	fprintf(stderr, "Could not initialize hash table.\n");
 	fprintf(stderr, "%s\n", Err_Get());
     }
-    if ( !Hash_Set(&tbl, "foo", 0)
-	    || !Hash_Set(&tbl, "bar", 1)
-	    || !Hash_Set(&tbl, "hello", 10)
-	    || !Hash_Set(&tbl, "world", 11) ) {
+    if ( !Hash_Set(&tbl, "foo", vals + 0)
+	    || !Hash_Set(&tbl, "bar", vals + 1)
+	    || !Hash_Set(&tbl, "hello", vals + 2)
+	    || !Hash_Set(&tbl, "world", vals + 3) ) {
 	fprintf(stderr, "Failed to set values in hash table.\n");
 	fprintf(stderr, "%s\n", Err_Get());
     }
@@ -64,7 +68,8 @@ int main(void)
     }
 
     printf("Modifying table.\n");
-    if ( !Hash_Set(&tbl, "bar", 2) ) {
+    v2 = 4;
+    if ( !Hash_Set(&tbl, "bar", &v2) ) {
 	fprintf(stderr, "Failed to set value in hash table.\n");
 	fprintf(stderr, "%s\n", Err_Get());
     }
@@ -73,7 +78,7 @@ int main(void)
     }
 
     printf("Modifying table recklessly.\n");
-    if ( !Hash_Add(&tbl, "bar", 3) ) {
+    if ( !Hash_Add(&tbl, "bar", &v2) ) {
 	printf("Failed to add entry for \"bar\".  Error message was:\n%s\n",
 		Err_Get());
     }
@@ -97,7 +102,7 @@ hello -> 10
 world -> 11
 Modifying table.
 foo -> 0
-bar -> 2
+bar -> 4
 hello -> 10
 world -> 11
 Modifying table recklessly.
