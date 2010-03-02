@@ -10,13 +10,13 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.13 $ $Date: 2009/10/01 21:43:46 $
+# $Revision: 1.14 $ $Date: 2009/10/07 17:06:47 $
 #
 ########################################################################
 
 # This is the remove command.  Change this to : to retain intermediate results.
 
-RM='rm -f'
+RM=${RM:-'rm -f'}
 
 # This test creates an application that reads a stream of words
 # into a hash table and then tries to retrieve some of them.
@@ -62,13 +62,13 @@ char keys[$NWORD][$LMAX];
 int main(void)
 {
     struct Hash_Tbl tbl;
-    char *word_fl = "$WORD_FL";
+    char *word_fl = "/usr/share/dict/words";
     FILE *in;
-    unsigned n;
-    char key[$LMAX];
+    unsigned long n;
+    char key[24];
 
     fprintf(stderr, "Running hash driver with %d buckets for %d words.\n",
-	    NBUCKET, $NWORD);
+	    NBUCKET, 234979);
     if ( !Hash_Init(&tbl, NBUCKET) ) {
 	fprintf(stderr, "Could not initialize hash table.\n");
 	fprintf(stderr, "%s.\n", Err_Get());
@@ -79,7 +79,7 @@ int main(void)
 	exit(1);
     }
     for (n = 0; fscanf(in, " %s", keys[n]) == 1; n++) {
-	if ( !Hash_Set(&tbl, keys[n], n) ) {
+	if ( !Hash_Set(&tbl, keys[n], (void *)n) ) {
 	    fprintf(stderr, "Could not set value in hash table.\n");
 	    fprintf(stderr, "%s\n", Err_Get());
 	    exit(1);
@@ -88,8 +88,8 @@ int main(void)
     fclose(in);
 
     while (scanf(" %s", key) == 1) {
-	if (Hash_Get(&tbl, key, &n)) {
-	    printf("%u %s\n", n, key);
+	if ( (n = (unsigned long)Hash_Get(&tbl, key)) ) {
+	    printf("%lu %s\n", n, key);
 	} else {
 	    fprintf(stderr, "No entry for %s\n", key);
 	    exit(1);
