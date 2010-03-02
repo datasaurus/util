@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.27 $ $Date: 2009/12/21 20:25:50 $
+   .	$Revision: 1.28 $ $Date: 2009/12/21 20:40:52 $
    .
    .	Reference:
    .		Kernighan, Brian W. and Rob Pike.
@@ -87,7 +87,7 @@ void Hash_Clear(struct Hash_Tbl *tblP)
 }
 
 /* See hash (3) */
-int Hash_Add(struct Hash_Tbl *tblP, const char *key, int val)
+int Hash_Add(struct Hash_Tbl *tblP, const char *key, void * val)
 {
     size_t len;
     struct Hash_Entry *ep, *p;
@@ -128,7 +128,7 @@ int Hash_Add(struct Hash_Tbl *tblP, const char *key, int val)
 }
 
 /* See hash (3) */
-int Hash_Set(struct Hash_Tbl *tblP, const char *key, int val)
+int Hash_Set(struct Hash_Tbl *tblP, const char *key, void *val)
 {
     size_t len;
     struct Hash_Entry *ep, *p;
@@ -169,7 +169,7 @@ int Hash_Set(struct Hash_Tbl *tblP, const char *key, int val)
 }
 
 /* See hash (3) */
-int Hash_Get(struct Hash_Tbl *tblP, const char *key, int *ip)
+void * Hash_Get(struct Hash_Tbl *tblP, const char *key)
 {
     unsigned b;			/* Index into buckets array */
     struct Hash_Entry *ep;	/* Hash entry */
@@ -180,11 +180,10 @@ int Hash_Get(struct Hash_Tbl *tblP, const char *key, int *ip)
     b = Hash(key, tblP->n_buckets);
     for (ep = tblP->buckets[b]; ep; ep = ep->next) {
 	if (strcmp(ep->key, key) == 0) {
-	    *ip = ep->val;
-	    return 1;
+	    return ep->val;
 	}
     }
-    return 0;
+    return NULL;
 }
 
 /* See hash (3) */
@@ -198,7 +197,7 @@ void Hash_Print(struct Hash_Tbl *tblP)
     for (bp = tblP->buckets, bp1 = bp + tblP->n_buckets; bp < bp1; bp++) {
 	printf("[");
 	for (ep = *bp; ep; ep = ep->next) {
-	    printf("(%s %d)", ep->key, ep->val);
+	    printf("(%s %p)", ep->key, ep->val);
 	}
 	printf("]\n");
     }

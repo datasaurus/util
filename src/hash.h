@@ -9,7 +9,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.20 $ $Date: 2009/12/21 20:25:50 $
+   .	$Revision: 1.21 $ $Date: 2009/12/21 20:40:52 $
  */
 
 #ifndef HASH_H_
@@ -22,7 +22,7 @@
 /* Hash table entry */
 struct Hash_Entry {
     char *key;				/* String identifier */
-    int val;				/* Value associated with string */
+    void *val;				/* Value associated with string */
     struct Hash_Entry *next;		/* Pointer to next entry in bucket
 					 * chain */
 };
@@ -39,9 +39,9 @@ struct Hash_Tbl {
 int Hash_Init(struct Hash_Tbl *, unsigned);
 void Hash_Clear(struct Hash_Tbl *);
 unsigned Hash(const char *, unsigned);
-int Hash_Add(struct Hash_Tbl *, const char *, int);
-int Hash_Set(struct Hash_Tbl *, const char *, int);
-int Hash_Get(struct Hash_Tbl *, const char *, int *);
+int Hash_Add(struct Hash_Tbl *, const char *, void *);
+int Hash_Set(struct Hash_Tbl *, const char *, void *);
+void * Hash_Get(struct Hash_Tbl *, const char *);
 void Hash_Print(struct Hash_Tbl *tblP);
 int Hash_Adj(struct Hash_Tbl *, unsigned);
 void Hash_Rm(struct Hash_Tbl *, const char *);
