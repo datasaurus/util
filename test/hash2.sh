@@ -9,17 +9,14 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.13 $ $Date: 2009/10/07 17:06:47 $
+# $Revision: 1.14 $ $Date: 2010/03/02 15:27:29 $
 #
 ########################################################################
 
 # This is the remove command.  Change this to : to retain intermediate results.
-
-RM='rm -f'
-#RM=:
+RM=${RM:-'rm -f'}
 
 # Here is the source code for the test application.
-
 cat > hash2.c << END
 #include <stdio.h>
 #include <hash.h>
@@ -29,10 +26,10 @@ void hash_print(struct Hash_Tbl *tblP, char *key);
 
 void hash_print(struct Hash_Tbl *tblP, char *key)
 {
-    unsigned long n;
+    int *np;
 
-    if ( (n = (unsigned long)Hash_Get(tblP, key)) ) {
-	printf("%s -> %lu\n", key, n);
+    if ( (np = Hash_Get(tblP, key)) ) {
+	printf("%s -> %d\n", key, *np);
     } else {
 	fprintf(stderr, "Entry for %s disappeared from table.\n", "foo");
     }
@@ -45,15 +42,19 @@ int main(void)
     char *keys[] = {
 	"foo", "bar", "hello", "world"
     };
+    int vals[] = {
+	1, 2, 10, 11
+    };
+    int v2;
 
     if ( !Hash_Init(&tbl, 4) ) {
 	fprintf(stderr, "Could not initialize hash table.\n");
 	fprintf(stderr, "%s\n", Err_Get());
     }
-    if ( !Hash_Set(&tbl, "foo", (void *)1)
-	    || !Hash_Set(&tbl, "bar", (void *)2)
-	    || !Hash_Set(&tbl, "hello", (void *)10)
-	    || !Hash_Set(&tbl, "world", (void *)11) ) {
+    if ( !Hash_Set(&tbl, "foo", vals + 0)
+	    || !Hash_Set(&tbl, "bar", vals + 1)
+	    || !Hash_Set(&tbl, "hello", vals + 2)
+	    || !Hash_Set(&tbl, "world", vals + 3) ) {
 	fprintf(stderr, "Failed to set values in hash table.\n");
 	fprintf(stderr, "%s\n", Err_Get());
     }
@@ -62,7 +63,8 @@ int main(void)
     }
 
     printf("Modifying table.\n");
-    if ( !Hash_Set(&tbl, "bar", (void *)4) ) {
+    v2 = 4;
+    if ( !Hash_Set(&tbl, "bar", &v2) ) {
 	fprintf(stderr, "Failed to set value in hash table.\n");
 	fprintf(stderr, "%s\n", Err_Get());
     }
