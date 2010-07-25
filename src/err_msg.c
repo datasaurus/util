@@ -9,7 +9,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.18 $ $Date: 2009/10/01 22:15:22 $
+   .	$Revision: 1.19 $ $Date: 2009/10/07 17:06:47 $
  */
 
 #include <stdio.h>
@@ -20,6 +20,7 @@
 
 #define LEN 65535
 static char msg[LEN];		/* Current error message */
+static char msg1[LEN];		/* Copy of msg */
 static size_t msg_len;		/* strlen(msg) */
 
 /* See err_msg (3) */
@@ -54,6 +55,8 @@ void Err_Append(const char *s)
 /* See err_msg (3) */
 char *Err_Get(void)
 {
+    strncpy(msg1, msg, LEN - 1);
     msg_len = 0;
-    return msg;
+    *msg = '\0';
+    return msg1;
 }
