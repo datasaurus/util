@@ -4,7 +4,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.9 $ $Date: 2009/09/25 21:33:14 $
+.\" $Revision: 1.10 $ $Date: 2009/10/07 17:06:47 $
 .\"
 .TH err_msg 3 "Error messages"
 .SH NAME
@@ -26,7 +26,8 @@ the global error message.
 \fBErr_Get\fP returns the global error string and then resets it, so that
 subsequent calls to \fBErr_Append\fP overwrite the previous contents.  The
 value returned by \fBErr_Get\fP belongs to the error message facility and
-should not be modified by users.
+should not be modified by users. If there is no error message, \fBErr_Get\fP
+returns an empty string.
 
 The error message is limited to 64 kilobytes. If it becomes longer than this,
 the application prints a warning followed by the current error message, and then
