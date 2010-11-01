@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.29 $ $Date: 2010/03/02 15:09:55 $
+   .	$Revision: 1.30 $ $Date: 2010/11/01 22:16:39 $
    .
    .	Reference:
    .		Kernighan, Brian W. and Rob Pike.
@@ -240,7 +240,7 @@ int Hash_Adj(struct Hash_Tbl *tblP, unsigned n_buckets2)
 /* See hash (3) */
 void Hash_Rm(struct Hash_Tbl *tblP, const char *key)
 {
-    struct Hash_Entry *p, *prev;
+    struct Hash_Entry *p, *p1, *prev;
     unsigned b;
 
     if ( !tblP->buckets || !key ) {
@@ -248,7 +248,8 @@ void Hash_Rm(struct Hash_Tbl *tblP, const char *key)
     }
     b = Hash(key, tblP->n_buckets);
     p = tblP->buckets[b];
-    for (prev = NULL, p = tblP->buckets[b]; p; prev = p, p = p->next) {
+    for (prev = NULL, p = p1 = tblP->buckets[b]; p1; prev = p) {
+	p1 = p->next;
 	if (strcmp(p->key, key) == 0) {
 	    if (prev) {
 		prev->next = p->next;
