@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.28 $ $Date: 2009/12/21 20:40:52 $
+   .	$Revision: 1.29 $ $Date: 2010/03/02 15:09:55 $
    .
    .	Reference:
    .		Kernighan, Brian W. and Rob Pike.
@@ -71,13 +71,14 @@ int Hash_Init(struct Hash_Tbl *tblP, unsigned n_buckets)
 /* See hash (3) */
 void Hash_Clear(struct Hash_Tbl *tblP)
 {
-    struct Hash_Entry **bp, **bp1, *ep;
+    struct Hash_Entry **bp, **bp1, *ep, *ep1;
 
     if ( !tblP ) {
 	return;
     }
     for (bp = tblP->buckets, bp1 = bp + tblP->n_buckets; bp < bp1; bp++) {
-	for (ep = *bp; ep; ep = ep->next) {
+	for (ep = ep1 = *bp; ep1; ) {
+	    ep1 = ep->next;
 	    FREE(ep->key);
 	    FREE(ep);
 	}
