@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.30 $ $Date: 2010/11/01 22:16:39 $
+   .	$Revision: 1.31 $ $Date: 2010/11/01 22:20:44 $
    .
    .	Reference:
    .		Kernighan, Brian W. and Rob Pike.
@@ -77,7 +77,7 @@ void Hash_Clear(struct Hash_Tbl *tblP)
 	return;
     }
     for (bp = tblP->buckets, bp1 = bp + tblP->n_buckets; bp < bp1; bp++) {
-	for (ep = ep1 = *bp; ep1; ) {
+	for (ep = *bp; ep; ep = ep1) {
 	    ep1 = ep->next;
 	    FREE(ep->key);
 	    FREE(ep);
@@ -248,7 +248,7 @@ void Hash_Rm(struct Hash_Tbl *tblP, const char *key)
     }
     b = Hash(key, tblP->n_buckets);
     p = tblP->buckets[b];
-    for (prev = NULL, p = p1 = tblP->buckets[b]; p1; prev = p) {
+    for (prev = NULL, p = p1 = tblP->buckets[b]; p; prev = p, p = p1) {
 	p1 = p->next;
 	if (strcmp(p->key, key) == 0) {
 	    if (prev) {
