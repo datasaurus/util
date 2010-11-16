@@ -4,7 +4,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.8 $ $Date: 2009/12/21 20:40:52 $
+.\" $Revision: 1.9 $ $Date: 2010/03/02 15:09:55 $
 .\"
 .TH hash 3 "Hash tables"
 .SH NAME
@@ -16,7 +16,7 @@ Hash_Init, Hash_Clear, Hash_Add, Hash_Set, Hash_Get, Hash_Print, Hash_Adj, Hash_
 \fBunsigned\fP \fBHash\fP(\fBconst char *\fP\fIkey\fP, \fBunsigned\fP \fIn_buckets\fP);
 \fBint\fP \fBHash_Add(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBvoid\fP *\fIval\fP);
 \fBint\fP \fBHash_Set(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP, \fBvoid\fP *\fIval\fP);
-\fBvoid\fP \fBHash_Get(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP);
+\fBvoid\fP *\fBHash_Get(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP);
 \fBvoid\fP \fBHash_Print\fP(\fBstruct Hash_Tbl *\fP\fItblP\fP);
 \fBint\fP \fBHash_Adj(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBunsigned\fP \fIn_buckets_2\fP);
 \fBvoid\fP \fBHash_Rm(\fP\fBstruct Hash_Tbl *\fP\fItblP\fP, \fBconst char *\fP\fIkey\fP);
