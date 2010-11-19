@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.31 $ $Date: 2010/11/01 22:20:44 $
+   .	$Revision: 1.32 $ $Date: 2010/11/01 23:03:28 $
    .
    .	Reference:
    .		Kernighan, Brian W. and Rob Pike.
@@ -93,7 +93,6 @@ int Hash_Add(struct Hash_Tbl *tblP, const char *key, void * val)
     size_t len;
     struct Hash_Entry *ep, *p;
     unsigned b;
-    char *s, *d;
 
     if ( !tblP || !tblP->buckets || !key ) {
 	return 0;
@@ -118,9 +117,7 @@ int Hash_Add(struct Hash_Tbl *tblP, const char *key, void * val)
 	FREE(ep);
 	return 0;
     }
-    for (s = (char *)key, d = ep->key; *s; s++, d++) {
-	*d = *s;
-    }
+    strcpy(ep->key, key);
     ep->val = val;
     ep->next = tblP->buckets[b];
     tblP->buckets[b] = ep;
@@ -134,7 +131,6 @@ int Hash_Set(struct Hash_Tbl *tblP, const char *key, void *val)
     size_t len;
     struct Hash_Entry *ep, *p;
     unsigned b;
-    char *s, *d;
 
     if ( !tblP->buckets || !key ) {
 	Err_Append("Attempted to set nonexistent hash table.\n");
@@ -159,9 +155,7 @@ int Hash_Set(struct Hash_Tbl *tblP, const char *key, void *val)
 	FREE(ep);
 	return 0;
     }
-    for (s = (char *)key, d = ep->key; *s; s++, d++) {
-	*d = *s;
-    }
+    strcpy(ep->key, key);
     ep->val = val;
     ep->next = tblP->buckets[b];
     tblP->buckets[b] = ep;
