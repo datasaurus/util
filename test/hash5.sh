@@ -9,7 +9,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: $ $Date: $
+# $Revision: 1.1 $ $Date: 2009/12/21 17:49:48 $
 #
 ########################################################################
 
@@ -32,10 +32,10 @@ int main(void)
 	fprintf(stderr, "Could not initialize hash table.\n");
 	fprintf(stderr, "%s\n", Err_Get());
     }
-    if ( !Hash_Set(&tbl, "foo", 0)
-	    || !Hash_Set(&tbl, "bar", 1)
-	    || !Hash_Set(&tbl, "hello", 10)
-	    || !Hash_Set(&tbl, "world", 11) ) {
+    if ( !Hash_Set(&tbl, "foo", (void *)16)
+	    || !Hash_Set(&tbl, "bar", (void *)32)
+	    || !Hash_Set(&tbl, "hello", (void *)33)
+	    || !Hash_Set(&tbl, "world", (void *)64) ) {
 	fprintf(stderr, "Failed to set values in hash table.\n");
 	fprintf(stderr, "%s\n", Err_Get());
     }
@@ -50,8 +50,8 @@ END
 cat << END > correct
 []
 []
-[(world 11)(hello 10)(foo 0)]
-[(bar 1)]
+[(world 0x40)(hello 0x21)(foo 0x10)]
+[(bar 0x20)]
 END
 
 # Build, run, and evaluate the test application
