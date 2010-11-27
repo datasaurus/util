@@ -10,14 +10,13 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.13 $ $Date: 2009/10/07 17:06:47 $
+# $Revision: 1.14 $ $Date: 2010/03/02 16:25:55 $
 #
 ########################################################################
 
 # This is the remove command.  Change this to : to retain intermediate results.
 
-RM='rm -f'
-#RM=:
+RM=${RM:-'rm -f'}
 
 # Identify a file of whitespace separated words, WORD_FL.
 
@@ -142,10 +141,10 @@ echo "Putting test values into file \"attempt\""
 echo "Putting memory trace into file \"memtrace\""
 COPT='-g -Wall -Wmissing-prototypes -Isrc/'
 CFLAGS="${COPT}"
-export MEM_DEBUG=2
+export MEM_DEBUG=3
 if cc ${CFLAGS} -o hash hash4.c src/hash.c src/err_msg.c src/alloc.c
 then
-    awk '{printf "%s ", $2}' correct | ./hash > attempt 2> memtrace
+    awk '{printf "%s ", $2}' correct | ./hash > attempt 2> hash.err 3> memtrace
 else
     echo Could not build hash from hash4.c
     exit 1
@@ -170,6 +169,6 @@ echo 'Checking memory trace (will not say anything if no leaks)'
 src/chkalloc < memtrace
 echo 'Memory check done'
 
-$RM correct memtrace hash4.c
+$RM correct memtrace hash4.c hash.err
 
 echo 'Done with hash4 test'
