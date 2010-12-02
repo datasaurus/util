@@ -9,7 +9,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.19 $ $Date: 2009/10/07 17:06:47 $
+   .	$Revision: 1.20 $ $Date: 2010/07/25 03:30:23 $
  */
 
 #include <stdio.h>
@@ -55,7 +55,7 @@ void Err_Append(const char *s)
 /* See err_msg (3) */
 char *Err_Get(void)
 {
-    strncpy(msg1, msg, LEN - 1);
+    memcpy(msg1, msg, LEN - 1);
     msg_len = 0;
     *msg = '\0';
     return msg1;
