@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.32 $ $Date: 2010/11/01 23:03:28 $
+   .	$Revision: 1.33 $ $Date: 2010/11/19 05:28:51 $
    .
    .	Reference:
    .		Kernighan, Brian W. and Rob Pike.
@@ -74,6 +74,10 @@ void Hash_Clear(struct Hash_Tbl *tblP)
     struct Hash_Entry **bp, **bp1, *ep, *ep1;
 
     if ( !tblP ) {
+	return;
+    }
+    if ( !tblP->buckets ) {
+	Hash_Init(tblP, 0);
 	return;
     }
     for (bp = tblP->buckets, bp1 = bp + tblP->n_buckets; bp < bp1; bp++) {
