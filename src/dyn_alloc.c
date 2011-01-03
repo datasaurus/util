@@ -7,7 +7,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.1 $ $Date: 2011/01/03 20:30:07 $
+   .	$Revision: 1.2 $ $Date: 2011/01/03 20:44:08 $
  */
 
 #include <string.h>
@@ -16,7 +16,7 @@
 #include "alloc.h"
 #include "dyn_alloc.h"
 
-void *dyn_alloc(void *base, size_t sz0, size_t offset, void *src, size_t len,
+void *dyn_alloc(void *base, size_t *sz_p, size_t offset, void *src, size_t len,
 	size_t extra)
 {
     void *b1 = NULL;
@@ -30,10 +30,11 @@ void *dyn_alloc(void *base, size_t sz0, size_t offset, void *src, size_t len,
 	return NULL;
     }
     o = (long)offset;
-    if ( offset + len <= sz0 ) {
+    if ( offset + len <= *sz_p ) {
 	return memcpy((char *)base + o, src, len);
     }
     if ( (b1 = REALLOC(base, offset + len + extra)) ) {
+	*sz_p = offset + len + extra;
 	memcpy((char *)b1 + o, src, len);
     }
     return b1;

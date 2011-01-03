@@ -4,7 +4,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: $ $Date: $
+.\" $Revision: 1.1 $ $Date: 2011/01/03 20:43:44 $
 .\"
 .TH dyn_alloc 3 "Dynamic allocator"
 .SH NAME
@@ -12,19 +12,20 @@ dyn_alloc \- dynamic allocator
 .SH SYNOPSIS
 .nf
 \fB#include "dyn_alloc.h"\fP
-\fBvoid\fP *\fBdyn_alloc\fP(\fBvoid\fP *\fIbase\fP, \fBsize_t\fP \fIsz0\fP, \fBsize_t\fP \fIoffset\fP, \fBvoid\fP *\fIsrc\fP,
+\fBvoid\fP *\fBdyn_alloc\fP(\fBvoid\fP *\fIbase\fP, \fBsize_t\fP *\fIsz_p\fP, \fBsize_t\fP \fIoffset\fP, \fBvoid\fP *\fIsrc\fP,
 	\fBsize_t\fP \fIlen\fP, \fBsize_t\fP \fIextra\fP)
 .fi
 .SH DESCRIPTION
 \fBdyn_alloc\fP copies \fIlen\fP bytes from \fIsrc\fP to
-\fIbase\fP\ +\ \fIoffset\fP. \fIbase\fP should have space for \fIsz0\fP bytes.
+\fIbase\fP\ +\ \fIoffset\fP. \fIbase\fP should have space for *\fIsz\fP bytes.
 If \fIoffset\fP is too large for pointer arithmetic, the function returns
 \fBNULL\fP with \fBerrno\fP set to \fBEOVERFLOW\fP. If
-\fIoffset\fP\ +\ \fIlen\fP <= \fIsz0\fP, the function just copies the bytes and
-returns \fIbase\fP. If \fIoffset\fP\ +\ \fIlen\fP > \fIsz0\fP, the function
+\fIoffset\fP\ +\ \fIlen\fP <= *\fIsz\fP, the function just copies the bytes and
+returns \fIbase\fP. If \fIoffset\fP\ +\ \fIlen\fP > *\fIsz\fP, the function
 attempts to change the allocation at \fIbase\fP to
 \fIoffset\fP\ +\ \fIlen\fP\ +\ \fIextra\fP bytes with a call to \fBREALLOC\fP.
-If \fBREALLOC\fP succeeds, it copies the bytes to the possibly new address. 
+If \fBREALLOC\fP succeeds, it copies the bytes to the possibly new address, and
+stores the new allocation size at \fIsz_p\fP. 
 If \fBREALLOC\fP is called, this function returns the return value from
 \fBREALLOC\fP, which might also set \fBerrno\fP.
 .SH SEE ALSO
