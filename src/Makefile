@@ -8,7 +8,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.24 $ $Date: 2009/12/21 20:26:27 $
+# $Revision: 1.25 $ $Date: 2009/12/22 21:46:37 $
 
 CC = cc
 CFLAGS = -g -Wall -Wmissing-prototypes
@@ -43,6 +43,9 @@ alloc3f.o : alloc3f.c alloc3f.h
 
 alloc4f.o : alloc4f.c alloc4f.h
 	${CC} ${CFLAGS} -c alloc4f.c
+
+dyn_alloc.o : dyn_alloc.c dyn_alloc.h
+	${CC} ${CFLAGS} -c dyn_alloc.c
 
 err_msg.o : err_msg.c err_msg.h
 	${CC} ${CFLAGS} -c err_msg.c
