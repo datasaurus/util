@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.33 $ $Date: 2010/11/19 05:28:51 $
+   .	$Revision: 1.34 $ $Date: 2010/12/02 22:09:01 $
    .
    .	Reference:
    .		Kernighan, Brian W. and Rob Pike.
@@ -114,14 +114,14 @@ int Hash_Add(struct Hash_Tbl *tblP, const char *key, void * val)
 	Err_Append("Could not allocate memory for new entry in hash table.\n");
 	return 0;
     }
-    len = strlen(key);
-    ep->key = (char *)MALLOC(len + 1);
+    len = strlen(key) + 1;
+    ep->key = (char *)MALLOC(len);
     if ( !ep->key ) {
 	Err_Append("Could not allocate memory for new entry in hash table.\n");
 	FREE(ep);
 	return 0;
     }
-    strcpy(ep->key, key);
+    strlcpy(ep->key, key, len);
     ep->val = val;
     ep->next = tblP->buckets[b];
     tblP->buckets[b] = ep;
@@ -152,14 +152,14 @@ int Hash_Set(struct Hash_Tbl *tblP, const char *key, void *val)
 	Err_Append("Could not allocate memory for new entry in hash table.\n");
 	return 0;
     }
-    len = strlen(key);
-    ep->key = (char *)MALLOC(len + 1);
+    len = strlen(key) + 1;
+    ep->key = (char *)MALLOC(len);
     if ( !ep->key ) {
 	Err_Append("Could not allocate memory for new entry in hash table.\n");
 	FREE(ep);
 	return 0;
     }
-    strcpy(ep->key, key);
+    strlcpy(ep->key, key, len);
     ep->val = val;
     ep->next = tblP->buckets[b];
     tblP->buckets[b] = ep;
