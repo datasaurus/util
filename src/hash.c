@@ -8,7 +8,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.34 $ $Date: 2010/12/02 22:09:01 $
+   .	$Revision: 1.35 $ $Date: 2011/01/07 23:15:53 $
    .
    .	Reference:
    .		Kernighan, Brian W. and Rob Pike.
@@ -20,6 +20,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "alloc.h"
+#include "strlcpy.h"
 #include "err_msg.h"
 #include "hash.h"
 
