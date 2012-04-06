@@ -35,7 +35,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.2 $ $Date: 2009/12/22 22:03:38 $
+   .	$Revision: 1.3 $ $Date: 2011/11/28 16:09:55 $
  */
 
 #include <stdio.h>
@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
 {
     struct Hash_Tbl h;
     char **a;
+    int val = 1;
     unsigned b, e, bb;
 
     if ( !Hash_Init(&h, (unsigned)(argc - 1)) ) {
@@ -53,7 +54,7 @@ int main(int argc, char *argv[])
 	exit(EXIT_FAILURE);
     }
     for (a = argv + 1; *a; a++) {
-	if ( !Hash_Add(&h, *a, 1) ) {
+	if ( !Hash_Add(&h, *a, &val) ) {
 	    fprintf(stderr, "Could not add \"%s\".\n%s\n", *a, Err_Get());
 	    exit(EXIT_FAILURE);
 	}
