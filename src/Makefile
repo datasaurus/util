@@ -29,7 +29,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.26 $ $Date: 2011/01/03 21:03:50 $
+# $Revision: 1.27 $ $Date: 2011/11/28 16:09:55 $
 
 CC = cc
 CFLAGS = -g -Wall -Wmissing-prototypes
@@ -75,4 +75,4 @@ str.o : str.c str.h
 	${CC} ${CFLAGS} -c str.c
 
 clean :
-	rm -f ${EXECS} *core*  *.o *.ps *.out
+	rm -fr ${EXECS} *core*  *.o *.ps *.out *.dSYM
