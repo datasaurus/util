@@ -29,15 +29,18 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.27 $ $Date: 2011/11/28 16:09:55 $
+# $Revision: 1.28 $ $Date: 2012/04/06 21:14:35 $
 
 CC = cc
 CFLAGS = -g -Wall -Wmissing-prototypes
 #LFLAGS = -L/usr/local/lib -lefence
-EXECS = allocfvi bhead prhash
+EXECS = allocfvi bhead prhash tmexec
 OBJ = alloc.o alloc2f.o alloc3f.o alloc4f.o allocfvi.o err_msg.o hash.o str.o
 
 obj : ${OBJ}
+
+tmexec : tmexec.c
+	${CC} ${CFLAGS} -o tmexec tmexec.c
 
 bhead : bhead.c
 	${CC} ${CFLAGS} -o bhead bhead.c
