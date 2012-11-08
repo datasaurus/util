@@ -29,9 +29,10 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.28 $ $Date: 2009/12/09 16:18:42 $
+   .	$Revision: 1.29 $ $Date: 2011/11/28 16:09:55 $
  */
 
+#include "unix_defs.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -153,7 +154,8 @@ void *Tkx_ReAlloc(void *m, size_t sz, char *fnm, int ln)
 	    fprintf(diag_out, "%p (%09x) allocated by realloc at %s:%d\n",
 		    m2, ++c, fnm, ln);
 	} else {
-	    fprintf(diag_out, "%p (%09x) reallocated at %s:%d\n", m, ++c, fnm, ln);
+	    fprintf(diag_out, "%p (%09x) reallocated at %s:%d\n",
+		    m, ++c, fnm, ln);
 	}
     }
     return m2;

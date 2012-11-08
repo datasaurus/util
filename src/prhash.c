@@ -6,7 +6,8 @@
    .	Usage:
    .		prhash word1 word2 ...
    .
-   .	Output will be from Hash_Print.  All entries will have value 1 (arbitrary).
+   .	Output will be from Hash_Print.  All entries will have value 1
+   .	(arbitrary).
    .
    .	Copyright (c) 2011, Gordon D. Carrie. All rights reserved.
    .	
@@ -35,7 +36,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.3 $ $Date: 2011/11/28 16:09:55 $
+   .	$Revision: 1.4 $ $Date: 2012/04/06 21:16:31 $
  */
 
 #include <stdio.h>

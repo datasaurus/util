@@ -31,7 +31,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.21 $ $Date: 2010/12/02 21:48:47 $
+   .	$Revision: 1.22 $ $Date: 2011/11/28 16:09:55 $
  */
 
 #include <stdio.h>
@@ -67,7 +67,8 @@ void Err_Append(const char *s)
 	}
 	exit(1);
     }
-    for (e = msg + (long)msg_len, m = s, e1 = e + (long)s_len; e < e1; e++, m++) {
+    for (e = msg + (long)msg_len, m = s, e1 = e + (long)s_len; e < e1; e++, m++)
+    {
 	*e  = *m;
     }
     *e = '\0';

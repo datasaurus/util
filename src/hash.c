@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.37 $ $Date: 2011/11/28 16:09:55 $
+   .	$Revision: 1.38 $ $Date: 2012/04/06 21:15:19 $
    .
    .	Reference:
    .		Kernighan, Brian W. and Rob Pike.
@@ -237,7 +237,8 @@ int Hash_Adj(struct Hash_Tbl *tblP, unsigned n_buckets2)
     sz = n_buckets2 * sizeof(struct Hash_Entry *);
     buckets2 = (struct Hash_Entry **)MALLOC(sz);
     if ( !buckets2 ) {
-	Err_Append("Could not allocate memory when adjusting hash table size.\n");
+	Err_Append("Could not allocate memory when adjusting "
+		"hash table size.\n");
 	return 0;
     }
     for (bp = buckets2, bp1 = bp + n_buckets2; bp < bp1; bp++) {
