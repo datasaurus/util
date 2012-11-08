@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.23 $ $Date: 2011/11/28 16:09:55 $
+   .	$Revision: 1.24 $ $Date: 2012/08/30 18:52:49 $
  */
 
 #include <stdlib.h>
@@ -115,7 +115,7 @@ char ** Str_Words(char *ln, char **argv, int *argc)
 	v = argv;
 	cx = *argc;
 	if (cx < 2) {
-	    if ( !(t = (char **)realloc(v, 2 * sizeof(char *))) ) {	/* re */
+	    if ( !(t = (char **)realloc(v, 2 * sizeof(char *))) ) {
 		free(v);
 		*argc = -1;
 		fprintf(stderr, "Could not allocate word array.\n");
@@ -126,7 +126,7 @@ char ** Str_Words(char *ln, char **argv, int *argc)
 	}
     } else {
 	cx = 2;
-	if ( !(v = (char **)calloc((size_t)cx, sizeof(char *))) ) {	/* new */
+	if ( !(v = (char **)calloc((size_t)cx, sizeof(char *))) ) {
 	    *argc = -1;
 	    fprintf(stderr, "Could not allocate word array.\n");
 	    return NULL;
