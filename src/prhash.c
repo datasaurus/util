@@ -36,11 +36,10 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.4 $ $Date: 2012/04/06 21:16:31 $
+   .	$Revision: 1.5 $ $Date: 2012/11/08 21:18:37 $
  */
 
 #include <stdio.h>
-#include "err_msg.h"
 #include "hash.h"
 
 int main(int argc, char *argv[])
@@ -56,7 +55,7 @@ int main(int argc, char *argv[])
     }
     for (a = argv + 1; *a; a++) {
 	if ( !Hash_Add(&h, *a, &val) ) {
-	    fprintf(stderr, "Could not add \"%s\".\n%s\n", *a, Err_Get());
+	    fprintf(stderr, "Could not add \"%s\".\n", *a);
 	    exit(EXIT_FAILURE);
 	}
     }

@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.38 $ $Date: 2012/04/06 21:15:19 $
+   .	$Revision: 1.39 $ $Date: 2012/11/08 21:18:37 $
    .
    .	Reference:
    .		Kernighan, Brian W. and Rob Pike.
@@ -42,7 +42,6 @@
 #include <string.h>
 #include <stdio.h>
 #include "alloc.h"
-#include "err_msg.h"
 #include "hash.h"
 
 
@@ -81,7 +80,7 @@ int Hash_Init(struct Hash_Tbl *tblP, unsigned n_buckets)
     sz = tblP->n_buckets * sizeof(struct Hash_Entry *);
     tblP->buckets = (struct Hash_Entry **)MALLOC(sz);
     if ( !tblP->buckets ) {
-	Err_Append("Could not allocate memory for hash table.\n");
+	fprintf(stderr, "Could not allocate memory for hash table.\n");
 	return 0;
     }
     for (bp = tblP->buckets; bp < tblP->buckets + tblP->n_buckets; bp++) {
@@ -126,20 +125,21 @@ int Hash_Add(struct Hash_Tbl *tblP, const char *key, void * val)
     b = Hash(key, tblP->n_buckets);
     for (p = tblP->buckets[b]; p; p = p->next) {
 	if (strcmp(p->key, key) == 0) {
-	    Err_Append(key);
-	    Err_Append(" in use.\n");
+	    fprintf(stderr, "%s in use.\n", key);
 	    return 0;
 	}
     }
     ep = (struct Hash_Entry *)MALLOC(sizeof(struct Hash_Entry));
     if ( !ep ) {
-	Err_Append("Could not allocate memory for new entry in hash table.\n");
+	fprintf(stderr, "Could not allocate memory for new entry "
+		"in hash table.\n");
 	return 0;
     }
     len = strlen(key) + 1;
     ep->key = (char *)MALLOC(len);
     if ( !ep->key ) {
-	Err_Append("Could not allocate memory for new entry in hash table.\n");
+	fprintf(stderr, "Could not allocate memory for new entry "
+		"key in hash table.\n");
 	FREE(ep);
 	return 0;
     }
@@ -159,7 +159,7 @@ int Hash_Set(struct Hash_Tbl *tblP, const char *key, void *val)
     unsigned b;
 
     if ( !tblP->buckets || !key ) {
-	Err_Append("Attempted to set nonexistent hash table.\n");
+	fprintf(stderr, "Attempted to set nonexistent hash table.\n");
 	return 0;
     }
     b = Hash(key, tblP->n_buckets);
@@ -171,13 +171,15 @@ int Hash_Set(struct Hash_Tbl *tblP, const char *key, void *val)
     }
     ep = (struct Hash_Entry *)MALLOC(sizeof(struct Hash_Entry));
     if ( !ep ) {
-	Err_Append("Could not allocate memory for new entry in hash table.\n");
+	fprintf(stderr, "Could not allocate memory for new entry "
+		"in hash table.\n");
 	return 0;
     }
     len = strlen(key) + 1;
     ep->key = (char *)MALLOC(len);
     if ( !ep->key ) {
-	Err_Append("Could not allocate memory for new entry in hash table.\n");
+	fprintf(stderr, "Could not allocate memory for new entry "
+		"key in hash table.\n");
 	FREE(ep);
 	return 0;
     }
@@ -237,7 +239,7 @@ int Hash_Adj(struct Hash_Tbl *tblP, unsigned n_buckets2)
     sz = n_buckets2 * sizeof(struct Hash_Entry *);
     buckets2 = (struct Hash_Entry **)MALLOC(sz);
     if ( !buckets2 ) {
-	Err_Append("Could not allocate memory when adjusting "
+	fprintf(stderr, "Could not allocate memory when adjusting "
 		"hash table size.\n");
 	return 0;
     }
