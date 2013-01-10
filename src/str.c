@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.24 $ $Date: 2012/08/30 18:52:49 $
+   .	$Revision: 1.25 $ $Date: 2012/11/08 21:19:51 $
  */
 
 #include <stdlib.h>
@@ -214,7 +214,7 @@ char * Str_Append(char *dest, size_t *l, size_t *lx, char *src, size_t n)
     return dest;
 }
 
-int Str_GetLn(FILE *in, char eol, char **ln, int *l_max)
+int Str_GetLn(FILE *in, char eol, char **ln, size_t *l_max)
 {
     int i;			/* Input character */
     char c;			/* Input character */

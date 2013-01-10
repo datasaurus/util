@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.10 $ $Date: 2010/01/04 21:06:23 $
+   .	$Revision: 1.11 $ $Date: 2011/11/28 16:09:55 $
  */
 
 #ifndef STR_H_
@@ -41,6 +41,6 @@
 char *Str_Esc(char *s);
 char ** Str_Words(char *, char **, int *);
 char * Str_Append(char *, size_t *, size_t *, char *, size_t);
-int Str_GetLn(FILE *, char, char **, int *);
+int Str_GetLn(FILE *, char, char **, size_t *);
     
 #endif
