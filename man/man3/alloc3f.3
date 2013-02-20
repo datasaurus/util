@@ -25,7 +25,7 @@
 .\" 
 .\" Please address questions and feedback to dev0@trekix.net
 .\" 
-.\" $Revision: 1.12 $ $Date: 2009/10/07 17:06:47 $
+.\" $Revision: 1.13 $ $Date: 2011/11/28 16:11:23 $
 .\"
 .TH alloc3f 3 "Dynamic three dimensional allocators"
 .SH NAME
@@ -68,8 +68,8 @@ are equivalent.
 
 The second loop might be faster for some compilers and options.
 
-If something goes wrong, the function generates an error message that can be
-retrieved with a call to \fBErr_Get\fP, and returns \fBNULL\fP.
+If something goes wrong, the function prints an error message to stderr,
+and returns \fBNULL\fP.
 
 \fBFree3F\fP frees all memory associated with \fId\fP,
 which should be a return value of \fBmalloc3f\fP.

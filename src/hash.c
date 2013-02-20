@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.39 $ $Date: 2012/11/08 21:18:37 $
+   .	$Revision: 1.40 $ $Date: 2013/01/10 21:22:17 $
    .
    .	Reference:
    .		Kernighan, Brian W. and Rob Pike.
@@ -43,6 +43,8 @@
 #include <stdio.h>
 #include "alloc.h"
 #include "hash.h"
+
+#define HASH_X 31
 
 
 /*

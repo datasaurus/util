@@ -31,9 +31,10 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.12 $ $Date: 2009/10/07 17:06:47 $
+   .	$Revision: 1.13 $ $Date: 2011/11/28 16:09:55 $
  */
 
+#include <stdio.h>
 #include "alloc.h"
 #include "err_msg.h"
 #include "alloc3f.h"
@@ -47,33 +48,34 @@ float *** Calloc3F(long kmax, long jmax, long imax)
 
     /* Make sure casting to size_t does not overflow anything.  */
     if (kmax <= 0 || jmax <= 0 || imax <= 0) {
-	Err_Append("Array dimensions must be positive.\n");
+	fprintf(stderr, "Array dimensions must be positive.\n");
 	return NULL;
     }
     kk = (size_t)kmax;
     jj = (size_t)jmax;
     ii = (size_t)imax;
     if ((kk * jj) / kk != jj || (kk * jj * ii) / (kk * jj) != ii) {
-	Err_Append("Dimensions too big for pointer arithmetic.\n");
+	fprintf(stderr, "Dimensions [%ld][%ld][%ld]  too big "
+		"for pointer arithmetic.\n", kmax, jmax, imax);
 	return NULL;
     }
 
     dat = (float ***)CALLOC(kk + 2, sizeof(float **));
     if ( !dat ) {
-	Err_Append("Could not allocate 2nd dimension.\n");
+	fprintf(stderr, "Could not allocate 2nd dimension.\n");
 	return NULL;
     }
     dat[0] = (float **)CALLOC(kk * jj + 1, sizeof(float *));
     if ( !dat[0] ) {
 	FREE(dat);
-	Err_Append("Could not allocate 1st dimension.\n");
+	fprintf(stderr, "Could not allocate 1st dimension.\n");
 	return NULL;
     }
     dat[0][0] = (float *)CALLOC(kk * jj * ii, sizeof(float));
     if ( !dat[0][0] ) {
 	FREE(dat[0]);
 	FREE(dat);
-	Err_Append("Could not allocate array of values.\n");
+	fprintf(stderr, "Could not allocate array of values.\n");
 	return NULL;
     }
     for (k = 1; k <= kmax; k++) {

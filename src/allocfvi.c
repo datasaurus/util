@@ -32,7 +32,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.16 $ $Date: 2009/10/07 17:06:47 $
+   .	$Revision: 1.17 $ $Date: 2011/11/28 16:09:55 $
  */
 
 #include <stdlib.h>
@@ -53,7 +53,7 @@ int main(void)
     imax = 3;
     dat2 = Calloc2F(jmax, imax);
     if ( !dat2 ) {
-	fprintf(stderr, "%s.\nCould not allocate memory.\n", Err_Get());
+	fprintf(stderr, "Could not allocate memory.\n");
 	exit(1);
     }
 
@@ -85,7 +85,7 @@ int main(void)
     imax = 4;
     dat3 = Calloc3F(kmax, jmax, imax);
     if ( !dat3 ) {
-	fprintf(stderr, "%s.\nCould not allocate memory.\n", Err_Get());
+	fprintf(stderr, "Could not allocate memory.\n");
 	exit(1);
     }
 
@@ -132,7 +132,7 @@ int main(void)
     imax = 5;
     dat4 = Calloc4F(lmax, kmax, jmax, imax);
     if ( !dat4 ) {
-	fprintf(stderr, "%s.\nCould not allocate memory.\n", Err_Get());
+	fprintf(stderr, "Could not allocate memory.\n");
 	exit(1);
     }
 

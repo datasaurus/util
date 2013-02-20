@@ -31,11 +31,11 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.12 $ $Date: 2009/10/07 17:06:47 $
+   .	$Revision: 1.13 $ $Date: 2011/11/28 16:09:55 $
  */
 
+#include <stdio.h>
 #include "alloc.h"
-#include "err_msg.h"
 #include "alloc2f.h"
 
 /* See alloc2f (3) */
@@ -48,28 +48,29 @@ float ** Calloc2F(long j, long i)
 
     /* Make sure casting to size_t does not overflow anything.  */
     if (j <= 0 || i <= 0) {
-	Err_Append("Array dimensions must be positive.\n");
+	fprintf(stderr, "Array dimensions must be positive.\n");
 	return NULL;
     }
     jj = (size_t)j;
     ii = (size_t)i;
     ji = jj * ii;
     if (ji / jj != ii) {
-	Err_Append("Dimensions too big for pointer arithmetic.\n");
+	fprintf(stderr, "Dimensions, [%ld][%ld] too big "
+		"for pointer arithmetic.\n", j, i);
 	return NULL;
     }
 
     dat = (float **)CALLOC(jj + 2, sizeof(float *));
     if ( !dat ) {
-	Err_Append("Could not allocate memory for 1st dimension of two dimensional"
-		" array.\n");
+	fprintf(stderr, "Could not allocate memory for 1st dimension of "
+		"two dimensional array.\n");
 	return NULL;
     }
     dat[0] = (float *)CALLOC(ji, sizeof(float));
     if ( !dat[0] ) {
 	FREE(dat);
-	Err_Append("Could not allocate memory for values of two dimensional "
-		"array.\n");
+	fprintf(stderr, "Could not allocate memory for values "
+		"of two dimensional array.\n");
 	return NULL;
     }
     for (n = 1; n <= j; n++) {

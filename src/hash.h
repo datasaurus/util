@@ -31,15 +31,13 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.22 $ $Date: 2010/03/02 15:09:55 $
+   .	$Revision: 1.23 $ $Date: 2011/11/28 16:09:55 $
  */
 
 #ifndef HASH_H_
 #define HASH_H_
 
 #include <stdlib.h>
-
-#define HASH_X 31
 
 /* Hash table entry */
 struct Hash_Entry {
