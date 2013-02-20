@@ -31,12 +31,11 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.11 $ $Date: 2011/11/28 16:09:55 $
+   .	$Revision: 1.12 $ $Date: 2013/02/20 18:40:25 $
  */
 
 #include <stdio.h>
 #include "alloc.h"
-#include "err_msg.h"
 #include "alloc4f.h"
 
 /* See alloc4f (3) */

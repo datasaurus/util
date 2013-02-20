@@ -32,7 +32,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.17 $ $Date: 2011/11/28 16:09:55 $
+   .	$Revision: 1.18 $ $Date: 2013/02/20 18:40:25 $
  */
 
 #include <stdlib.h>
@@ -40,7 +40,6 @@
 #include "alloc2f.h"
 #include "alloc3f.h"
 #include "alloc4f.h"
-#include "err_msg.h"
 
 int main(void)
 {
