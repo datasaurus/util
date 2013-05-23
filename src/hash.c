@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.40 $ $Date: 2013/01/10 21:22:17 $
+   .	$Revision: 1.41 $ $Date: 2013/02/20 18:40:25 $
    .
    .	Reference:
    .		Kernighan, Brian W. and Rob Pike.
@@ -41,6 +41,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include "strlcpy.h"
 #include "alloc.h"
 #include "hash.h"
 
@@ -145,7 +146,7 @@ int Hash_Add(struct Hash_Tbl *tblP, const char *key, void * val)
 	FREE(ep);
 	return 0;
     }
-    strcpy(ep->key, key);
+    strlcpy(ep->key, key, len);
     ep->val = val;
     ep->next = tblP->buckets[b];
     tblP->buckets[b] = ep;
@@ -185,7 +186,7 @@ int Hash_Set(struct Hash_Tbl *tblP, const char *key, void *val)
 	FREE(ep);
 	return 0;
     }
-    strcpy(ep->key, key);
+    strlcpy(ep->key, key, len);
     ep->val = val;
     ep->next = tblP->buckets[b];
     tblP->buckets[b] = ep;
