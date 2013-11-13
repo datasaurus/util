@@ -29,14 +29,14 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.29 $ $Date: 2011/11/28 16:09:55 $
+   .	$Revision: 1.30 $ $Date: 2012/11/08 21:17:41 $
  */
 
-#include "unix_defs.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+#include "unix_defs.h"
 #include "alloc.h"
 
 static int init;
