@@ -29,13 +29,12 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.24 $ $Date: 2011/11/28 16:09:55 $
+   .	$Revision: 1.25 $ $Date: 2012/11/08 21:17:33 $
  */
 
 #ifndef ALLOC_H_
 #define ALLOC_H_
 
-#include "unix_defs.h"
 #include <stdlib.h>
 
 #define MALLOC(s) Tkx_Malloc((s), __FILE__, __LINE__)
