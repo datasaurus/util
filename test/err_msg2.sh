@@ -31,7 +31,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.4 $ $Date: 2009/10/07 17:06:47 $
+# $Revision: 1.5 $ $Date: 2011/11/28 16:11:23 $
 #
 ########################################################################
 
@@ -58,7 +58,7 @@ All rights reserved
 # Set RM to : in environment to save temporary files.
 RM=${RM:-'rm -f'}
 
-CC="cc"
+CC="cc -std=c99"
 CFLAGS="-g -Wall -Wmissing-prototypes"
 MSRC="err_msg2.c"
 ASRC="$MSRC src/err_msg.c"

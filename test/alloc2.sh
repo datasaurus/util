@@ -32,7 +32,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.24 $ $Date: 2009/09/25 21:33:13 $
+# $Revision: 1.25 $ $Date: 2011/11/28 16:11:23 $
 #
 ########################################################################
 
@@ -66,7 +66,7 @@ fi
 # Set RM to : in environment to save temporary files.
 RM=${RM:-'rm -f'}
 
-CC="cc"
+CC="cc -std=c99"
 CFLAGS="-g -Wall -Wmissing-prototypes"
 
 # Here is the source code for the driver application.

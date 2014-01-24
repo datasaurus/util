@@ -31,7 +31,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.22 $ $Date: 2009/10/07 17:06:47 $
+# $Revision: 1.23 $ $Date: 2011/11/28 16:11:23 $
 #
 ########################################################################
 
@@ -68,7 +68,7 @@ KMAX=${KMAX:-"83"}
 JMAX=${JMAX:-"89"}
 IMAX=${IMAX:-"97"}
 
-CC="cc"
+CC="cc -std=c99"
 CFLAGS="-g -Wall -Wmissing-prototypes"
 MSRC="alloc4f_1.c"
 ASRC="$MSRC src/alloc4f.c src/alloc.c"

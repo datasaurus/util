@@ -30,7 +30,7 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 # Please send feedback to dev0@trekix.net
-# $Revision: 1.35 $ $Date: 2009/10/07 17:06:47 $
+# $Revision: 1.36 $ $Date: 2011/11/28 16:11:23 $
 #
 ########################################################################
 
@@ -67,7 +67,7 @@ KMAX=${KMAX:-"379"}
 JMAX=${JMAX:-"383"}
 IMAX=${IMAX:-"421"}
 
-CC="cc"
+CC="cc -std=c99"
 CFLAGS="-g -Wall -Wmissing-prototypes"
 MSRC="alloc3f_1.c"
 ASRC="$MSRC src/alloc3f.c src/alloc.c"

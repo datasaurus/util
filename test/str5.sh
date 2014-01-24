@@ -29,7 +29,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.3 $ $Date: 2010/01/05 19:29:07 $
+# $Revision: 1.4 $ $Date: 2011/11/28 16:11:23 $
 #
 ########################################################################
 
@@ -71,7 +71,7 @@ int main(void)
 END
 
 # Build the test application
-CFLAGS="-g -Wall -Wmissing-prototypes"
+CFLAGS="-std=c99 -g -Wall -Wmissing-prototypes"
 if ! cc ${CFLAGS} -o str5 str5.c src/str.c src/err_msg.c src/alloc.c
 then
     echo "Could not build str5 from str5.c"

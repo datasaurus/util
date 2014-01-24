@@ -30,7 +30,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.15 $ $Date: 2010/11/27 03:21:20 $
+# $Revision: 1.16 $ $Date: 2011/11/28 16:11:23 $
 #
 ########################################################################
 
@@ -159,10 +159,10 @@ awk -v nword=$NWORD \
 echo "Running the hash test"
 echo "Putting test values into file \"attempt\""
 echo "Putting memory trace into file \"memtrace\""
-COPT='-g -Wall -Wmissing-prototypes -Isrc/'
+COPT='-std=c99 -g -Wall -Wmissing-prototypes -Isrc/'
 CFLAGS="${COPT}"
 export MEM_DEBUG=3
-if cc ${CFLAGS} -o hash hash4.c src/hash.c src/err_msg.c src/alloc.c
+if cc ${CFLAGS} -o hash hash4.c src/hash.c src/err_msg.c src/alloc.c src/strlcpy.c
 then
     awk '{printf "%s ", $2}' correct | ./hash > attempt 2> hash.err 3> memtrace
 else

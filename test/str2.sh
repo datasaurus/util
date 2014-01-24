@@ -32,7 +32,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.4 $ $Date: 2009/12/23 16:24:54 $
+# $Revision: 1.5 $ $Date: 2011/11/28 16:11:23 $
 #
 ########################################################################
 
@@ -54,7 +54,7 @@ All rights reserved
 RM=${RM:-'rm -f'}
 
 #
-CC="cc"
+CC="cc -std=c99"
 CFLAGS="-g -Wall -Wmissing-prototypes"
 MSRC="str2.c"
 SRC="$MSRC src/str.c src/err_msg.c src/alloc.c"

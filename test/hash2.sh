@@ -33,7 +33,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.15 $ $Date: 2010/03/02 16:20:41 $
+# $Revision: 1.16 $ $Date: 2011/11/28 16:11:23 $
 #
 ########################################################################
 
@@ -120,9 +120,9 @@ END
 echo "Running the hash test"
 echo "Putting test values into file \"attempt\""
 echo "Putting memory trace into file \"memtrace\""
-COPT='-g -Wall -Wmissing-prototypes -Isrc/'
+COPT=' -std=c99 -g -Wall -Wmissing-prototypes -Isrc/'
 export MEM_DEBUG=2
-if cc $COPT -o hash hash2.c src/hash.c src/err_msg.c src/alloc.c
+if cc $COPT -o hash hash2.c src/hash.c src/err_msg.c src/alloc.c src/strlcpy.c
 then
     ./hash > attempt 2> memtrace
 else

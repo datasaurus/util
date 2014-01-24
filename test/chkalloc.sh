@@ -31,7 +31,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.14 $ $Date: 2009/09/25 21:33:13 $
+# $Revision: 1.15 $ $Date: 2011/11/28 16:11:23 $
 #
 ########################################################################
 
@@ -54,7 +54,7 @@ See $0 for distribution terms
 # Set RM to : in environment to save temporary files.
 RM=${RM:-'rm -f'}
 
-CC="cc"
+CC="cc -std=c99"
 CFLAGS="-g -Wall -Wmissing-prototypes"
 
 CHKALLOC=src/chkalloc

@@ -31,7 +31,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.23 $ $Date: 2009/10/07 17:06:47 $
+# $Revision: 1.24 $ $Date: 2011/11/28 16:11:23 $
 #
 ########################################################################
 
@@ -60,7 +60,7 @@ All rights reserved
 # Set RM to : to save intermediate files
 RM=${RM:-'rm -f'}
 
-CC="cc"
+CC="cc -std=c99"
 CFLAGS="-g -Wall -Wmissing-prototypes"
 MSRC="alloc3f_3.c"
 ASRC="$MSRC src/alloc3f.c src/alloc.c"

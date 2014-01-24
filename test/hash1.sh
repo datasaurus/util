@@ -31,7 +31,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.16 $ $Date: 2010/03/02 15:57:59 $
+# $Revision: 1.17 $ $Date: 2011/11/28 16:11:23 $
 #
 ########################################################################
 
@@ -147,10 +147,10 @@ awk -v nword=$NWORD \
 
 echo "Running the hash test"
 echo "Putting test values into file \"attempt\""
-COPT='-g -Wall -Wmissing-prototypes -Isrc/'
+COPT='-std=c99 -g -Wall -Wmissing-prototypes -Isrc/'
 NBUCKET=${NWORD}
 CFLAGS="${COPT} -DNBUCKET=${NBUCKET}"
-if cc ${CFLAGS} -o hash hash1.c src/err_msg.c src/hash.c src/alloc.c
+if cc ${CFLAGS} -o hash hash1.c src/err_msg.c src/hash.c src/alloc.c src/strlcpy.c
 then
     awk '{printf "%s ", $2}' correct | ./hash > attempt
 else
@@ -179,7 +179,7 @@ echo "Running the hash test with excessively small hash table"
 echo "Putting test values into file \"attempt\""
 NBUCKET=`expr ${NWORD} / 4`
 CFLAGS="${COPT} -DNBUCKET=${NBUCKET}"
-if cc ${CFLAGS} -o hash hash1.c src/err_msg.c src/hash.c src/alloc.c
+if cc ${CFLAGS} -o hash hash1.c src/err_msg.c src/hash.c src/alloc.c src/strlcpy.c
 then
     awk '{printf "%s ", $2}' correct | ./hash > attempt
 else

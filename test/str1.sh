@@ -28,7 +28,7 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 # Please send feedback to dev0@trekix.net
-# $Revision: 1.4 $ $Date: 2010/01/05 19:44:48 $
+# $Revision: 1.5 $ $Date: 2011/11/28 16:11:23 $
 #
 ########################################################################
 
@@ -96,7 +96,7 @@ int main(void)
 }
 END
 
-CFLAGS="-g -Wall -Wmissing-prototypes"
+CFLAGS="-std=c99 -g -Wall -Wmissing-prototypes"
 if ! cc ${CFLAGS} -o str1 str1.c src/str.c src/err_msg.c src/alloc.c
 then
     echo 'Could not build str1 from str1.c'
