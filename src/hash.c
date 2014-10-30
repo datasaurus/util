@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.41 $ $Date: 2013/02/20 18:40:25 $
+   .	$Revision: 1.42 $ $Date: 2013/05/23 21:57:52 $
    .
    .	Reference:
    .		Kernighan, Brian W. and Rob Pike.

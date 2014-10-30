@@ -1,5 +1,5 @@
-.\" 
-.\" Copyright (c) 2011, Gordon D. Carrie. All rights reserved.
+.\"
+.\" Copyright (c) 2012, Gordon D. Carrie. All rights reserved.
 .\" 
 .\" Redistribution and use in source and binary forms, with or without
 .\" modification, are permitted provided that the following conditions
@@ -22,19 +22,47 @@
 .\" LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 .\" NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 .\" SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-.\" 
-.\" Please address questions and feedback to dev0@trekix.net
-.\" 
-.\" $Revision: 1.2 $ $Date: 2011/11/28 16:11:23 $
 .\"
-.TH bhead 1 "File utility"
-.SH NAME
-bhead \- print a number of bytes from a file.
-.SH SYNOPSIS
-.nf
-\fBbhead\fP \fIn\fP
-.fi
-.SH DESCRIPTION
-\fBbhead\fP prints \fIn\fP bytes from standard input to standard output.
-.SH AUTHOR
+.\"
+.\" Please address questions and feedback to dev0@trekix.net
+.\"
+.\" $Revision: $ $Date: $
+.\"
+.Dd $Mdocdate$
+.Dt TMEXEC 1
+.Os Unix
+.Sh NAME
+.Nm tmexec
+.Nd run a command with a time limit.
+.Sh SYNOPSIS
+.Nm tmexec
+.Ar timeout
+.Ar command
+.Op options
+.Sh DESCRIPTION
+The 
+.Nm tmexec
+command executes
+.Ar command
+.Op options
+in a child process.
+If the child process is still running after
+.Ar timeout
+seconds,
+.Nm tmexec
+terminates it with a
+.Li SIGKILL
+signal.
+.Sh RETURN VALUES
+If the child process exits normally, return value will be that of
+the child process.  Otherwise,
+.Nm tmexec
+returns failure.
+.Sh BUGS
+Upon timeout,
+.Nm tmexec
+terminates itself and the child process specified by
+.Ar command .
+It does not terminate grandchildren.
+.Sh AUTHOR
 Gordon Carrie (dev0@trekix.net)

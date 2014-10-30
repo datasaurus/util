@@ -36,7 +36,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.5 $ $Date: 2012/11/08 21:18:37 $
+   .	$Revision: 1.6 $ $Date: 2013/01/10 21:22:35 $
  */
 
 #include <stdio.h>

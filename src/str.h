@@ -30,7 +30,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.11 $ $Date: 2011/11/28 16:09:55 $
+   .	$Revision: 1.12 $ $Date: 2013/01/10 21:23:36 $
  */
 
 #ifndef STR_H_

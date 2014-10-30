@@ -29,7 +29,7 @@
    .
    .	Please send feedback to dev0@trekix.net
    .
-   .	$Revision: 1.2 $ $Date: 2011/01/03 21:03:19 $
+   .	$Revision: 1.3 $ $Date: 2011/11/28 16:09:55 $
  */
 
 #ifndef DYN_ALLOC_H_

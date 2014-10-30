@@ -1,9 +1,8 @@
 /*
- -	bhead --
- -		Command line utility prints a given number of bytes from a file.
- -		See bhead (1).
- -
-   .	Copyright (c) 2011, Gordon D. Carrie. All rights reserved.
+   -	unix_defs.h --
+   -		Request UNIX/C standards
+   -
+   .	Copyright (c) 2012, Gordon D. Carrie. All rights reserved.
    .	
    .	Redistribution and use in source and binary forms, with or without
    .	modification, are permitted provided that the following conditions
@@ -27,25 +26,38 @@
    .	LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
    .	NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
    .	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- .
- .	Please send feedback to dev0@trekix.net
- .
- .	$Revision: 1.2 $ $Date: 2011/11/28 16:09:55 $
+   .
+   .	Please send feedback to dev0@trekix.net
+   .
+   .	$Revision: $ $Date: $
  */
 
-#include <stdlib.h>
-#include <stdio.h>
+/*
+   Ref.
+   M. J. Rochkind. Advanced UNIX Programming, Second Edition.
+   2004. Pearson Eduction, Inc.
+ */
 
-int main(int argc, char *argv[])
-{
-    unsigned long n;
-    int i;
+#ifndef UNIX_DEFS_H_
+#define UNIX_DEFS_H_
 
-    if (argc != 2 || (sscanf(argv[1], "%lu", &n) != 1)) {
-	fprintf(stderr, "Usage: %s n\n", argv[0]);
-	exit(1);
-    }
-    while (n-- > 0 && ((i = getchar()) != EOF) && (putchar(i) != EOF))
-	continue;
-    return 0;
-}
+#ifndef _POSIX_SOURCE
+#define _POSIX_SOURCE
+#endif
+#ifndef _POSIX_C_SOURCE
+#define _POSIX_C_SOURCE 200112L
+#endif
+#ifndef _XOPEN_SOURCE
+#define _XOPEN_SOURCE 600
+#endif
+#ifndef _XOPEN_SOURCE_EXTENDED
+#define _XOPEN_SOURCE_EXTENDED 1
+#endif
+#include <sys/types.h>
+#include <unistd.h>
+
+#if __STDC_VERSION__ != 199901L
+#error C99 required
+#endif
+
+#endif

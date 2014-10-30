@@ -29,7 +29,7 @@
 #
 # Please send feedback to dev0@trekix.net
 #
-# $Revision: 1.29 $ $Date: 2012/09/13 20:00:36 $
+# $Revision: 1.30 $ $Date: 2013/01/10 21:21:34 $
 
 CC = cc
 CFLAGS = -std=c99 -g -Wall -Wmissing-prototypes

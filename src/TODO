@@ -1,0 +1,7 @@
+Hash dump keys.
+Hash stat's.
+Hash man.
+Give better error messages on allocation failure.
+Make use of terms "program" and "application" more consistent.
+Try to replace malloc with calloc.
+Close diagnostic memory output on exec.
