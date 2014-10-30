@@ -1,0 +1,15 @@
+Applications:
+chkalloc	- check for memory leaks in a program that uses MALLOC,
+		  CALLOC, REALLOC, and FREE. See alloc (3).
+tmexec		- spawn a sub-process. KILL it after a set time.
+allocfvi	- print pointers and values of a multi-dimensional array.
+
+Library functions:
+alloc		- allocators with optional diagnostics.
+alloc2f		- allocate a two dimensional array of floats
+alloc3f		- allocate a three dimensional array of floats
+alloc4f		- allocate a four dimensional array of floats
+dyn_alloc	- concatenate data, allocating more memory if necessary.
+err_msg		- accumulate and print error messages.
+hash		- simple hash table
+str		- dynamic strings
