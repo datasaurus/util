@@ -34,7 +34,7 @@
 CC = cc
 CFLAGS = -std=c99 -g -Wall -Wmissing-prototypes
 #LFLAGS = -L/usr/local/lib -lefence
-EXECS = allocfvi bhead prhash tmexec
+EXECS = allocfvi bhead prhash tmexec arr32
 OBJ = alloc.o alloc2f.o alloc3f.o alloc4f.o allocfvi.o err_msg.o hash.o str.o
 
 obj : ${OBJ}
@@ -52,6 +52,9 @@ allocfvi : ${SRC}
 SRC = prhash.c hash.c alloc.c err_msg.c
 prhash : ${SRC}
 	${CC} ${CFLAGS} -o prhash ${SRC} ${LFLAGS}
+
+arr32 : arr32.c
+	${CC} ${CFLAGS} -o arr32 arr32.c
 
 hash.o : hash.c hash.h
 	${CC} ${CFLAGS} -c hash.c
